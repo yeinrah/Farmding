@@ -1,4 +1,8 @@
+import Banner from "../Common/UI/Banner/Banner";
+
 const Main = () => {
-  return <>hi</>;
+  return (
+    <Banner />
+  );
 };
 export default Main;
