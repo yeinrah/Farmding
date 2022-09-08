@@ -44,7 +44,7 @@ const SearchBar = () => {
     },
   }));
   return (
-    <>
+    <div>
       <Search>
         <SearchIconWrapper>
           <SearchIcon />
@@ -54,7 +54,7 @@ const SearchBar = () => {
           inputProps={{ "aria-label": "search" }}
         />
       </Search>
-    </>
+    </div>
   );
 };
 export default SearchBar;
