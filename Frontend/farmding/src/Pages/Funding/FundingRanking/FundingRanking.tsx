@@ -58,6 +58,7 @@ const FundingRanking = () => {
         {sortedItem.map((item, index) => (
           <div key={index}>
             <ListItem alignItems="flex-start">
+              <div className={styles.rank}>{index + 1}</div>
               <ListItemAvatar>
                 <Avatar
                   alt={item.avatar}
