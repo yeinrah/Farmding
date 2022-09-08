@@ -45,12 +45,16 @@ const FundingRanking = () => {
   ];
   return (
     <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      <h3>실시간 랭킹</h3>
+      <h3 className={styles.title}>실시간 랭킹</h3>
       {item.map((item, index) => (
         <div key={index}>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt={item.avatar} src="/static/images/avatar/1.jpg" />
+              <Avatar
+                alt={item.avatar}
+                src="/static/images/avatar/1.jpg"
+                sx={{ cursor: "pointer" }}
+              />
             </ListItemAvatar>
             <ListItemText
               primary={item.title}

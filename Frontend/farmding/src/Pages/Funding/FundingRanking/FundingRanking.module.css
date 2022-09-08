@@ -1,7 +1,6 @@
-/* .heartArea {
-  text-align: right;
-  line-height: 10px;
-} */
+.title {
+  margin-left: 16px;
+}
 .detailInfo {
   display: flex;
   justify-content: space-between;
