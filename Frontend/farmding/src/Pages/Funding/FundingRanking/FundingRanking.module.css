@@ -1,0 +1,17 @@
+/* .heartArea {
+  text-align: right;
+  line-height: 10px;
+} */
+.detailInfo {
+  display: flex;
+  justify-content: space-between;
+}
+.heartArea {
+  display: flex;
+  justify-content: right;
+}
+
+.like {
+  margin-left: 4px;
+  padding-top: 2px;
+}
