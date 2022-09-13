@@ -16,13 +16,11 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import ProjectItem from "./ProjectItem";
 
-
 const ProjectItemList = () => {
-  
   const projects = [
     {
       title: "올해의 마지막 제주감귤",
@@ -35,21 +33,18 @@ const ProjectItemList = () => {
       mainImg: "grape.png",
       farm: "상훈농장",
       likeCnt: 4,
-
     },
     {
       title: "올해의 마지막 제주오렌지",
       mainImg: "grape.png",
       farm: "예인농장",
       likeCnt: 3,
-
     },
     {
       title: "올해의 마지막 제주아보카도",
       mainImg: "grape.png",
       farm: "은민농장",
       likeCnt: 2,
-
     },
     {
       title: "올해의 마지막 제주복숭아",
@@ -78,19 +73,11 @@ const ProjectItemList = () => {
   ];
 
   return (
-    <Grid container 
-    spacing={{ xs: 4, md: 5 }}
-    className={styles.container}
-    >
+    <Grid container spacing={{ xs: 4, md: 5 }} className={styles.container}>
       {projects.map((pjt, idx) => (
         // <ProjectItem key={idx} title={pjt.title} />
-        <Grid item 
-          xs={6} sm={4} md={3} 
-          key={idx}
-        >
-          <Card 
-          sx={{ height: 320}}
-          >
+        <Grid item xs={6} sm={4} md={3} key={idx}>
+          <Card sx={{ height: 320 }}>
             <CardMedia
               component="img"
               alt=""
@@ -109,13 +96,12 @@ const ProjectItemList = () => {
                 <span className={styles.like}>{pjt.likeCnt}</span>
               </div>
             </CardContent>
-
           </Card>
         </Grid>
       ))}
     </Grid>
     // <Box sx={{ flexGrow: 1 }}>
     // </Box>
-  )
+  );
 };
 export default ProjectItemList;

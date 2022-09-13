@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import styles from "./FundingRanking.module.css";
+import styles from "./FundingRanking.module.scss";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 const FundingRanking = () => {
   const item = [

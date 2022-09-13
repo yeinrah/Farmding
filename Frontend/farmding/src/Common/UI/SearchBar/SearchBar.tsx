@@ -11,6 +11,7 @@ const SearchBar = () => {
     },
     marginLeft: 0,
     width: "100%",
+    height: "70px",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
       width: "700px",
@@ -31,7 +32,9 @@ const SearchBar = () => {
     color: "inherit",
     display: "flex",
     justifyContent: "center",
+    fontSize: "22px",
     width: "100%",
+    paddingTop: "12px",
     "& .MuiInputBase-input": {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon
