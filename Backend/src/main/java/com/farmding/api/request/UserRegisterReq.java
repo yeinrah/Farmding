@@ -26,7 +26,7 @@ public class UserRegisterReq {
 
 	@ApiModelProperty(name = "유저 Address", example = "서울시 강남구")
 	@NotNull(message = "주소를 입력하세요.")
-	private String email;
+	private String address;
 
 	@ApiModelProperty(name = "유저 Zipcode", example = "01010")
 	@NotNull(message = "우편번호를 입력하세요")
