@@ -38,9 +38,6 @@ public class Project {
 	@Column(name = "project_created_date")
 	private String projectCreatedDate;
 	
-	@Column(name = "project_end_date")
-	private String projectEndDate;
-	
 	@Column(name = "farmer_name")
 	private String farmerName;
 	
@@ -53,16 +50,10 @@ public class Project {
 	@Column(name = "project_period")
 	private int projectPeriod;
 	
-	@Column(name = "reward_info")
-	private String rewardInfo;
-	
 	@Column(name = "funding_status")
 	private String fundingStatus;
 	
 	@Column(name = "like_amount")
 	private int likeAmount;
-	
-	@Column(name = "funder_count")
-	private int funderCount;
 	
 }

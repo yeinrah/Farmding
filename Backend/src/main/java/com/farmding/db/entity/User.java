@@ -47,5 +47,8 @@ public class User {
 	@Column(name = "is_active")
 	private boolean isActive;
 	
+	@Column(name = "user_pr")
+	private String userPr;
+	
 	
 }

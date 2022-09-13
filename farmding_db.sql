@@ -46,15 +46,12 @@ CREATE TABLE `PROJECT` (
 	`project_explanation` text NULL,
 	`category` int NOT NULL,
 	`project_created_date` datetime NOT NULL,
-	`project_end_date` datetime NOT NULL,
 	`farmer_name` varchar(10) NOT NULL,
 	`farmer_wallet_address`	varchar(200) NOT NULL,
 	`target_amount` double NOT NULL,
 	`project_period` int NOT NULL,
-	`reward_info` varchar(50) NOT NULL,
 	`funding_status` varchar(20) NOT NULL,
-	`like_amount` int NOT NULL,
-    `funder_count` int NOT NULL
+	`like_amount` int NOT NULL
 );
 
 CREATE TABLE `LIKE` (
@@ -71,7 +68,8 @@ CREATE TABLE `USER` (
 	`profile_image` int	NOT NULL,
 	`address` varchar(100) NOT NULL,
 	`zip_code` int NOT NULL,
-	`is_active` boolean	NOT NULL
+	`is_active` boolean	NOT NULL,
+    `user_pr` varchar(200) NULL
 );
 
 CREATE TABLE `REWARD` (
