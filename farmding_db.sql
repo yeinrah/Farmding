@@ -52,7 +52,7 @@ CREATE TABLE `PROJECT` (
 	`target_amount` double NOT NULL,
 	`project_period` int NOT NULL,
 	`funding_status` varchar(20) NOT NULL,
-	`like_amount` int NOT NULL
+	`like_amount` int NOT NULL,
 	`funder_count` int NOT NULL
 );
 
