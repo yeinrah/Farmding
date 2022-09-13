@@ -46,12 +46,14 @@ CREATE TABLE `PROJECT` (
 	`project_explanation` text NULL,
 	`category` int NOT NULL,
 	`project_created_date` datetime NOT NULL,
+	`project_end_date` datetime NOT NULL,
 	`farmer_name` varchar(10) NOT NULL,
 	`farmer_wallet_address`	varchar(200) NOT NULL,
 	`target_amount` double NOT NULL,
 	`project_period` int NOT NULL,
 	`funding_status` varchar(20) NOT NULL,
 	`like_amount` int NOT NULL
+	`funder_count` int NOT NULL
 );
 
 CREATE TABLE `LIKE` (
