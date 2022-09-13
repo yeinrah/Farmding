@@ -1,8 +1,13 @@
 import Banner from "../Common/UI/Banner/Banner";
+import ProjectItemList from "./Funding/FundingProject/ProjectItemList";
 
 const Main = () => {
   return (
-    <Banner />
+    <>
+      <Banner />
+      <ProjectItemList />
+    
+    </>
   );
 };
 export default Main;
