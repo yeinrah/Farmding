@@ -51,7 +51,10 @@ CREATE TABLE `PROJECT` (
 	`project_period` int NOT NULL,
 	`reward_info` varchar(50) NOT NULL,
 	`funding_status` varchar(20) NOT NULL,
-	`like_amount` int NOT NULL
+	`like_amount` int NOT NULL,
+    `project_file_name` varchar(200) NOT NULL,
+    `project_file_path` varchar(200) NOT NULL,
+    `project_file_size` bigint NULL
 );
 
 CREATE TABLE `LIKE` (
