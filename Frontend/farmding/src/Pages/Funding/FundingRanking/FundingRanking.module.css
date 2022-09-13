@@ -1,0 +1,21 @@
+.title {
+  margin-left: 16px;
+}
+.rank {
+  font-size: 30px;
+  padding-top: 8px;
+  padding-right: 20px;
+}
+.detailInfo {
+  display: flex;
+  justify-content: space-between;
+}
+.heartArea {
+  display: flex;
+  justify-content: right;
+}
+
+.like {
+  margin-left: 4px;
+  padding-top: 2px;
+}
