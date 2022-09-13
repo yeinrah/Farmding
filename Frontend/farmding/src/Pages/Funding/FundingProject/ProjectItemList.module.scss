@@ -2,8 +2,22 @@
 //   display: flex;
 //   flex-flow: row wrap;
 // }
-
+.projectMainBox {
+  display: flex;
+  justify-content: center;
+}
 .container {
-  width: 73%;
-  margin: 20px;
+  // !important 수정하기!!
+  display: flex;
+  width: 70% !important;
+  margin: 20px !important;
+}
+.heartArea {
+  display: flex;
+  justify-content: space-between;
+}
+.like {
+  position: relative;
+  margin-left: 4px;
+  bottom: 6px;
 }

@@ -19,6 +19,8 @@ import {
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 import ProjectItem from "./ProjectItem";
+import FundingRanking from "../FundingRanking/FundingRanking";
+import { Padding } from "@mui/icons-material";
 
 const ProjectItemList = () => {
   const projects = [
@@ -71,35 +73,43 @@ const ProjectItemList = () => {
       likeCnt: 1,
     },
   ];
-
+  const cutLongTitle = (title: string) => {
+    if (title.length > 12) return title.slice(0, 12) + "...";
+    return title;
+  };
   return (
-    <Grid container spacing={{ xs: 4, md: 5 }} className={styles.container}>
-      {projects.map((pjt, idx) => (
-        // <ProjectItem key={idx} title={pjt.title} />
-        <Grid item xs={6} sm={4} md={3} key={idx}>
-          <Card sx={{ height: 320 }}>
-            <CardMedia
-              component="img"
-              alt=""
-              height="170"
-              image={`/Assets/${pjt.mainImg}`}
-            />
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {pjt.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {pjt.farm}
-              </Typography>
-              <div className={styles.heartArea}>
-                <FavoriteBorderIcon sx={{ color: "green" }} />
-                <span className={styles.like}>{pjt.likeCnt}</span>
-              </div>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+    <div className={styles.projectMainBox}>
+      <Grid container spacing={{ xs: 4, md: 5 }} className={styles.container}>
+        {projects.map((pjt, idx) => (
+          // <ProjectItem key={idx} title={pjt.title} />
+          <Grid item xs={6} sm={8} md={3} key={idx}>
+            <Card sx={{ height: 270 }}>
+              <CardMedia
+                component="img"
+                alt=""
+                height="170"
+                image={`/Assets/${pjt.mainImg}`}
+              />
+              <CardContent>
+                <Typography gutterBottom variant="subtitle1" component="div">
+                  {cutLongTitle(pjt.title)}
+                </Typography>
+                <div className={styles.heartArea}>
+                  <Typography variant="body2" color="text.secondary">
+                    {pjt.farm}
+                  </Typography>
+                  <div>
+                    <FavoriteBorderIcon sx={{ color: "green" }} />
+                    <span className={styles.like}>{pjt.likeCnt}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+      <FundingRanking />
+    </div>
     // <Box sx={{ flexGrow: 1 }}>
     // </Box>
   );
