@@ -1,7 +1,9 @@
 package com.farmding.api.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,13 +69,28 @@ public class FundingController {
 	@ApiOperation(value = "펀딩 상세 페이지", notes = "상세 페이지 구현에 필요한 프로젝트 데이터와 이미지 데이터를 보내준다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
 		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
-	public ResponseEntity<?> fundingDetail(@PathVariable int projectId) throws Exception {
+	public ResponseEntity<HashMap<String,Object>> fundingDetail(@PathVariable int projectId) throws Exception {
 		Project project = fundingService.FindOneByProjectId(projectId);
 		List<Images> list = fundingService.FindAllImageByProjectId(projectId);
-//		System.out.println(list.get(0).getImageId());
-//		System.out.println(list.get(1).getImageId());
-//		System.out.println(list.get(2).getImageId());
-		FundingDetailRes fundingRes = new FundingDetailRes(project, list);
-		return new ResponseEntity<FundingDetailRes>(fundingRes,HttpStatus.OK);
+		
+		HashMap<String, Object> result = new HashMap<>();
+		result.put("project", project);
+		result.put("images", list);
+//		FundingDetailRes fundingRes = new FundingDetailRes(project, list);
+//		return new ResponseEntity<FundingDetailRes>(fundingRes,HttpStatus.OK);
+		return new ResponseEntity<HashMap<String, Object>>(result,HttpStatus.OK);
 	}
+	
+	@GetMapping("detail/{project_id}")
+	@ApiOperation(value = "펀딩 상세페이지 모달", notes = "상세페이지에 필요한 데이터를 보내준다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> detailFunding(@PathVariable int userId) throws Exception {
+		List<Like> likeData = fundingService.likeFunding(userId);
+		List<Project> list = fundingService.getUserLikeProject(likeData);
+
+		return new ResponseEntity<List<Project>>(list,HttpStatus.OK);
+	}
+	
+	//펀딩모달 SSF얼마씩쓰는지 이거 api 만들기 
 }

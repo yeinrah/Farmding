@@ -53,7 +53,8 @@ CREATE TABLE `PROJECT` (
 	`project_period` int NOT NULL,
 	`funding_status` varchar(20) NOT NULL,
 	`like_amount` int NOT NULL,
-	`funder_count` int NOT NULL
+	`funder_count` int NOT NULL,
+	`project_file_path` varchar(200) NOT NULL
 );
 
 CREATE TABLE `LIKE` (
@@ -90,7 +91,6 @@ CREATE TABLE `IMAGES` (
 	`project_id` int NOT NULL,
 	`project_file_name` varchar(200) NOT NULL,
 	`project_file_path` varchar(200) NOT NULL,
-	`project_file_size` bigint NULL,
 	`is_main` boolean NULL
 );
 

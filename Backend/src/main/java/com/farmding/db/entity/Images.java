@@ -35,9 +35,6 @@ public class Images {
 	@Column(name = "project_file_path")
 	private String projectFilePath;
 	
-	@Column(name = "project_file_size")
-	private long projectFileSize;
-	
 	@Column(name = "is_main", nullable = false)
 	private Boolean isMain;
 }

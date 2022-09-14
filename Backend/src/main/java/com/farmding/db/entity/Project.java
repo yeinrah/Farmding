@@ -62,4 +62,7 @@ public class Project {
 	@Column(name = "funder_count")
 	private int funderCount;
 	
+	@Column(name = "project_file_path")
+	private String projectFilePath;
+	
 }
