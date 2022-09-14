@@ -84,6 +84,9 @@ const NavBar = () => {
               <Link to="/">
                 <img src="/Assets/farmer_1.png" alt="" className={styles.navbar__logo}/>
               </Link>
+              <Link to="/project">
+                <h5>디테일</h5>
+              </Link>
               <Typography
                 // variant="h5"
                 // noWrap

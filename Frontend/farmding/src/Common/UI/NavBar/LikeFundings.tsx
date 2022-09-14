@@ -61,14 +61,14 @@ const LikeFundingsModal = (props: ILikeFundingsProps) => {
   const [likeFundings, setLikeFundings] = useState([]);
 
   return (
-    <Box sx={{...modalStyle, width: 500, height: 450, overflow: 'auto'}}>
+    <Box sx={{...modalStyle, width: 530, height: 500, overflow: 'auto'}}>
       <Typography id="modal-title" 
         variant="h5" component="h2"
         fontWeight= 'bold'
         color = '#5DAE8B'
         sx={{ mb: 3}}
       >
-        좋아요 누른 프로젝트
+        좋아하는 프로젝트
       </Typography>
 
       <Grid container spacing={{ xs: 2, md: 3 }} className={styles.container}>

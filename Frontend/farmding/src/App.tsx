@@ -2,8 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import NavBar from "./Common/UI/NavBar/NavBar";
-import SearchBar from "./Common/UI/SearchBar/SearchBar";
-import FundingRanking from "./Pages/Funding/FundingRanking/FundingRanking";
+import ProjectDetail from "./Pages/Funding/ProjectDetail/ProjectDetail";
 import Main from "./Pages/Main";
 function App() {
   return (
@@ -11,7 +10,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />}></Route>
-      
+        <Route path="/project" element={<ProjectDetail/>}></Route>
       </Routes>
     </div>
   );
