@@ -38,23 +38,15 @@ public class UserService {
 		this.fundingRepository = fundingRepository;
 		this.nftRepository = nftRepository;
 	}
-//	// 닉네임 중복 검사
-//	@Transactional(readOnly = true)
-//	public void checkNicknameDuplication(UserRegisterReq userRegisterReq) {
-//		boolean nicknameDuplicate = userRepository.existsByNickname(userRegisterReq.getNickname());
-//		if (nicknameDuplicate) {
-//			throw new IllegalStateException("이미 존재하는 닉네임입니다.");
-//		}
-//	}
-//
-//	// 지갑 주소 중복 검사
-//	@Transactional(readOnly = true)
-//	public void checkWalletAddressDuplication(UserRegisterReq userRegisterReq) {
-//		boolean walletAddressDuplicate = userRepository.existsByWalletAddress(userRegisterReq.getWalletAddress());
-//		if (walletAddressDuplicate) {
-//			throw new IllegalStateException("이미 존재하는 지갑주소입니다.");
-//		}
-//	}
+
+	// 닉네임 중복 검사
+	@Transactional(readOnly = true)
+	public void checkNicknameDuplication(UserRegisterReq userRegisterReq) {
+		boolean nicknameDuplicate = userRepository.existsByNickname(userRegisterReq.getNickname());
+		if (nicknameDuplicate) {
+			throw new IllegalStateException("이미 존재하는 닉네임입니다.");
+		}
+	}
 
 	// 회원 등록
 	@Transactional
@@ -73,7 +65,7 @@ public class UserService {
 			user.setActive(true);
 			return userRepository.save(user);
 		} else if (userRegisterReq.getWalletAddress().equals(user.getWalletAddress()) && user.isActive() == true) {
-			throw new IllegalStateException("이미 가입하셨습니다.");
+			throw new IllegalStateException("이미 존재하는 계정입니다.");
 		} else {
 			User userinfo = User.builder().nickname(userRegisterReq.getNickname())
 					.walletAddress(userRegisterReq.getWalletAddress()).phoneNumber(userRegisterReq.getPhoneNumber())
@@ -88,9 +80,6 @@ public class UserService {
 		User user = userRepository.findOneByUserId(id);
 		// 내가 후원한 펀딩프로젝트
 		List<Funding> funding = fundingRepository.findAllByUserId(id);
-//		if (user == null) {
-//			throw new IllegalStateException("회원 정보 조회에 실패했습니다.");
-//		}
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("user", user);
 		result.put("funding", funding);
@@ -103,7 +92,6 @@ public class UserService {
 		User user = userRepository.findOneByUserId(id);
 		// 내 NFT
 		List<Nft> nft = nftRepository.findAllByOwnerWalletAddress(user.getWalletAddress());
-
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("user", user);
 		result.put("nft", nft);

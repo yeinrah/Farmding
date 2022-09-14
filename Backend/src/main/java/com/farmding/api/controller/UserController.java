@@ -43,9 +43,8 @@ public class UserController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "등록 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "정보 중복(등록 불가)") })
 	public ResponseEntity<?> signup(@RequestBody UserRegisterReq userRegisterReq) throws Exception {
+		userService.checkNicknameDuplication(userRegisterReq);
 		userService.signup(userRegisterReq);
-//		userService.checkWalletAddressDuplication(userRegisterReq);
-//		userService.checkNicknameDuplication(userRegisterReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
@@ -108,7 +107,7 @@ public class UserController {
 	}
 
 	@GetMapping("/mypage/myproject/{user_id}")
-	@ApiOperation(value = "회원 자신이 후원한 프로젝트", notes = "회원이 자신이 후원한 프로젝트를 조회한다.")
+	@ApiOperation(value = "회원 자신이 후원한 펀딩프로젝트", notes = "회원이 자신이 후원한 프로젝트를 조회한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
 	public ResponseEntity<?> showmyproject(@PathVariable int user_id) throws Exception {
