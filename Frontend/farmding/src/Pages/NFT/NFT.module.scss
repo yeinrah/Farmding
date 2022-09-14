@@ -1,0 +1,19 @@
+.NFTsBox {
+  display: flex;
+  flex-wrap: wrap;
+  width: 60rem;
+  //   background-color: red;
+  margin: auto;
+}
+.searchBar {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.title {
+  display: block;
+  justify-content: center;
+  width: 100%;
+  font-size: 2rem;
+}
