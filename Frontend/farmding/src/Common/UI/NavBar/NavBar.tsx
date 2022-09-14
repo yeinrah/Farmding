@@ -19,6 +19,8 @@ import Badge, { BadgeProps } from '@mui/material/Badge';
 
 import Modal from '@mui/material/Modal';
 
+// data
+import { modalStyle } from "../../data/Style";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -31,25 +33,13 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   },
 }));
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 450,
-  height: 450,
-  bgcolor: 'background.paper',
-  // border: '2px #000', 
-  borderRadius: 5,
-  boxShadow: 24,
-  p: 4,
-};
 
 const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [profileImg, setProfileImg] = useState(null);
   // likeCount default 0으로 바꾸기.
   const [likeCount, setlikeCount] = useState(10);
+
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -123,7 +113,7 @@ const NavBar = () => {
                 aria-labelledby="modal-title"
                 // aria-describedby="modal-modal-description"
               >
-                <Box sx={style}>
+                <Box sx={{...modalStyle, width: 450, height: 450}}>
                   <Typography id="modal-title" 
                     variant="h5" component="h2"
                     fontWeight= 'bold'
