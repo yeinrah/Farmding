@@ -8,7 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import styles from "./FundingRanking.module.css";
+import styles from "./FundingRanking.module.scss";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 const FundingRanking = () => {
   const item = [
@@ -47,17 +47,43 @@ const FundingRanking = () => {
       like: 1,
       show: true,
     },
+    {
+      title: "올해의 마지막 제주복숭아",
+      avatar: "demy",
+      owner: "영진농장2",
+      like: 1,
+      show: true,
+    },
+    {
+      title: "올해의 마지막 제주복숭아",
+      avatar: "demy",
+      owner: "영진농장3",
+      like: 1,
+      show: true,
+    },
+    {
+      title: "올해의 마지막 제주복숭아",
+      avatar: "demy",
+      owner: "영진농장4",
+      like: 1,
+      show: true,
+    },
   ];
-  let sortedItem = item
+  const sortedItem = item
     .filter((item) => item.show)
     .sort((a, b) => b.like - a.like);
+
+  const cutLongTitle = (title: string) => {
+    if (title.length > 12) return title.slice(0, 12) + "..";
+    return title;
+  };
   return (
-    <div>
+    <div className={styles.rankingBox}>
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         <h3 className={styles.title}>실시간 랭킹</h3>
         {sortedItem.map((item, index) => (
           <div key={index}>
-            <ListItem alignItems="flex-start">
+            <ListItem alignItems="flex-start" sx={{ margin: "10px 0px" }}>
               <div className={styles.rank}>{index + 1}</div>
               <ListItemAvatar>
                 <Avatar
@@ -67,7 +93,7 @@ const FundingRanking = () => {
                 />
               </ListItemAvatar>
               <ListItemText
-                primary={item.title}
+                primary={cutLongTitle(item.title)}
                 secondary={
                   <div className={styles.detailInfo}>
                     <Typography
