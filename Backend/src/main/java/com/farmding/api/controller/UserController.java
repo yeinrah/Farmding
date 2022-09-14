@@ -49,22 +49,21 @@ public class UserController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	// 작업중 1
-	@GetMapping("/mypage/{user_id}")
-	@ApiOperation(value = "마이페이지", notes = "지갑주소를 통해 마이페이지를 조회한다.")
-	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
-			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
-	public ResponseEntity<?> showmypage(@PathVariable int user_id) throws Exception {
-		HashMap<String, Object> user = userService.findUser(user_id);
-		return new ResponseEntity<>(user, HttpStatus.OK);
-	}
+//	@GetMapping("/mypage/{user_id}")
+//	@ApiOperation(value = "마이페이지", notes = "지갑주소를 통해 마이페이지를 조회한다.")
+//	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
+//			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
+//	public ResponseEntity<?> showmypage(@PathVariable int user_id) throws Exception {
+//		HashMap<String, Object> user = userService.findUserFunding(user_id);
+//		return new ResponseEntity<>(user, HttpStatus.OK);
+//	}
 
 	@PatchMapping("/updateaddress/{user_id}")
 	@ApiOperation(value = "회원 배송지 수정", notes = "집주소와 우편번호를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "수정 실패") })
-	public ResponseEntity<?> updateaddress(@PathVariable int user_id, @Valid @RequestBody UpdateAddressReq updateAddressReq)
-			throws Exception {
+	public ResponseEntity<?> updateaddress(@PathVariable int user_id,
+			@Valid @RequestBody UpdateAddressReq updateAddressReq) throws Exception {
 		userService.updateAddress(user_id, updateAddressReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
@@ -93,8 +92,8 @@ public class UserController {
 	@ApiOperation(value = "회원 전화번호 수정", notes = "회원 전화번호를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "수정 실패") })
-	public ResponseEntity<?> updateuserphone(@PathVariable int user_id, @Valid @RequestBody UpdatePhoneReq updatePhoneReq)
-			throws Exception {
+	public ResponseEntity<?> updateuserphone(@PathVariable int user_id,
+			@Valid @RequestBody UpdatePhoneReq updatePhoneReq) throws Exception {
 		userService.updatePhone(user_id, updatePhoneReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
@@ -108,22 +107,22 @@ public class UserController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@GetMapping("/myproject")
+	@GetMapping("/mypage/myproject/{user_id}")
 	@ApiOperation(value = "회원 자신이 후원한 프로젝트", notes = "회원이 자신이 후원한 프로젝트를 조회한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
-	public ResponseEntity<?> showmyproject() throws Exception {
-
-		return new ResponseEntity<String>(HttpStatus.OK);
+	public ResponseEntity<?> showmyproject(@PathVariable int user_id) throws Exception {
+		HashMap<String, Object> user = userService.findUserFunding(user_id);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
-	@GetMapping("/mynft")
+	@GetMapping("/mypage/mynft/{user_id}")
 	@ApiOperation(value = "회원의 NFT", notes = "회원의 NFT 정보를 조회한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
-	public ResponseEntity<?> showNFT() throws Exception {
-
-		return new ResponseEntity<String>(HttpStatus.OK);
+	public ResponseEntity<?> showNFT(@PathVariable int user_id) throws Exception {
+		HashMap<String, Object> user = userService.findUserNFT(user_id);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 }

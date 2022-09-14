@@ -90,6 +90,7 @@ CREATE TABLE `IMAGES` (
 	`project_id` int NOT NULL,
 	`project_file_name` varchar(200) NOT NULL,
 	`project_file_path` varchar(200) NOT NULL,
+	`project_file_size` bigint NULL,
 	`is_main` boolean NULL
 );
 

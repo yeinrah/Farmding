@@ -1,6 +1,7 @@
 package com.farmding.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,11 @@ import com.farmding.api.request.UpdateImageReq;
 import com.farmding.api.request.UpdatePhoneReq;
 import com.farmding.api.request.UpdateProfileReq;
 import com.farmding.api.request.UserRegisterReq;
+import com.farmding.db.entity.Funding;
+import com.farmding.db.entity.Nft;
 import com.farmding.db.entity.User;
+import com.farmding.repository.FundingRepository;
+import com.farmding.repository.NftRepository;
 import com.farmding.repository.UserRepository;
 
 @Service
@@ -20,6 +25,19 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private FundingRepository fundingRepository;
+
+	@Autowired
+	private NftRepository nftRepository;
+
+	public UserService(UserRepository userRepository, FundingRepository fundingRepository,
+			NftRepository nftRepository) {
+		super();
+		this.userRepository = userRepository;
+		this.fundingRepository = fundingRepository;
+		this.nftRepository = nftRepository;
+	}
 //	// 닉네임 중복 검사
 //	@Transactional(readOnly = true)
 //	public void checkNicknameDuplication(UserRegisterReq userRegisterReq) {
@@ -64,21 +82,31 @@ public class UserService {
 		}
 	}
 
-	// 회원 정보 조회
+	// 회원 정보(펀딩프로젝트) 조회
 	@Transactional
-	public HashMap<String, Object> findUser(int id) throws Exception {
+	public HashMap<String, Object> findUserFunding(int id) throws Exception {
 		User user = userRepository.findOneByUserId(id);
-//			//내가 후원한 프로젝트
-//			List<Project> project = ProjectRepository.findByUserId(id);
-//			//내 NFT
-//			List<Nft> nft = NftRepository.findByUserId(id);
-
-		if (user == null) {
-			throw new IllegalStateException("회원 정보 조회에 실패했습니다.");
-		}
+		// 내가 후원한 펀딩프로젝트
+		List<Funding> funding = fundingRepository.findAllByUserId(id);
+//		if (user == null) {
+//			throw new IllegalStateException("회원 정보 조회에 실패했습니다.");
+//		}
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("user", user);
-//			result.put("project", project);
+		result.put("funding", funding);
+		return result;
+	}
+
+	// 회원 정보(NFT) 조회
+	@Transactional
+	public HashMap<String, Object> findUserNFT(int id) throws Exception {
+		User user = userRepository.findOneByUserId(id);
+		// 내 NFT
+		List<Nft> nft = nftRepository.findAllByOwnerWalletAddress(user.getWalletAddress());
+
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		result.put("user", user);
+		result.put("nft", nft);
 		return result;
 	}
 
