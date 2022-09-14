@@ -1,18 +1,29 @@
-import { Avatar, Typography } from "@mui/material";
+import { Avatar } from "@mui/material";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import styles from "./NFTItem.module.scss";
-const NFTItem = () => {
+interface NFTInfo {
+  userName: string;
+  nftName: string;
+  nftPrice: number;
+  image: string;
+}
+interface NFTitemProps {
+  NFTInfo: NFTInfo;
+}
+const NFTItem = ({ NFTInfo }: NFTitemProps) => {
   return (
     <div className={styles.NFTBox}>
       <div className={styles.userInfo}>
         <Avatar alt="k" sx={{ width: 24, height: 24 }} />
-        <span className={styles.userTitle}>wjdtj</span>
+        <span className={styles.userTitle}>{NFTInfo.userName}</span>
       </div>
-      <img className={styles.nft} alt="nft1" src="/Assets/NFT1.PNG" />
+      <img className={styles.nft} alt="nft1" src={NFTInfo.image} />
       <div className={styles.nftInfo}>
-        <Typography>Farmer#123</Typography>
-        <LocalAtmIcon />
-        <Typography>0.05</Typography>
+        <span className={styles.nftName}>{NFTInfo.nftName}</span>
+        <div className={styles.priceBlock}>
+          <LocalAtmIcon />
+          <span className={styles.nftPrice}>{NFTInfo.nftPrice}</span>
+        </div>
       </div>
     </div>
   );
