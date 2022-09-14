@@ -9,4 +9,7 @@ import com.farmding.db.entity.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 	User findOneByUserId(int id);
 
+	boolean existsByNickname(String nickname);
+	
+	boolean existsByWalletAddress(String walletAddress);
 }
