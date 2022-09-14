@@ -42,7 +42,7 @@ public class User {
 	private String address;
 	
 	@Column(name = "zip_code")
-	private int zipCode;
+	private String zipCode;
 	
 	@Column(name = "is_active")
 	private boolean isActive;

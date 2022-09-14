@@ -69,7 +69,7 @@ CREATE TABLE `USER` (
 	`phone_number` varchar(13) NOT NULL,
 	`profile_image` int	NOT NULL,
 	`address` varchar(100) NOT NULL,
-	`zip_code` int NOT NULL,
+	`zip_code` varchar(5) NOT NULL,
 	`is_active` boolean	NOT NULL,
     `user_pr` varchar(200) NULL
 );
