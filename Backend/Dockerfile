@@ -1,5 +1,5 @@
 FROM java:8
-WORKDIR /var/jenkins_home/workspace/S07P22A608/Backend
+WORKDIR /var/jenkins_home/workspace/Farmding/Backend
 EXPOSE 8080
 ARG JAR_FILE=build/libs/farmding-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
