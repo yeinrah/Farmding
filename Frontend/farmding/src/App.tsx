@@ -11,8 +11,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />}></Route>
-        <Route path="/a" element={<SearchBar />}></Route>
-        <Route path="/r" element={<FundingRanking />}></Route>
+      
       </Routes>
     </div>
   );

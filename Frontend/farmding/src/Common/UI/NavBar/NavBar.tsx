@@ -1,4 +1,6 @@
 import { useState } from "react";
+// component
+import LikeFundings from "./LikeFundings";
 // scss
 import styles from "./NavBar.module.scss";
 // router
@@ -13,14 +15,13 @@ import Menu from "@mui/material/Menu";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
 import MenuItem from "@mui/material/MenuItem";
+import Modal from '@mui/material/Modal';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { styled } from '@mui/material/styles';
 import Badge, { BadgeProps } from '@mui/material/Badge';
 
-import Modal from '@mui/material/Modal';
 
-// data
-import { modalStyle } from "../../data/Style";
+
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -36,14 +37,14 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 
 const NavBar = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-  const [profileImg, setProfileImg] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [profileImg, setProfileImg] = useState("");
   // likeCount default 0으로 바꾸기.
   const [likeCount, setlikeCount] = useState(10);
-
-  const [open, setOpen] = useState(false);
+  
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  
+ 
   
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
@@ -106,24 +107,13 @@ const NavBar = () => {
             </div>
           
             <div>
-              
               <Modal
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="modal-title"
                 // aria-describedby="modal-modal-description"
               >
-                <Box sx={{...modalStyle, width: 450, height: 450}}>
-                  <Typography id="modal-title" 
-                    variant="h5" component="h2"
-                    fontWeight= 'bold'
-                  >
-                    좋아요 누른 프로젝트
-                  </Typography>
-                  <Typography id="modal-projects" sx={{ mt: 2 }}>
-                    프로젝트 목록
-                  </Typography>
-                </Box>
+                <LikeFundings/>
               </Modal>
 
               <IconButton onClick={showLikeHandler} 
@@ -139,8 +129,8 @@ const NavBar = () => {
               <Box sx={{ flexGrow: 0 }}>
                 <div onClick={handleOpenUserMenu} className={styles.avatar}>
                   <Avatar 
-                    src="/Assets/grape.png"  
-                    // src={profileImg}  
+                    // src="/Assets/grape.png"  
+                    src={profileImg}  
                     sx={{ width: 53, height: 53, mr:4}}
                   />
 
