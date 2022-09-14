@@ -20,32 +20,48 @@ public class UserService {
 	@Autowired
 	private UserRepository userRepository;
 
-	// 닉네임 중복 검사
-	@Transactional(readOnly = true)
-	public void checkNicknameDuplication(UserRegisterReq userRegisterReq) {
-		boolean nicknameDuplicate = userRepository.existsByNickname(userRegisterReq.getNickname());
-		if (nicknameDuplicate) {
-			throw new IllegalStateException("이미 존재하는 닉네임입니다.");
-		}
-	}
-
-	// 지갑 주소 중복 검사
-	@Transactional(readOnly = true)
-	public void checkWalletAddressDuplication(UserRegisterReq userRegisterReq) {
-		boolean walletAddressDuplicate = userRepository.existsByWalletAddress(userRegisterReq.getWalletAddress());
-		if (walletAddressDuplicate) {
-			throw new IllegalStateException("이미 존재하는 지갑주소입니다.");
-		}
-	}
+//	// 닉네임 중복 검사
+//	@Transactional(readOnly = true)
+//	public void checkNicknameDuplication(UserRegisterReq userRegisterReq) {
+//		boolean nicknameDuplicate = userRepository.existsByNickname(userRegisterReq.getNickname());
+//		if (nicknameDuplicate) {
+//			throw new IllegalStateException("이미 존재하는 닉네임입니다.");
+//		}
+//	}
+//
+//	// 지갑 주소 중복 검사
+//	@Transactional(readOnly = true)
+//	public void checkWalletAddressDuplication(UserRegisterReq userRegisterReq) {
+//		boolean walletAddressDuplicate = userRepository.existsByWalletAddress(userRegisterReq.getWalletAddress());
+//		if (walletAddressDuplicate) {
+//			throw new IllegalStateException("이미 존재하는 지갑주소입니다.");
+//		}
+//	}
 
 	// 회원 등록
 	@Transactional
 	public User signup(UserRegisterReq userRegisterReq) throws Exception {
-		User user = User.builder().nickname(userRegisterReq.getNickname())
-				.walletAddress(userRegisterReq.getWalletAddress()).phoneNumber(userRegisterReq.getPhoneNumber())
-				.address(userRegisterReq.getAddress()).zipCode(userRegisterReq.getZipCode()).isActive(true).build();
-		return userRepository.save(user);
-
+		User user = userRepository.findOneByWalletAddress(userRegisterReq.getWalletAddress());
+		if (user == null) {
+			User userinfo = User.builder().nickname(userRegisterReq.getNickname())
+					.walletAddress(userRegisterReq.getWalletAddress()).phoneNumber(userRegisterReq.getPhoneNumber())
+					.address(userRegisterReq.getAddress()).zipCode(userRegisterReq.getZipCode()).isActive(true).build();
+			return userRepository.save(userinfo);
+		} else if (userRegisterReq.getWalletAddress().equals(user.getWalletAddress()) && user.isActive() == false) {
+			user.setNickname(userRegisterReq.getNickname());
+			user.setPhoneNumber(userRegisterReq.getPhoneNumber());
+			user.setAddress(userRegisterReq.getAddress());
+			user.setZipCode(userRegisterReq.getZipCode());
+			user.setActive(true);
+			return userRepository.save(user);
+		} else if (userRegisterReq.getWalletAddress().equals(user.getWalletAddress()) && user.isActive() == true) {
+			throw new IllegalStateException("이미 가입하셨습니다.");
+		} else {
+			User userinfo = User.builder().nickname(userRegisterReq.getNickname())
+					.walletAddress(userRegisterReq.getWalletAddress()).phoneNumber(userRegisterReq.getPhoneNumber())
+					.address(userRegisterReq.getAddress()).zipCode(userRegisterReq.getZipCode()).isActive(true).build();
+			return userRepository.save(userinfo);
+		}
 	}
 
 	// 회원 정보 조회
@@ -94,12 +110,17 @@ public class UserService {
 	@Transactional
 	public User updateProfile(Integer id, UpdateProfileReq updateProfileReq) throws Exception {
 		User user = userRepository.findOneByUserId(id);
-		user.setNickname(updateProfileReq.getNickname());
-		user.setUserPr(updateProfileReq.getUserPr());
-		return userRepository.save(user);
+		if (userRepository.existsByNickname(user.getNickname()) == false) {
+			user.setNickname(updateProfileReq.getNickname());
+			user.setUserPr(updateProfileReq.getUserPr());
+			return userRepository.save(user);
+		} else {
+			throw new IllegalStateException("이미 존재하는 닉네임입니다.");
+		}
+
 	}
-	
-	// 회원 탈퇴(회원 정보 상태 변경) 
+
+	// 회원 탈퇴(회원 정보 상태 변경)
 	@Transactional
 	public User updateUserState(Integer id) throws Exception {
 		User user = userRepository.findOneByUserId(id);

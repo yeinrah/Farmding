@@ -43,9 +43,9 @@ public class UserController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "등록 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "정보 중복(등록 불가)") })
 	public ResponseEntity<?> signup(@RequestBody UserRegisterReq userRegisterReq) throws Exception {
-		userService.checkWalletAddressDuplication(userRegisterReq);
-		userService.checkNicknameDuplication(userRegisterReq);
 		userService.signup(userRegisterReq);
+//		userService.checkWalletAddressDuplication(userRegisterReq);
+//		userService.checkNicknameDuplication(userRegisterReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
@@ -101,7 +101,7 @@ public class UserController {
 
 	@PatchMapping("/delete/{user_id}")
 	@ApiOperation(value = "회원 탈퇴", notes = "회원이 탈퇴된다.")
-	@ApiResponses({ @ApiResponse(code = 200, message = "등록 성공"), @ApiResponse(code = 400, message = "입력 오류"),
+	@ApiResponses({ @ApiResponse(code = 200, message = "탈퇴 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "탈퇴 실패"), @ApiResponse(code = 500, message = "탈퇴 실패") })
 	public ResponseEntity<?> withdraw(@PathVariable int user_id) throws Exception {
 		userService.updateUserState(user_id);
