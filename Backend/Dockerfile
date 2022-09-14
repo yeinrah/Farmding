@@ -1,4 +1,5 @@
 FROM openjdk:8
+RUN ./gradlew bootJar
 EXPOSE 8080
 ARG JAR_FILE=build/libs/farmding-0.0.1-SNAPSHOT.jar
 COPY ${JAR_FILE} app.jar
