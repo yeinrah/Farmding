@@ -1,9 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import NavBar from "./Common/UI/Navbar/NavBar";
-import SearchBar from "./Common/UI/SearchBar/SearchBar";
-import FundingRanking from "./Pages/Funding/FundingRanking/FundingRanking";
+import NavBar from "./Common/UI/NavBar/NavBar";
+import ProjectDetail from "./Pages/Funding/ProjectDetail/ProjectDetail";
 import Main from "./Pages/Main";
 import NFT from "./Pages/NFT/NFT";
 function App() {
