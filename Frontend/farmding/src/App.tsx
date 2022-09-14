@@ -11,6 +11,7 @@ function App() {
       <NavBar />
       <Routes>
         <Route path="/" element={<Main />}></Route>
+        <Route path="/project" element={<ProjectDetail/>}></Route>
         <Route path="/nft" element={<NFT />}></Route>
       </Routes>
     </div>

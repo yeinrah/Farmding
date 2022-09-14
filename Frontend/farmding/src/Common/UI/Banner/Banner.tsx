@@ -1,9 +1,17 @@
 import styles from "./Banner.module.scss";
+// interface eachFunding {
+//   title: string;
+//   farm: string;
+//   likeCnt: number;
+// }
 interface BannerProps {
   imgSrc: string;
   isMain: boolean;
+  // eachFunding: eachFunding;
 }
-const Banner = ({ imgSrc, isMain }: BannerProps) => {
+
+const Banner = ({ imgSrc, isMain}: BannerProps) => {
+  
   return (
     <>
       <div className={styles.wrap}>

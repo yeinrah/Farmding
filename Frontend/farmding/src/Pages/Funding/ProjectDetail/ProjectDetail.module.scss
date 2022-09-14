@@ -1,0 +1,19 @@
+.project_detail {
+  display: flex;
+  justify-content: center;
+  // justify-content: space-evenly;
+  gap: 40px;
+  margin: 20px 60px;
+  .project_detail_info {
+    width: 40%;
+    min-height: 50vh;
+    background: rgba(93, 174, 139, 0.2);
+    border-radius: 20px;
+  }
+  .project_detail_funding {
+    width: 30%;
+    min-height: 50vh;
+    background: rgba(93, 174, 139, 0.2);
+    border-radius: 20px;
+  }
+}
