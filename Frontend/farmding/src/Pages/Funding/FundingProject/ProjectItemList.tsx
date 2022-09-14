@@ -1,13 +1,14 @@
 import React from "react";
+import FundingRanking from "../FundingRanking/FundingRanking";
+import ProjectItem from "./ProjectItem";
 // scss
 import styles from "./ProjectItemList.module.scss";
 // mui
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
-import ProjectItem from "./ProjectItem";
-import FundingRanking from "../FundingRanking/FundingRanking";
 import { Padding } from "@mui/icons-material";
+
+import { cutLongTitle } from "../../../Common/functions/CutLongTitle";
 
 const ProjectItemList = () => {
   const projects = [
@@ -60,10 +61,7 @@ const ProjectItemList = () => {
       likeCnt: 1,
     },
   ];
-  const cutLongTitle = (title: string) => {
-    if (title.length > 12) return title.slice(0, 12) + "...";
-    return title;
-  };
+
   return (
     <div className={styles.projectMainBox}>
       <Grid container spacing={{ xs: 4, md: 5 }} className={styles.container}>
@@ -78,8 +76,10 @@ const ProjectItemList = () => {
                 image={`/Assets/${pjt.mainImg}`}
               />
               <CardContent>
-                <Typography gutterBottom variant="subtitle1" component="div">
-                  {cutLongTitle(pjt.title)}
+                <Typography gutterBottom variant="subtitle1" component="div"
+                  sx={{fontWeight: 800}}
+                >
+                  {cutLongTitle(pjt.title, 12)}
                 </Typography>
                 <div className={styles.heartArea}>
                   <Typography variant="body2" color="text.secondary">
