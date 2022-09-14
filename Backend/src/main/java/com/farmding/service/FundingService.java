@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.farmding.db.entity.Images;
 import com.farmding.db.entity.Like;
 import com.farmding.db.entity.Project;
+import com.farmding.repository.ImagesRepository;
 import com.farmding.repository.LikeRepository;
 import com.farmding.repository.ProjectRepository;
 
@@ -18,14 +20,16 @@ public class FundingService {
 	private ProjectRepository projectRepository;
 	@Autowired
 	private LikeRepository likeRepository;
+	@Autowired
+	private ImagesRepository imagesRepository;
 	
-	
-	public FundingService(ProjectRepository projectRepository, LikeRepository likeRepository) {
+	public FundingService(ProjectRepository projectRepository, LikeRepository likeRepository,
+			ImagesRepository imagesRepository) {
 		super();
 		this.projectRepository = projectRepository;
 		this.likeRepository = likeRepository;
+		this.imagesRepository = imagesRepository;
 	}
-	
 	@Transactional
 	public List<Project> ProjectList() throws Exception {
 		List<Project> list = projectRepository.findAll();
@@ -49,7 +53,7 @@ public class FundingService {
 		List<Integer> idData = new ArrayList<>();
 		for(int i=0; i<likeData.size();i++) {
 			idData.add(likeData.get(i).getProjectId());
-			System.out.println("getProjectId==> "+likeData.get(i).getProjectId());
+//			System.out.println("getProjectId==> "+likeData.get(i).getProjectId());
 		}
 		
 		List<Project> list = new ArrayList<Project>();
@@ -60,6 +64,15 @@ public class FundingService {
 		return list;
 	}
 	
+	@Transactional
+	public Project FindOneByProjectId(int projectId) throws Exception {
+		return projectRepository.findOneByProjectId(projectId);
+	}
 	
+	@Transactional
+	public List<Images> FindAllImageByProjectId(int projectId) throws Exception {
+		return imagesRepository.findAllByProjectId(projectId);
+	}
+
 	
 }

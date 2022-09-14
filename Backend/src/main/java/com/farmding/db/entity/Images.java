@@ -39,5 +39,5 @@ public class Images {
 	private long projectFileSize;
 	
 	@Column(name = "is_main", nullable = false)
-	private boolean isMain;
+	private Boolean isMain;
 }

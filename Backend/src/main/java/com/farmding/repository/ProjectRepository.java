@@ -13,7 +13,7 @@ public interface ProjectRepository extends JpaRepository<Project, String> {
 	List<Project> findAll();
 	
 	@Query(value = "select * from project where project_id=?1", nativeQuery = true)
-	Project findOneByProjectId(int userId);
+	Project findOneByProjectId(int projectId);
 	
 	@Query(value = "SELECT * FROM project order by funder_count desc limit 8", nativeQuery = true)
 	List<Project> findAllBestEight();

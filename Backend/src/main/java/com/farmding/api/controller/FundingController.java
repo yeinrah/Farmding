@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.farmding.api.response.FundingDetailRes;
+import com.farmding.db.entity.Images;
 import com.farmding.db.entity.Like;
 import com.farmding.db.entity.Project;
 import com.farmding.service.FundingService;
@@ -53,10 +55,25 @@ public class FundingController {
 	@ApiOperation(value = "like 데이터", notes = "like")
 	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
 		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
-	public ResponseEntity<?> zzimFunding(@PathVariable int userId) throws Exception {
+	public ResponseEntity<?> likeFunding(@PathVariable int userId) throws Exception {
 		List<Like> likeData = fundingService.likeFunding(userId);
 		List<Project> list = fundingService.getUserLikeProject(likeData);
 
 		return new ResponseEntity<List<Project>>(list,HttpStatus.OK);
+	}
+	
+	
+	@GetMapping("/funding/{projectId}")
+	@ApiOperation(value = "펀딩 상세 페이지", notes = "상세 페이지 구현에 필요한 프로젝트 데이터와 이미지 데이터를 보내준다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> fundingDetail(@PathVariable int projectId) throws Exception {
+		Project project = fundingService.FindOneByProjectId(projectId);
+		List<Images> list = fundingService.FindAllImageByProjectId(projectId);
+//		System.out.println(list.get(0).getImageId());
+//		System.out.println(list.get(1).getImageId());
+//		System.out.println(list.get(2).getImageId());
+		FundingDetailRes fundingRes = new FundingDetailRes(project, list);
+		return new ResponseEntity<FundingDetailRes>(fundingRes,HttpStatus.OK);
 	}
 }
