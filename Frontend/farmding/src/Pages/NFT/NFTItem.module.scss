@@ -1,0 +1,23 @@
+.NFTBox {
+  margin: 10px 20px;
+}
+.userInfo {
+  display: flex;
+  margin: 4px 8px;
+}
+
+.userTitle {
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  font-weight: bold;
+  line-height: 20px;
+}
+.nft {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.nftInfo {
+  display: flex;
+}

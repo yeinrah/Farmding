@@ -1,7 +1,10 @@
 import { styled } from "@mui/material/styles";
 import { alpha, InputBase } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-const SearchBar = () => {
+interface SearchBarProps {
+  placeHolder: string;
+}
+const SearchBar = ({ placeHolder }: SearchBarProps) => {
   const Search = styled("div")(({ theme }) => ({
     position: "relative",
     borderRadius: "500px",
@@ -53,7 +56,7 @@ const SearchBar = () => {
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
-          placeholder="어떤 과일이 드시고 싶으신가요?"
+          placeholder={placeHolder}
           inputProps={{ "aria-label": "search" }}
         />
       </Search>
