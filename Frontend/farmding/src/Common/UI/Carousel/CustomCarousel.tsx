@@ -12,8 +12,8 @@ const CustomCarousel = ({ imgArray }: CustomCarouselProps) => {
   return (
     <div className={styles.container}>
       <Carousel
-        height= "200px"
-        sx={{ width: "400px"}}
+        height= "280px"
+        sx={{ width: "450px"}}
       >
         {
           imgArray.map( (img, i) => 
