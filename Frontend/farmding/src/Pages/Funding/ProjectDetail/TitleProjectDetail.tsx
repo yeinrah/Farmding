@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styles from "./TitleProjectDetail.module.scss";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { mainGreen } from "../../../Common/data/Style";
 
 
 interface TitleProjectDetailProps {
@@ -26,7 +27,7 @@ const TitleProjectDetail = ({ mainImg, title, farm, likeCnt }: TitleProjectDetai
           <div className={styles.farm_like}>
             <h4>{farm}</h4>
             <div className={styles.heart_area}>
-              <FavoriteBorderIcon sx={{ color: "green" }} fontSize="large" />
+              <FavoriteBorderIcon sx={{ color: mainGreen }} fontSize="large" />
               <div className={styles.like}>{likeCnt}</div>
             </div>
 

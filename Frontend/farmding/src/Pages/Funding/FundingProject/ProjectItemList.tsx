@@ -1,6 +1,7 @@
 import React from "react";
 import FundingRanking from "../FundingRanking/FundingRanking";
 import ProjectItem from "./ProjectItem";
+import { useNavigate } from "react-router-dom";
 // scss
 import styles from "./ProjectItemList.module.scss";
 // mui
@@ -9,8 +10,14 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Padding } from "@mui/icons-material";
 
 import { cutLongTitle } from "../../../Common/functions/CutLongTitle";
+import { mainGreen } from "../../../Common/data/Style";
 
 const ProjectItemList = () => {
+  const navigate = useNavigate();
+  const moveDetailHandler = () => {
+    navigate('/project')
+  }
+
   const projects = [
     {
       title: "올해의 마지막 제주감귤",
@@ -68,7 +75,9 @@ const ProjectItemList = () => {
         {projects.map((pjt, idx) => (
           // <ProjectItem key={idx} title={pjt.title} />
           <Grid item xs={6} sm={8} md={3} key={idx}>
-            <Card sx={{ height: 270 }}>
+            <Card sx={{ height: 270}}
+              className={styles.card}
+              onClick={moveDetailHandler}>
               <CardMedia
                 component="img"
                 alt=""
@@ -86,7 +95,7 @@ const ProjectItemList = () => {
                     {pjt.farm}
                   </Typography>
                   <div>
-                    <FavoriteBorderIcon sx={{ color: "green" }} />
+                    <FavoriteBorderIcon sx={{ color: mainGreen }} />
                     <span className={styles.like}>{pjt.likeCnt}</span>
                   </div>
                 </div>

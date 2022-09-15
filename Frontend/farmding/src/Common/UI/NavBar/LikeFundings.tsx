@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // scss
 import styles from "./LikeFundings.module.scss";
@@ -59,6 +60,11 @@ const dummyLikeProjects = [
 
 const LikeFundingsModal = (props: ILikeFundingsProps) => {
   const [likeFundings, setLikeFundings] = useState([]);
+  const navigate = useNavigate();
+  const moveDetailHandler = () => {
+    navigate('/project')
+    // 모달 close 하는 함수 호출
+  }
 
   return (
     <Box sx={{...modalStyle, width: 530, height: 500, overflow: 'auto'}}>
@@ -75,7 +81,10 @@ const LikeFundingsModal = (props: ILikeFundingsProps) => {
         {dummyLikeProjects.map((pjt, idx) => (
           // <ProjectItem key={idx} title={pjt.title} />
           <Grid item xs={4} key={idx}>
-            <Card sx={{ height: 160 }}>
+            <Card sx={{ height: 160 }}
+              className={styles.card}
+              onClick={moveDetailHandler}
+            >
               <CardMedia
                 component="img"
                 alt=""

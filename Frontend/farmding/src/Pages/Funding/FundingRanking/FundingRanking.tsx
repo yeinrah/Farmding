@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import styles from "./FundingRanking.module.scss";
+import { mainGreen } from "../../../Common/data/Style";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 const FundingRanking = () => {
   const item = [
@@ -105,7 +106,7 @@ const FundingRanking = () => {
                       {item.owner}
                     </Typography>
                     <div className={styles.heartArea}>
-                      <FavoriteBorderIcon sx={{ color: "green" }} />
+                      <FavoriteBorderIcon sx={{ color: mainGreen }} />
                       <span className={styles.like}>{item.like}</span>
                     </div>
                   </div>
