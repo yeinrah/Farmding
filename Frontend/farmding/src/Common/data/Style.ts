@@ -13,5 +13,6 @@ export const modalStyle = {
   p: 4,
 };
 
-
+export const mainGreen = '#5DAE8B'
+export const mainPink = '#FF7676'
 
