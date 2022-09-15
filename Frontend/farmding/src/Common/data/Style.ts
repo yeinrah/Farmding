@@ -11,6 +11,7 @@ export const modalStyle = {
   borderRadius: 5,
   boxShadow: 24,
   p: 4,
+  overflow: 'auto'
 };
 
 export const mainGreen = '#5DAE8B'

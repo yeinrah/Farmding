@@ -1,30 +1,31 @@
 import { useState } from "react";
-import styles from "./FundingProjectDetail.module.scss";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import CustomCarousel from "../../../Common/UI/Carousel/CustomCarousel";
-import { Typography } from "@mui/material";
-import Button, { ButtonProps } from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
+import CustomBtn from "../../../Common/UI/CustomBtn/CustomBtn";
 import { mainGreen, mainPink } from "../../../Common/data/Style";
-
+// scss
+import styles from "./FundingProjectDetail.module.scss";
+// mui
+import { Typography } from "@mui/material";
+import Modal from '@mui/material/Modal';
+import ChooseReward from "../Reward/ChooseReward";
 
 interface FundingProjectDetailProps {
   fundingAmount: number;
   targetAmount: number;
   funders: number;
   remainingDays: number;
+  title: string; 
 }
-const CustomButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  color: theme.palette.getContrastText(mainGreen),
-  backgroundColor: mainGreen,
-  border: "3px solid #CAD6E2",
-  '&:hover': {
-    backgroundColor: "#3C7B60",
-  },
-}));
-const FundingProjectDetail = ({ fundingAmount, targetAmount, funders, remainingDays }: FundingProjectDetailProps) => {
-  
+
+const FundingProjectDetail = ({ fundingAmount, targetAmount, funders, remainingDays, title }: FundingProjectDetailProps) => {
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const fundingAchieveRate = parseFloat((fundingAmount / targetAmount).toFixed(2));
+  const chooseRewardModalHandler = () => {
+    handleOpen();
+
+  }
+  
   return (
     <>
       <div className={styles.funding_amount}>
@@ -74,20 +75,28 @@ const FundingProjectDetail = ({ fundingAmount, targetAmount, funders, remainingD
           {remainingDays}
         </Typography>
       </div>
-      {/* <Button variant="contained" 
-        sx={{bgcolor: mainGreen, width:"350px", height:"45px", 
-        fontSize:"20px", fontWeight:"bold",
-  
-        }}  
-      >펀딩하기</Button> */}
       <div className={styles.btn}>
-        <CustomButton variant="contained" 
+        <CustomBtn customSx={{width:"400px", height:"70px", 
+          fontSize:"30px", letterSpacing: 3}}
+          onclick={chooseRewardModalHandler}
+          btnWord={'펀딩하기'}
+        />
+        {/* <CustomButton variant="contained"
+          onClick={chooseRewardModalHandler}
           sx={{width:"400px", height:"70px", 
           fontSize:"30px", fontWeight:"bold", color: "white",
           borderRadius:"15px", letterSpacing: 3
           }}  
-        >펀딩하기</CustomButton>
+        >펀딩하기</CustomButton> */}
       </div>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-title"
+      >
+        <ChooseReward title={title}/>
+      </Modal>
+
       
     </>
   );

@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import { Card, CardContent, CardMedia, Grid } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 // data
-import { modalStyle } from "../../data/Style";
+import { mainGreen, modalStyle } from "../../data/Style";
 import { cutLongTitle } from "../../functions/CutLongTitle";
 
 export interface ILikeFundingsProps {
@@ -67,11 +67,11 @@ const LikeFundingsModal = (props: ILikeFundingsProps) => {
   }
 
   return (
-    <Box sx={{...modalStyle, width: 530, height: 500, overflow: 'auto'}}>
+    <Box sx={{...modalStyle, width: 530, height: 500}}>
       <Typography id="modal-title" 
         variant="h5" component="h2"
         fontWeight= 'bold'
-        color = '#5DAE8B'
+        color = {mainGreen}
         sx={{ mb: 3}}
       >
         좋아하는 프로젝트
@@ -104,7 +104,7 @@ const LikeFundingsModal = (props: ILikeFundingsProps) => {
                     {pjt.farm}
                   </Typography>
                   <div>
-                    <FavoriteBorderIcon sx={{ color: "green" }} 
+                    <FavoriteBorderIcon sx={{ color: mainGreen }} 
                       fontSize="small"
                     />
                     <span className={styles.like}>{pjt.likeCnt}</span>
