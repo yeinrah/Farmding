@@ -33,11 +33,9 @@ CREATE TABLE `FUNDING` (
 	`funding_id` int AUTO_INCREMENT	NOT NULL PRIMARY KEY,
 	`user_id` int NOT NULL,
 	`project_id` int NOT NULL,
+    `reward_id` int NOT NULL,
 	`funding_amount` double	NULL,
-	`funding_created_date` datetime	NULL,
-	`funding_status` varchar(20) NULL,
-	`funding_transaction_hash` varchar(200) NULL,
-	`funding_receiver_address` varchar(200)	NULL
+	`funding_transaction_hash` varchar(200) NULL
 );
 
 CREATE TABLE `PROJECT` (
@@ -50,6 +48,7 @@ CREATE TABLE `PROJECT` (
 	`farmer_name` varchar(10) NOT NULL,
 	`farmer_wallet_address`	varchar(200) NOT NULL,
 	`target_amount` double NOT NULL,
+    `current_amount` double NOT NULL,
 	`project_period` int NOT NULL,
 	`funding_status` varchar(20) NOT NULL,
 	`like_amount` int NOT NULL,
@@ -78,7 +77,6 @@ CREATE TABLE `USER` (
 CREATE TABLE `REWARD` (
 	`reward_id`	int NOT NULL  AUTO_INCREMENT PRIMARY KEY,
 	`project_id` int NOT NULL,
-	`user_id` int NOT NULL,
 	`reward_name` varchar(50) NULL,
 	`ssf_price` double NULL,
 	`amount` int NULL,
@@ -122,6 +120,13 @@ REFERENCES `PROJECT` (
 	`project_id`
 );
 
+ALTER TABLE `FUNDING` ADD CONSTRAINT `FK_REWARD_TO_FUNDING_1` FOREIGN KEY (
+	`reward_id`
+)
+REFERENCES `REWARD` (
+	`reward_id`
+);
+
 ALTER TABLE `LIKE` ADD CONSTRAINT `FK_USER_TO_LIKE_1` FOREIGN KEY (
 	`user_id`
 )
@@ -143,18 +148,9 @@ REFERENCES `PROJECT` (
 	`project_id`
 );
 
-ALTER TABLE `REWARD` ADD CONSTRAINT `FK_USER_TO_REWARD_1` FOREIGN KEY (
-	`user_id`
-)
-REFERENCES `USER` (
-	`user_id`
-);
-
 ALTER TABLE `IMAGES` ADD CONSTRAINT `FK_PROJECT_TO_IMAGES_1` FOREIGN KEY (
 	`project_id`
 )
 REFERENCES `PROJECT` (
 	`project_id`
 );
-
-select * from user;
