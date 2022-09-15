@@ -1,20 +1,16 @@
 package com.farmding.api.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.farmding.api.response.FundingDetailRes;
 import com.farmding.db.entity.Images;
 import com.farmding.db.entity.Like;
 import com.farmding.db.entity.Project;
@@ -28,6 +24,7 @@ import io.swagger.annotations.ApiResponses;
 @RequestMapping("/api/funding")
 public class FundingController {
 	
+	@Autowired
 	private FundingService fundingService;
 	
 	@Autowired

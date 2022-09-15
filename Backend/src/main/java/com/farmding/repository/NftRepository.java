@@ -8,5 +8,7 @@ import com.farmding.db.entity.Nft;
 
 public interface NftRepository extends JpaRepository<Nft, String> {
 	List<Nft> findAllByOwnerWalletAddress(String ownerWalletAddress);
+	
+	List<Nft> findAll();
 
 }
