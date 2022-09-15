@@ -29,9 +29,6 @@ public class Reward {
 	@Column(name = "project_id")
 	private int projectId;
 	
-	@Column(name = "user_id")
-	private int userId;
-	
 	@Column(name = "reward_name")
 	private String rewardName;
 	
