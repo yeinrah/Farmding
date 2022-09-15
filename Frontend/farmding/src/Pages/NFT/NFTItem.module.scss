@@ -1,5 +1,6 @@
 .NFTBox {
   margin: 10px 20px;
+  cursor: pointer;
 }
 .userInfo {
   display: flex;
@@ -20,4 +21,18 @@
 
 .nftInfo {
   display: flex;
+  justify-content: space-around;
+}
+
+.nftName {
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.priceBlock {
+  display: flex;
+}
+.nftPrice {
+  color: gray;
+  margin: 0 4px;
 }
