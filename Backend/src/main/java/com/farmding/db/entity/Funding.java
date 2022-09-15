@@ -32,18 +32,13 @@ public class Funding {
 	@Column(name = "project_id")
 	private int projectId;
 	
+	@Column(name = "reward_id")
+	private int rewardId;
+	
 	@Column(name = "funding_amount")
 	private double fundingAmount;
 	
-	@Column(name = "funding_created_date")
-	private String fundingCreatedDate;
-	
-	@Column(name = "funding_status")
-	private String fundingStatus;
-	
 	@Column(name = "funding_transaction_hash")
 	private String fundingTransactionHash;
-	
-	@Column(name = "funding_receiver_address")
-	private String fundingReceiverAddress;
+
 }

@@ -49,6 +49,9 @@ public class Project {
 	
 	@Column(name = "target_amount")
 	private double targetAmount;
+
+	@Column(name = "current_amount")
+	private double currentAmount;
 	
 	@Column(name = "project_period")
 	private int projectPeriod;
