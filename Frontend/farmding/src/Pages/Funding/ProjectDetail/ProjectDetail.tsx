@@ -8,7 +8,7 @@ import InfoProjectDetail from "./InfoProjectDetail";
 
 const ProjectDetail = () => {
   const projectDetailInfo = {
-    title: "올해의 마지막 영동포도입니다",
+    title: "올해의 마지막 영동포도",
     farm: "정서농장",
     images: ["grape.png", "farm1.jpg", "grape.png", "farm1.jpg", "grape.png", "farm1.jpg", "grape.png"],
     likeCnt: 5,
@@ -54,6 +54,7 @@ const ProjectDetail = () => {
             targetAmount= {projectDetailInfo.targetAmount}
             funders= {projectDetailInfo.funders}
             remainingDays={projectDetailInfo.remainingDays}
+            title={projectDetailInfo.title}
           />
 
         </div>
