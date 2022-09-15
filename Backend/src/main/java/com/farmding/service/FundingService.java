@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.farmding.db.entity.Images;
 import com.farmding.db.entity.Like;
 import com.farmding.db.entity.Project;
+import com.farmding.db.entity.Reward;
 import com.farmding.repository.ImagesRepository;
 import com.farmding.repository.LikeRepository;
 import com.farmding.repository.ProjectRepository;
+import com.farmding.repository.RewardRepository;
 
 @Service
 public class FundingService {
@@ -22,13 +24,17 @@ public class FundingService {
 	private LikeRepository likeRepository;
 	@Autowired
 	private ImagesRepository imagesRepository;
+	@Autowired
+	private RewardRepository rewardRepository;
+	
 	
 	public FundingService(ProjectRepository projectRepository, LikeRepository likeRepository,
-			ImagesRepository imagesRepository) {
+			ImagesRepository imagesRepository, RewardRepository rewardRepository) {
 		super();
 		this.projectRepository = projectRepository;
 		this.likeRepository = likeRepository;
 		this.imagesRepository = imagesRepository;
+		this.rewardRepository = rewardRepository;
 	}
 	@Transactional
 	public List<Project> ProjectList() throws Exception {
@@ -72,6 +78,11 @@ public class FundingService {
 	@Transactional
 	public List<Images> FindAllImageByProjectId(int projectId) throws Exception {
 		return imagesRepository.findAllByProjectId(projectId);
+	}
+	
+	@Transactional
+	public List<Reward> findSsfReward(int projectId) throws Exception {
+		return rewardRepository.findAllByProjectId(projectId);
 	}
 
 	
