@@ -22,19 +22,19 @@ CREATE TABLE `DEALS` (
 	`nft_id` int NOT NULL,
 	`deals_address`	varchar(200) NOT NULL,
 	`deals_created_date` datetime NOT NULL,
-	`deals_ended_date`	datetime NOT NULL,
-	`deals_status`	boolean	NOT NULL,
-	`deals_token_address`	varchar(200) NOT NULL,
-	`seller_wallet_address`	varchar(200) NOT NULL,
-	`buyer_wallet_address`	varchar(200) NOT NULL
+	`deals_ended_date` datetime NOT NULL,
+	`deals_status` boolean NOT NULL,
+	`deals_token_address` varchar(200) NOT NULL,
+	`seller_wallet_address` varchar(200) NOT NULL,
+	`buyer_wallet_address` varchar(200) NOT NULL
 );
 
 CREATE TABLE `FUNDING` (
-	`funding_id` int AUTO_INCREMENT	NOT NULL PRIMARY KEY,
+	`funding_id` int AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	`user_id` int NOT NULL,
 	`project_id` int NOT NULL,
     `reward_id` int NOT NULL,
-	`funding_amount` double	NULL,
+	`funding_amount` double NULL,
 	`funding_transaction_hash` varchar(200) NULL
 );
 
@@ -67,10 +67,10 @@ CREATE TABLE `USER` (
 	`nickname` varchar(50) NOT NULL,
 	`wallet_address` varchar(200) NOT NULL,
 	`phone_number` varchar(13) NOT NULL,
-	`profile_image` int	NOT NULL,
+	`profile_image` int NOT NULL,
 	`address` varchar(100) NOT NULL,
 	`zip_code` varchar(5) NOT NULL,
-	`is_active` boolean	NOT NULL,
+	`is_active` boolean NOT NULL,
     `user_pr` varchar(200) NULL
 );
 
