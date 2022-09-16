@@ -47,22 +47,44 @@ const MyProject = () => {
           </CardContent>
         </Card>
         <Card
-          sx={{ margin: "0 5rem", width: "900px", backgroundColor: "gray" }}
+          sx={{ margin: "0 5rem", width: "900px", backgroundColor: "#DDDDDD" }}
         >
-          <Box sx={{ display: "flex", margin: "1rem 0" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              margin: "1rem 0",
+            }}
+          >
             <Typography sx={{ marginLeft: "10px" }}>총 펀딩 금액</Typography>
-            <Typography sx={{ margin: "0rem 0 0rem 60%" }}>250 SSF</Typography>
+            <Typography
+              sx={{
+                margin: "0rem 1rem 0rem 0",
+                fontWeight: "bold",
+                fontSize: "25px",
+              }}
+            >
+              250 SSF
+            </Typography>
           </Box>
-          <Box sx={{ display: "flex", margin: "1rem 0" }}>
-            <Typography sx={{ marginLeft: "10px" }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              margin: "10% 0",
+            }}
+          >
+            <Typography
+              sx={{ marginLeft: "10px", fontWeight: "bold", fontSize: "25px" }}
+            >
               제일 맛있는 영동포도 4kg
             </Typography>
-            <Typography sx={{ margin: "0rem 0 0rem 40%" }}>
+            <Typography sx={{ margin: "0rem 1rem 0rem 0" }}>
               수량: 1개
             </Typography>
           </Box>
-          <Box sx={{ margin: "3rem 0 1rem 0" }}>
-            <Typography sx={{ marginLeft: "10px" }}>배송비 10SSF</Typography>
+          <Box sx={{ margin: "10% 0 1rem 0" }}>
+            <Typography sx={{ marginLeft: "10px" }}>배송비: 10 SSF</Typography>
             <Typography sx={{ marginLeft: "10px" }}>
               배송예정일: 2022년 9월 16일 예정
             </Typography>
