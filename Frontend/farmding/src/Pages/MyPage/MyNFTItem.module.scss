@@ -1,6 +1,5 @@
 .NFTBox {
   margin: 10px 20px;
-  cursor: pointer;
 }
 .userInfo {
   display: flex;
@@ -31,6 +30,7 @@
 
 .priceBlock {
   display: flex;
+  cursor: pointer;
 }
 .nftPrice {
   color: gray;
