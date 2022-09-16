@@ -46,8 +46,7 @@ const NavBar = () => {
   
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
- 
-  
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   }; 
@@ -86,9 +85,9 @@ const NavBar = () => {
               <Link to="/">
                 <img src="/Assets/farmer_1.png" alt="" className={styles.navbar__logo}/>
               </Link>
-              {/* <Link to="/project">
-                <h5>디테일</h5>
-              </Link> */}
+              <Link to="/test-metamask">
+                <h5>메타마스크 연결</h5>
+              </Link>
               <Typography
                 // variant="h5"
                 // noWrap
