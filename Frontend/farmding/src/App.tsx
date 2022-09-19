@@ -1,12 +1,17 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import NavBar from "./Common/UI/Navbar/NavBar";
+import NavBar from "./Common/UI/NavBar/NavBar";
 import ProjectDetail from "./Pages/Funding/ProjectDetail/ProjectDetail";
 import Main from "./Pages/Main";
 import MyPage from "./Pages/MyPage/Mypage";
 import NFT from "./Pages/NFT/NFT";
+import Test from "./Test";
+
+
 function App() {
+
+
   return (
     <div className="app">
       <NavBar />
@@ -15,6 +20,7 @@ function App() {
         <Route path="/project" element={<ProjectDetail />}></Route>
         <Route path="/nft" element={<NFT />}></Route>
         <Route path="/mypage" element={<MyPage />}></Route>
+        <Route path="/test-metamask" element={<Test />}></Route>
       </Routes>
     </div>
   );

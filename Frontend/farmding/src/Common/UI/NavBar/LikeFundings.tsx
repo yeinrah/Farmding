@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // scss
 import styles from "./LikeFundings.module.scss";
@@ -11,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import { Card, CardContent, CardMedia, Grid } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 // data
-import { modalStyle } from "../../data/Style";
+import { mainGreen, modalStyle } from "../../data/Style";
 import { cutLongTitle } from "../../functions/CutLongTitle";
 
 export interface ILikeFundingsProps {
@@ -59,13 +60,18 @@ const dummyLikeProjects = [
 
 const LikeFundingsModal = (props: ILikeFundingsProps) => {
   const [likeFundings, setLikeFundings] = useState([]);
+  const navigate = useNavigate();
+  const moveDetailHandler = () => {
+    navigate('/project')
+    // 모달 close 하는 함수 호출
+  }
 
   return (
-    <Box sx={{...modalStyle, width: 530, height: 500, overflow: 'auto'}}>
+    <Box sx={{...modalStyle, width: 530, height: 500}}>
       <Typography id="modal-title" 
         variant="h5" component="h2"
         fontWeight= 'bold'
-        color = '#5DAE8B'
+        color = {mainGreen}
         sx={{ mb: 3}}
       >
         좋아하는 프로젝트
@@ -75,7 +81,10 @@ const LikeFundingsModal = (props: ILikeFundingsProps) => {
         {dummyLikeProjects.map((pjt, idx) => (
           // <ProjectItem key={idx} title={pjt.title} />
           <Grid item xs={4} key={idx}>
-            <Card sx={{ height: 160 }}>
+            <Card sx={{ height: 160 }}
+              className={styles.card}
+              onClick={moveDetailHandler}
+            >
               <CardMedia
                 component="img"
                 alt=""
@@ -95,7 +104,7 @@ const LikeFundingsModal = (props: ILikeFundingsProps) => {
                     {pjt.farm}
                   </Typography>
                   <div>
-                    <FavoriteBorderIcon sx={{ color: "green" }} 
+                    <FavoriteBorderIcon sx={{ color: mainGreen }} 
                       fontSize="small"
                     />
                     <span className={styles.like}>{pjt.likeCnt}</span>

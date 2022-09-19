@@ -1,6 +1,8 @@
 import { useState } from "react";
 // component
 import LikeFundings from "./LikeFundings";
+
+import { mainGreen, mainPink } from "../../data/Style";
 // scss
 import styles from "./NavBar.module.scss";
 // router
@@ -28,7 +30,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
     right: -3,
     top: 13,
     border: `2px solid ${theme.palette.background.paper}`,
-    backgroundColor: '#FF7676',
+    backgroundColor: mainPink,
     color: 'white',
     padding: '9px 6px',
   },
@@ -44,8 +46,7 @@ const NavBar = () => {
   
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
- 
-  
+
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   }; 
@@ -84,8 +85,8 @@ const NavBar = () => {
               <Link to="/">
                 <img src="/Assets/farmer_1.png" alt="" className={styles.navbar__logo}/>
               </Link>
-              <Link to="/project">
-                <h5>디테일</h5>
+              <Link to="/test-metamask">
+                <h5>메타마스크 연결</h5>
               </Link>
               <Typography
                 // variant="h5"
@@ -100,7 +101,7 @@ const NavBar = () => {
                   fontSize: "20px",
                   fontWeight: 600,
                   letterSpacing: ".2rem",
-                  color: "#5DAE8B",
+                  color: mainGreen,
                   textDecoration: "none",
                   my: 'auto'
                 }}
@@ -126,7 +127,7 @@ const NavBar = () => {
                   // badgeContent={4} 
                   badgeContent={likeCount} 
                 >
-                  <FavoriteIcon sx={{ color: "#5DAE8B", width:"40px", height:"40px" }}  />
+                  <FavoriteIcon sx={{ color: mainGreen, width:"40px", height:"40px" }}  />
                 </StyledBadge>
               </IconButton>
               <Box sx={{ flexGrow: 0 }}>
