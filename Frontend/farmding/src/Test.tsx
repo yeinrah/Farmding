@@ -1,11 +1,22 @@
 
 // web3
 import { useWeb3React } from '@web3-react/core';
+import { formatEther } from 'ethers/lib/utils';
+import { useEffect, useState } from 'react';
 import { injected } from "./lib/connectors";
 
+// import web3 from 'web3';
+
+
+export interface IResult {
+  _hex: string;
+  _isBigNumber: boolean;
+}
+
 function Test() {
-  const { chainId, account, active, activate, deactivate} = useWeb3React();
-  const handdleConnect = async () => {
+  const { chainId, account, library, active, activate, deactivate} = useWeb3React();
+  const [balance, setBalance] = useState('');
+  const handleConnect = async () => {
     try {
       await activate(injected, (error) => {
 				// 크롬 익스텐션 없을 경우 오류 핸들링
@@ -29,15 +40,40 @@ function Test() {
     //   }
     // });
   }
+  useEffect(() => {
+    // (async function () {
+    //   const balance_1 = await web3?.eth.getBalance(account);
+    //   if (balance_1 !== undefined) {
+    //     setBalance(Number(balance_1) / 10 ** 18);
+    //   }
+    // })();
+
+		if (account) {
+			library
+				?.getBalance(account)
+				.then(
+          (result: IResult) => {
+            setBalance(result._hex)
+            console.log(result)
+          }
+        );
+		}
+	}, [account, library]);
 
   return (
     <div>
       <h1>my wallet</h1>
       <div>
         <p>Account: {account}</p>
+        {/* <p>balance:{balance}</p> */}
+        
         <p>ChainId: {chainId}</p>
+        <p>잔고: {balance && account && Number(formatEther(balance)).toFixed(4)}
+							ETH
+        </p>
+
       </div>
-      <button type="button" onClick={handdleConnect}>{active ? 'disconnect':'connect'}</button>
+      <button type="button" onClick={handleConnect}>{active ? 'disconnect':'connect'}</button>
       {/* { active ? 
         <div>
           <p>Account: {account}</p>

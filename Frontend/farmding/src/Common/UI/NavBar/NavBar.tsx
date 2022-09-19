@@ -6,7 +6,7 @@ import { mainGreen, mainPink } from "../../data/Style";
 // scss
 import styles from "./NavBar.module.scss";
 // router
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // mui
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -21,6 +21,8 @@ import Modal from '@mui/material/Modal';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { styled } from '@mui/material/styles';
 import Badge, { BadgeProps } from '@mui/material/Badge';
+import { useRecoilState } from "recoil";
+import { loginState } from "../../../Recoil/atoms/auth";
 
 
 
@@ -38,11 +40,13 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 
 
 const NavBar = () => {
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const [profileImg, setProfileImg] = useState("");
   // likeCount default 0으로 바꾸기.
   const [likeCount, setlikeCount] = useState(10);
+  const navigate = useNavigate();
   
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -60,11 +64,8 @@ const NavBar = () => {
   };
   const logoutHandler = () => {
     handleCloseUserMenu()
-    // dispatch(logout())
-    //   .unwrap()
-    //   .then(() => {
-    //     document.location.href = '/';
-    //   });
+    setIsLogin(false);
+    navigate('/landing')
   };
 
 
@@ -87,6 +88,9 @@ const NavBar = () => {
               </Link>
               <Link to="/test-metamask">
                 <h5>메타마스크 연결</h5>
+              </Link>
+              <Link to="/landing">
+                <h5>시작페이지</h5>
               </Link>
               <Typography
                 // variant="h5"
