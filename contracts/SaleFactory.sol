@@ -4,6 +4,8 @@ pragma solidity ^0.8.4;
 import "./access/Ownable.sol";
 import "./token/ERC20/ERC20.sol";
 import "./token/ERC721/ERC721.sol";
+import "./SsafyNFT.sol";
+import "./SsafyToken.sol";
 
 /**
  * PJT Ⅲ - Req.1-SC1 SaleFactory 구현
@@ -96,9 +98,9 @@ contract Sale {
         erc721Constract = IERC721(_nftAddress);
     }
 
-    function bid(uint256 bid_amount) public {
-        // TODO
-    }
+    // function bid(uint256 bid_amount) public {
+    //     // TODO
+    // }
 
     function purchase() public {
         // TODO 
