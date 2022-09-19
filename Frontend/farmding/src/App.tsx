@@ -8,6 +8,7 @@ import NavBar from "./Common/UI/NavBar/NavBar";
 import ProjectDetail from "./Pages/Funding/ProjectDetail/ProjectDetail";
 import Landing from "./Pages/Landing/Landing";
 import Main from "./Pages/Main";
+import MyPage from "./Pages/MyPage/Mypage";
 import NFT from "./Pages/NFT/NFT";
 import { loginState } from "./Recoil/atoms/auth";
 import Test from "./Test";
@@ -53,9 +54,19 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path="/mypage"
+          element={
+            <PrivateRoute>
+              <MyPage />
+            </PrivateRoute>
+          }
+        />
+        {/* <Route path="/mypage" element={<MyPage />}></Route> */}
         {/* <Route path="/" element={<Main />}></Route> */}
         {/* <Route path="/project" element={<ProjectDetail/>}></Route> */}
         {/* <Route path="/nft" element={<NFT />}></Route> */}
+
         <Route path="/test-metamask" element={<Test />}></Route>
 
         {/* 404 만들기! */}
