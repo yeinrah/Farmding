@@ -6,7 +6,7 @@ import { mainGreen, mainPink } from "../../data/Style";
 // scss
 import styles from "./NavBar.module.scss";
 // router
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 // mui
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -65,8 +65,16 @@ const NavBar = () => {
   const logoutHandler = () => {
     handleCloseUserMenu()
     setIsLogin(false);
-    navigate('/landing')
+    // navigate('/landing')
   };
+  
+  const goMyPageHandler = () => {
+    handleCloseUserMenu()
+    console.log('mypage가기')
+    // return <Navigate to="/mypage" />
+    navigate('/mypage');
+    
+  }
 
 
   return (
@@ -161,15 +169,15 @@ const NavBar = () => {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  <Link 
+                  <MenuItem onClick={goMyPageHandler} sx={{ px: 3, py: 2 }}>
+                    <Typography textAlign="center">MY PAGE</Typography>
+                  </MenuItem>
+                  {/* <Link 
                   // to={`/profile/${currentUser.id}`} 
                   to="#" 
                   className={styles.link}
                   >
-                    <MenuItem onClick={handleCloseUserMenu} sx={{ px: 3, py: 2 }}>
-                      <Typography textAlign="center">MY PAGE</Typography>
-                    </MenuItem>
-                  </Link>
+                  </Link> */}
                   <MenuItem onClick={logoutHandler} sx={{ px: 3, py: 2 }}>
                     <Typography textAlign="center">LOGOUT</Typography>
                   </MenuItem>

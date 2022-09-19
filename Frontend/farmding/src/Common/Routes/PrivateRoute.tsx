@@ -47,7 +47,7 @@ import { loginState } from "../../Recoil/atoms/auth";
     const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
 
     const { pathname } = useLocation();
-    console.log({ pathname });
+    console.log({ pathname }, 'ㅇㅇ');
     
     return isLogin ? (
       children
