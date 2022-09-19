@@ -19,7 +19,7 @@ function App() {
 
   return (
     <div className="app">
-      <NavBar />
+      {isLogin && <NavBar />}
       <Routes>
         {/* <Route path="/landing" element={<Landing />}></Route> */}
         <Route
