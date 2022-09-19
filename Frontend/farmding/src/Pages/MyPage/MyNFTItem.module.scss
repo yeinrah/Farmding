@@ -1,0 +1,38 @@
+.NFTBox {
+  margin: 10px 20px;
+}
+.userInfo {
+  display: flex;
+  margin: 4px 8px;
+}
+
+.userTitle {
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  font-weight: bold;
+  line-height: 20px;
+}
+.nft {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.nftInfo {
+  display: flex;
+  justify-content: space-around;
+}
+
+.nftName {
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+.priceBlock {
+  display: flex;
+  cursor: pointer;
+}
+.nftPrice {
+  color: gray;
+  margin: 0 4px;
+}
