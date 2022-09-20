@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.13;
+pragma solidity >=0.7.0 <0.9.0;
 
 interface IERC20 {
     function transfer(address, uint) external returns (bool);
@@ -111,7 +111,7 @@ contract Funding {
         Campaign storage campaign = campaigns[_id];
         require(campaign.creator == msg.sender, "not creator");
         require(block.timestamp > campaign.endAt, "not ended");
-        require(campaign.pledged >= campaign.goal, "pledged < goal");
+        // require(campaign.pledged >= campaign.goal, "pledged < goal");
         require(!campaign.claimed, "claimed");
 
         campaign.claimed = true;
