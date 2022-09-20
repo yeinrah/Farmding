@@ -30,7 +30,7 @@ contract SaleFactory is Ownable {
      */
     function createSale(
         uint256 itemId,
-        uint256 minPrice,
+        // uint256 minPrice,
         uint256 purchasePrice,
         uint256 startTime,
         uint256 endTime,
@@ -55,7 +55,7 @@ contract Sale {
     address admin;
     uint256 public saleStartTime;
     uint256 public saleEndTime;
-    uint256 public minPrice;
+    // uint256 public minPrice;
     uint256 public purchasePrice;
     uint256 public tokenId;
     address public currencyAddress;
@@ -76,16 +76,18 @@ contract Sale {
         address _admin,
         address _seller,
         uint256 _tokenId,
-        uint256 _minPrice,
+        // uint256 _minPrice,
         uint256 _purchasePrice,
         uint256 startTime,
         uint256 endTime,
         address _currencyAddress,
         address _nftAddress
     ) {
-        require(_minPrice > 0);
+        // require(_minPrice > 0);
+        require(_purchasePrice > 0);
+        
         tokenId = _tokenId;
-        minPrice = _minPrice;
+        // minPrice = _minPrice;
         purchasePrice = _purchasePrice;
         seller = _seller;
         admin = _admin;
@@ -124,7 +126,7 @@ contract Sale {
         returns (
             uint256,
             uint256,
-            uint256,
+            // uint256,
             uint256,
             uint256,
             // address,
@@ -136,7 +138,7 @@ contract Sale {
         return (
             saleStartTime,
             saleEndTime,
-            minPrice,
+            // minPrice,
             purchasePrice,
             tokenId,
             // highestBidder,
