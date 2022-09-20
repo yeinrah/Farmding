@@ -13,7 +13,6 @@ import NFT from "./Pages/NFT/NFT";
 import { loginState } from "./Recoil/atoms/auth";
 import Test from "./Test";
 
-
 function App() {
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
 
@@ -42,7 +41,7 @@ function App() {
           path="/project"
           element={
             <PrivateRoute>
-              <ProjectDetail/>
+              <ProjectDetail />
             </PrivateRoute>
           }
         />
