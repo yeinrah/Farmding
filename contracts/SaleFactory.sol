@@ -62,9 +62,9 @@ contract Sale {
     address public nftAddress;
     bool public ended;
 
-    // 현재 최고 입찰 상태
-    address public highestBidder;
-    uint256 public highestBid;
+    // // 현재 최고 입찰 상태
+    // address public highestBidder;
+    // uint256 public highestBid;
 
     IERC20 public erc20Contract;
     IERC721 public erc721Constract;
@@ -127,8 +127,8 @@ contract Sale {
             uint256,
             uint256,
             uint256,
-            address,
-            uint256,
+            // address,
+            // uint256,
             address,
             address
         )
@@ -139,16 +139,16 @@ contract Sale {
             minPrice,
             purchasePrice,
             tokenId,
-            highestBidder,
-            highestBid,
+            // highestBidder,
+            // highestBid,
             currencyAddress,
             nftAddress
         );
     }
 
-    function getHighestBid() public view returns(uint256){
-        return highestBid;
-    }
+    // function getHighestBid() public view returns(uint256){
+    //     return highestBid;
+    // }
 
     // internal 혹은 private 함수 선언시 아래와 같이 _로 시작하도록 네이밍합니다.
     function _end() internal {
