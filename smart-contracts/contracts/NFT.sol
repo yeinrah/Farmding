@@ -26,8 +26,8 @@ contract NFT is ERC721Enumerable, Ownable {
   uint256 public cost = 0.05 ether;
   uint256 public maxSupply = 10000;
   uint256 public maxMintAmount = 20;
+  uint256 public count = 1;
   bool public paused = false;
-  mapping(address => bool) public whitelisted;
 
   constructor(
     string memory _name,
@@ -35,7 +35,7 @@ contract NFT is ERC721Enumerable, Ownable {
     string memory _initBaseURI
   ) ERC721(_name, _symbol) {
     setBaseURI(_initBaseURI);
-    mint(msg.sender, 1);
+    mint(msg.sender, count);
   }
 
   // internal
@@ -43,23 +43,27 @@ contract NFT is ERC721Enumerable, Ownable {
     return baseURI;
   }
 
+  //mint함수를 사용할 때
+  function useMint() public payable {
+    mint(msg.sender, count);
+  }
+
   // public
   function mint(address _to, uint256 _mintAmount) public payable {
     uint256 supply = totalSupply();
     require(!paused);
     require(_mintAmount > 0);
-    require(_mintAmount <= maxMintAmount);
+    require(_mintAmount <= maxMintAmount,"err");
     require(supply + _mintAmount <= maxSupply);
 
     if (msg.sender != owner()) {
-        if(whitelisted[msg.sender] != true) {
           require(msg.value >= cost * _mintAmount);
-        }
     }
 
     for (uint256 i = 1; i <= _mintAmount; i++) {
       _safeMint(_to, supply + i);
     }
+    count++;
   }
 
   function walletOfOwner(address _owner)
@@ -114,13 +118,6 @@ contract NFT is ERC721Enumerable, Ownable {
     paused = _state;
   }
  
- function whitelistUser(address _user) public onlyOwner {
-    whitelisted[_user] = true;
-  }
- 
-  function removeWhitelistUser(address _user) public onlyOwner {
-    whitelisted[_user] = false;
-  }
 
   function withdraw() public payable onlyOwner {
     // This will pay HashLips 5% of the initial sale.
