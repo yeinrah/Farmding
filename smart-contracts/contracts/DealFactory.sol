@@ -134,15 +134,23 @@ contract Deal {
     }
 
     function purchase() public {
-        // TODO 
+        // TODO
+        address _puchaser = msg.sender;
     }
 
     function confirmItem() public {
         // TODO 
     }
     
-    function cancelDeals() public {
-        // TODO
+    function cancelDeals() public returns(bool) {
+        address request = msg.sender;
+        require(request == admin || request == seller, "Do not allowed permission");
+
+        erc721Constract.transferFrom(address(this), seller, tokenId);
+        _end();
+
+        emit DealEnded(address(this), address(0), tokenId,0);
+        return true;
     }
 
     function getTimeLeft() public view returns (int256) {
@@ -155,11 +163,8 @@ contract Deal {
         returns (
             uint256,
             uint256,
-            // uint256,
             uint256,
             uint256,
-            // address,
-            // uint256,
             address,
             address
         )
