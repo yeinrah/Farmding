@@ -142,16 +142,16 @@ contract Deal {
         // TODO 
     }
     
-    function cancelDeals() public returns(bool) {
-        address request = msg.sender;
-        require(request == admin || request == seller, "Do not allowed permission");
+    // function cancelDeals() public returns(bool) {
+    //     address request = msg.sender;
+    //     require(request == admin || request == seller, "Do not allowed permission");
 
-        erc721Constract.transferFrom(address(this), seller, tokenId);
-        _end();
+    //     erc721Constract.transferFrom(address(this), seller, tokenId);
+    //     _end();
 
-        emit DealEnded(address(this), address(0), tokenId,0);
-        return true;
-    }
+    //     emit DealEnded(address(this), address(0), tokenId,0);
+    //     return true;
+    // }
 
     function getTimeLeft() public view returns (int256) {
         return (int256)(dealEndTime - block.timestamp);
