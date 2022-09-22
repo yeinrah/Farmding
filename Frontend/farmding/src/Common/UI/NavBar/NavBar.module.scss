@@ -1,0 +1,29 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  > div {
+    display: flex;
+
+  }
+  
+}
+.navbar__logo {
+  width: 80px;
+  height: 60px;
+}
+
+.avatar {
+  cursor: pointer;
+  &:hover {
+    transform: translateY(10px);
+    transition: 0.5s;
+
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+}
+
+

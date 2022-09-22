@@ -1,0 +1,160 @@
+// import { useEffect, useState } from "react";
+// import "./App.css";
+// import Goods from "./components/Goods/Goods";
+// import HomeMenu from "./components/HomeMenu/HomeMenu";
+// import HomeTitle from "./components/HomeTitle/HomeTitle";
+// import Navbar from "./components/Navbar/Navbar";
+
+// function App() {
+//   //menu state
+//   const [menu, setMenu] = useState<string>("전체");
+
+//   //scroll state
+//   const [num, setNum] = useState(0);
+//   const [prev, setPrevNum] = useState(0);
+//   const [scrollState, setScrollState] = useState(true);
+
+//   const getMenu: (menu: string) => void = (menu: string) => {
+//     setMenu(menu);
+//     console.log(menu);
+//   };
+
+//   //이전 스크롤 위치와 현재 스크롤 위치 비교
+//   const handleScroll = () => {
+//     setNum((prev) => {
+//       setPrevNum(prev);
+//       return window.scrollY;
+//     });
+//   };
+
+//   //스크롤의 방향을 정하는 side
+//   useEffect(() => {
+//     if (prev >= num) setScrollState(true);
+//     else setScrollState(false);
+//   }, [num]);
+
+//   //스크롤 이벤트 감시
+//   useEffect(() => {
+//     window.addEventListener("scroll", handleScroll);
+//     return () => {
+//       window.removeEventListener("scroll", handleScroll); //clean up
+//     };
+//   }, []);
+//   return (
+//     <div className="App">
+//       <Navbar />
+//       <HomeTitle />
+//       {scrollState && <HomeMenu getMenu={getMenu} nowMenu={menu} />}
+//       <Goods nowMenu={menu} />
+//     </div>
+//   );
+// }
+
+// export default App;
+//-------------------------------------------------------------------------------------------------
+// import styles from "./Goods.module.css";
+// import { useEffect, useState } from "react";
+// import itemDataApi from "../../api/ItemDataAPI";
+// import { useInView } from "react-intersection-observer";
+// import Good from "./Good";
+// import { Item } from "../../model/Item";
+// interface GoodsProps {
+//   nowMenu: string;
+// }
+// const Goods = ({ nowMenu }: GoodsProps) => {
+//   const [Items, setItems] = useState<Item[]>([]);
+//   const [nowItems, setNowItems] = useState<Item[]>([]);
+//   const [itemIndex, setItemIndex] = useState(0);
+
+//   //infinite scroll state
+//   const [ref, inView] = useInView({ initialInView: false });
+//   //아이템 무한 스크롤링
+//   const showMoreItem = () => {
+//     let index = itemIndex;
+//     let jum = switchMax();
+//     for (let i = index; i < index + jum; i++) {
+//       if (Items.length === 0) {
+//         return;
+//       }
+//       //더 이상 아이템이 없을 때
+//       if (!Items[i]) {
+//         setItemIndex(Infinity);
+//         return;
+//       }
+//       //카테고리
+//       if (nowMenu === "전체" || Items[i].tag.indexOf(nowMenu) >= 0) nowItems.push(Items[i]);
+//       else index++;
+//     }
+//     setItemIndex(index + jum);
+//     setNowItems([...nowItems]);
+//   };
+
+//   //화면 크기별 아이템 개수 설정
+//   const switchMax = () => {
+//     let max = 10;
+//     if (window.innerWidth > 1500 && window.innerWidth < 2000) max = 20;
+//     else if (window.innerWidth >= 2000 && window.innerWidth < 2500) max = 30;
+//     else if (window.innerWidth >= 2500 && window.innerWidth < 3000) max = 40;
+//     else if (window.innerWidth >= 3000 && window.innerWidth < 5000) max = 70;
+//     else if (window.innerWidth >= 5000 && window.innerWidth < 7000) max = 200;
+//     else if (window.innerWidth >= 7000) max = 400;
+//     return max;
+//   };
+
+//   //아이템 load
+//   const itemLoad = () => {
+//     itemDataApi
+//       .get("dummy/itemData.json")
+//       .then((item) => {
+//         setItems(item.data.itemList);
+//       })
+//       .catch((error) => {
+//         if (error.response) console.log("item load response Error");
+//         else if (error.request) console.log("item load request Error");
+//         else console.log("item load" + error.message);
+//       });
+//   };
+
+//   //item load
+//   useEffect(() => {
+//     itemLoad();
+//   }, []);
+//   //아이템 로딩이 끝난 후, 로직 수행을 위한 side
+//   useEffect(() => {
+//     // showMoreItem();
+//     setNowItems([]);
+//   }, [Items]);
+//   //다른 메뉴 선택시 side
+//   useEffect(() => {
+//     setNowItems([]);
+//     setItemIndex(0);
+//     window.scrollTo(0, 0);
+//   }, [nowMenu]);
+//   //무한 스크롤을 위한 side
+//   useEffect(() => {
+//     if (inView && Items.length > 0) {
+//       showMoreItem();
+//     }
+//   }, [inView]);
+//   //초기에 화면을 채위기 위한 side
+//   useEffect(() => {
+//     if (inView && nowItems.length < switchMax() && Items.length > 0) {
+//       showMoreItem();
+//     }
+//   }, [nowItems]);
+//   return (
+//     <>
+//       <div className={styles.goodsBox}>
+//         {nowItems.map((item: Item, index) => (
+//           <div className={styles.goods} key={index}>
+//             <Good item={item} />
+//           </div>
+//         ))}
+//         {isFinite(itemIndex) && (
+//           <button className={styles.scrollingBtn} onClick={showMoreItem} ref={ref} />
+//         )}
+//       </div>
+//     </>
+//   );
+// };
+// export default Goods;

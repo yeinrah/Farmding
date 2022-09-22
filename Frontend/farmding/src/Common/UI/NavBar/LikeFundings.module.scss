@@ -1,0 +1,23 @@
+.container {
+  // margin: 20px 0 10px 0;
+  margin-top: 15px;
+  
+  .heartArea {
+    display: flex;
+    justify-content: space-between;
+  }
+  .like {
+    position: relative;
+    margin-left: 3px;
+    bottom: 6px;
+    font-size: 13px;
+  }
+}
+.card {
+  cursor: pointer;
+  &:hover {
+    // box-shadow: ;
+    transform: translateY(-15px);
+    transition: 0.5s;
+  }
+}
