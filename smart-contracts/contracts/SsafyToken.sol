@@ -12,6 +12,10 @@ contract SsafyToken is ERC20, Ownable{
     
     constructor(string memory name, string memory symbol, uint8 decimal) ERC20(name, symbol, decimal) {}
     
+    function addressOfContract() public view returns (address) {
+        return address(this);
+    }
+
     function mint(uint256 amount) public onlyOwner{
         _mint(_msgSender(), amount);
     }

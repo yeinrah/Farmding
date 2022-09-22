@@ -4,9 +4,9 @@ pragma solidity >=0.7.0 <0.9.0;
 import "./access/Ownable.sol";
 import "./token/ERC20/ERC20.sol";
 import "./token/ERC721/ERC721.sol";
-import "./SsafyNFT.sol";
-import "./SsafyToken.sol";
-import "./NFT.sol";
+// import "./SsafyNFT.sol";
+// import "./SsafyToken.sol";
+// import "./NFT.sol";
 
 /**
  * PJT Ⅲ - Req.1-SC1 DealFactory 구현
@@ -133,25 +133,36 @@ contract Deal {
         erc721Constract = IERC721(_nftAddress);
     }
 
-    function purchase() public {
-        // TODO
-        address _puchaser = msg.sender;
-    }
-
-    function confirmItem() public {
-        // TODO 
-    }
-    
-    function cancelDeals() public returns(bool) {
-        address request = msg.sender;
-        require(request == admin || request == seller, "Do not allowed permission");
-
-        erc721Constract.transferFrom(address(this), seller, tokenId);
+    function purchase() public notSeller isDealOngoing returns (bool){
+        address _purchaser = msg.sender;
+        require(erc20Contract.approve(_purchaser, purchasePrice), "Not approved : ERC20");
+        
+        erc20Contract.transferFrom(_purchaser, address(this), purchasePrice);
+        erc20Contract.approve(address(this), purchasePrice);
+        erc20Contract.transferFrom(address(this), seller, purchasePrice);
+        erc721Constract.transferFrom(address(this), _purchaser, tokenId);
+        
         _end();
-
-        emit DealEnded(address(this), address(0), tokenId,0);
+        
+        emit DealEnded(address(this), _purchaser, tokenId, purchasePrice);
+        
         return true;
     }
+
+    // function confirmItem() public {
+    //     // TODO 
+    // }
+    
+    // function cancelDeals() public returns(bool) {
+    //     address request = msg.sender;
+    //     require(request == admin || request == seller, "Do not allowed permission");
+
+    //     erc721Constract.transferFrom(address(this), seller, tokenId);
+    //     _end();
+
+    //     emit DealEnded(address(this), address(0), tokenId,0);
+    //     return true;
+    // }
 
     function getTimeLeft() public view returns (int256) {
         return (int256)(dealEndTime - block.timestamp);
@@ -179,26 +190,47 @@ contract Deal {
         );
     }
 
+    function _isDealOngoing() internal view returns (bool)
+    {
+        return (block.timestamp >= dealStartTime &&
+            block.timestamp < dealEndTime && !ended);
+    }
+
     // internal 혹은 private 함수 선언시 아래와 같이 _로 시작하도록 네이밍합니다.
     function _end() internal {
         ended = true;
     }
 
-    function _getCurrencyAmount() private view returns (uint256) {
-        return erc20Contract.balanceOf(msg.sender);
-    }
+    // function _getCurrencyAmount() private view returns (uint256) {
+    //     return erc20Contract.balanceOf(msg.sender);
+    // }
 
     // modifier를 사용하여 함수 동작 조건을 재사용하는 것을 권장합니다. 
-    modifier onlySeller() {
-        require(msg.sender == seller, "Deal: You are not seller.");
+
+     modifier notSeller() {
+        require(msg.sender != seller, "Deal: You are seller.");
         _;
     }
 
-    modifier onlyAfterStart() {
+    modifier isDealOngoing() {
         require(
-            block.timestamp >= dealStartTime,
-            "Deal: This Deal is not started."
+            _isDealOngoing(),
+            "Deal: This Deal is not operate"
         );
         _;
     }
+    // modifier onlySeller() {
+    //     require(msg.sender == seller, "Deal: You are not seller.");
+    //     _;
+    // }
+
+    // modifier onlyAfterStart() {
+    //     require(
+    //         block.timestamp >= dealStartTime,
+    //         "Deal: This Deal is not started."
+    //     );
+    //     _;
+    // }
+
+
 }
