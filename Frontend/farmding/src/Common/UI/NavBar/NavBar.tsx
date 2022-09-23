@@ -121,7 +121,6 @@ const NavBar = () => {
                 FARMDING
               </Typography>
             </div>
-          
             <div>
               <Modal
                 open={open}

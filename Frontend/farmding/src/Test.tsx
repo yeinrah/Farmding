@@ -54,7 +54,7 @@ function Test() {
 				.then(
           (result: IResult) => {
             setBalance(result._hex)
-            console.log(result)
+            console.log(result, 'test')
           }
         );
 		}
