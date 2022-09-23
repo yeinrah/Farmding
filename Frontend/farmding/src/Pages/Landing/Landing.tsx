@@ -1,7 +1,7 @@
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
 import { useEffect, useState } from 'react';
 
-// web3
+// // web3
 import { useWeb3React } from '@web3-react/core';
 import { formatEther } from 'ethers/lib/utils';
 import { injected } from "../../lib/connectors";
@@ -77,6 +77,9 @@ const Landing = () => {
 
   return (
     <>
+      <h1>
+
+      </h1>
       <CustomBtn customSx={{width:"300px", height:"100px",
           fontSize:"20px", letterSpacing: 3}}
           onclick={metamaskLoginHandler}
