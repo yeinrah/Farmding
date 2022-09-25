@@ -180,7 +180,7 @@ contract CrowdFunding{
     // c.funders[c.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
     // c.amount += msg.value;
   }
-   function _getCurrencyAmount() private view returns (uint256) {
+  function _getCurrencyAmount() private view returns (uint256) {
         return SSFTokenContract.balanceOf(msg.sender);
     }
 

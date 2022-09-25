@@ -40,6 +40,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 
 
 const NavBar = () => {
+  const { ethereum } = window;
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
@@ -63,9 +64,10 @@ const NavBar = () => {
 
   };
   const logoutHandler = () => {
-    handleCloseUserMenu()
+    handleCloseUserMenu();
+    // ethereum.on('disconnect',handler: (error: ProviderRpcError) => void);
     setIsLogin(false);
-    // navigate('/landing')
+    // navigate('/login')
   };
   
   const goMyPageHandler = () => {

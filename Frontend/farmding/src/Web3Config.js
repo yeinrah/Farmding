@@ -791,6 +791,7 @@ export const SSFTokenContract = new web3.eth.Contract(
 	SSFTokenABI,
 	SSFTokenAddress
 )
+// export const CrowdFundingAddress = "0xd977531DB496F22b720C94116119078D00f6fffb"
 
 // // 생성한 Sale컨트랙트의 주소를 인자로 받아 SaleContract를 생성해주는 함수
 // export const createSaleContract = (SaleAddress) => {

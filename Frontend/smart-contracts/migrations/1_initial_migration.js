@@ -16,5 +16,5 @@ module.exports = function (deployer) {
   // deployer.deploy(SsafyNFT); 
   deployer.deploy(SSFToken, "SSAFY", "SSF", 0);
   // deployer.deploy(SaleFactory);
-  deployer.deploy(CrowdFunding);
+  deployer.deploy(CrowdFunding, "0x0c54E456CE9E4501D2c43C38796ce3F06846C966");
 };
