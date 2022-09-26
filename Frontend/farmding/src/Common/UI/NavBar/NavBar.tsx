@@ -261,6 +261,36 @@ const NavBar = () => {
           >
             nft 구입!!
           </Button> */}
+          <Button
+            onClick={async () => {
+              // await nftContract.methods
+              //   .mint(window.ethereum._state.accounts[0], 1)
+              //   .send({ from: window.ethereum._state.accounts[0] });
+
+              // await nftContract.methods
+              //   .approve("0x39E71e11885a77f9ddAf2aB037736946e9477dcF", 1)
+              //   .send({ from: "0x406397D506e8C189047753b63BeE6674E413504B" });
+              await ssafyTokenContract.methods
+                .approve("0x39E71e11885a77f9ddAf2aB037736946e9477dcF", 5)
+                .send({ from: "0x406397D506e8C189047753b63BeE6674E413504B" });
+
+              const a = await nftContract.methods
+                .purchase(1)
+                .send({ from: "0x406397D506e8C189047753b63BeE6674E413504B" });
+              console.log(a);
+              // const b = await ssafyTokenContract.methods
+              //   .balanceOf("0x3AaeCA57514D1cD3E8441E12CD3A270008a0e4e5")
+              //   .call();
+              // console.log(b);
+
+              // const c = nftContract.methods
+              //   .createSell(1, 3)
+              //   .send({ from: "0x406397D506e8C189047753b63BeE6674E413504B" });
+              // console.log(c);
+            }}
+          >
+            ㅎㅇㅎㅇㅎ
+          </Button>
         </Container>
       </AppBar>
     </>
