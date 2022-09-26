@@ -416,6 +416,19 @@ const CrowdFundingABI = [
     type: "event",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+    ],
+    name: "cancel",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -429,6 +442,19 @@ const CrowdFundingABI = [
     type: "event",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+    ],
+    name: "claim",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -440,6 +466,37 @@ const CrowdFundingABI = [
     ],
     name: "Claim",
     type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "campaignID",
+        type: "uint256",
+      },
+    ],
+    name: "contribute",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_goal",
+        type: "uint256",
+      },
+      {
+        internalType: "uint32",
+        name: "_endAt",
+        type: "uint32",
+      },
+    ],
+    name: "launch",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     anonymous: false,
@@ -479,6 +536,24 @@ const CrowdFundingABI = [
     type: "event",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "pledge",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -502,6 +577,19 @@ const CrowdFundingABI = [
     ],
     name: "Pledge",
     type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+    ],
+    name: "refund",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     anonymous: false,
@@ -529,6 +617,24 @@ const CrowdFundingABI = [
     type: "event",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_id",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "unpledge",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -552,19 +658,6 @@ const CrowdFundingABI = [
     ],
     name: "Unpledge",
     type: "event",
-  },
-  {
-    inputs: [],
-    name: "SSFTokenContract",
-    outputs: [
-      {
-        internalType: "contract SSFToken",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
   },
   {
     inputs: [
@@ -619,45 +712,6 @@ const CrowdFundingABI = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_id",
-        type: "uint256",
-      },
-    ],
-    name: "cancel",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_id",
-        type: "uint256",
-      },
-    ],
-    name: "claim",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "campaignID",
-        type: "uint256",
-      },
-    ],
-    name: "contribute",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "currencyAddress",
     outputs: [
@@ -700,42 +754,6 @@ const CrowdFundingABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "_goal",
-        type: "uint256",
-      },
-      {
-        internalType: "uint32",
-        name: "_endAt",
-        type: "uint32",
-      },
-    ],
-    name: "launch",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-    ],
-    name: "pledge",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
         name: "",
         type: "uint256",
       },
@@ -757,41 +775,23 @@ const CrowdFundingABI = [
     type: "function",
   },
   {
-    inputs: [
+    inputs: [],
+    name: "SSFTokenContract",
+    outputs: [
       {
-        internalType: "uint256",
-        name: "_id",
-        type: "uint256",
+        internalType: "contract SSFToken",
+        name: "",
+        type: "address",
       },
     ],
-    name: "refund",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-    ],
-    name: "unpledge",
-    outputs: [],
-    stateMutability: "nonpayable",
+    stateMutability: "view",
     type: "function",
   },
 ];
 // export const NFTcreatorAddress = "0x6a2BBCa33ad091b4D95A290D18613D8466F3252d";
 // export const SaleFactoryAddress = "0x5A8834A1DFE35bcc8bC8d78644D238ada9d1cab6";
 export const SSFTokenAddress = "0x0c54E456CE9E4501D2c43C38796ce3F06846C966";
-export const CrowdFundingAddress = "0x823D019a7Db24EC0c9d3D417C9608d6bD8674062";
+export const CrowdFundingAddress = "0xD9bf59d3ad939f3C9332Aab25FB1CE375966A267";
 
 export const web3 = new Web3(window.ethereum);
 

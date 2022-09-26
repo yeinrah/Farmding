@@ -5,6 +5,7 @@ import {
   SSFTokenAddress,
   SSFTokenContract,
   CrowdFundingContract,
+  CrowdFundingAddress,
 } from "../../../Web3Config";
 import { useNavigate } from "react-router-dom";
 import EachRewardItem from "./EachRewardItem";
@@ -158,7 +159,7 @@ const ChooseReward = ({ title }: IChooseRewardProps) => {
       const price = 3;
       // funding- pledge
       await SSFTokenContract.methods
-        .approve(fundingAddr, price)
+        .approve(CrowdFundingAddress, price)
         .send({ from: accounts[0] });
 
       const fundingRes = await CrowdFundingContract.methods
@@ -202,6 +203,25 @@ const ChooseReward = ({ title }: IChooseRewardProps) => {
 
     // }
   };
+  const claimHandler = async () => {
+    try {
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      // const price = 3;
+      // funding- pledge
+
+      const claimRes = await CrowdFundingContract.methods
+        .claim(1)
+        .send({ from: accounts[0] });
+      console.log(claimRes);
+      const claimId = claimRes.events.Pledge.returnValues.id;
+
+      console.log(claimId);
+    } catch (error) {
+      console.log(error);
+      console.log("클레임 에러");
+    }
+  };
+
   useEffect(() => {
     (async function () {
       setAccount(ethereum.selectedAddress);
@@ -260,6 +280,19 @@ const ChooseReward = ({ title }: IChooseRewardProps) => {
           onclick={fundingHandler}
           // btnWord={"다음 단계로"}
           btnWord={"펀딩- pledge"}
+        />
+      </div>
+      <div className={styles.btn}>
+        <CustomBtn
+          customSx={{
+            width: "200px",
+            height: "50px",
+            fontSize: "20px",
+            letterSpacing: 3,
+          }}
+          onclick={claimHandler}
+          // btnWord={"다음 단계로"}
+          btnWord={"claim"}
         />
       </div>
     </Box>
