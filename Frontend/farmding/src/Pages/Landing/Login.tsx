@@ -13,13 +13,17 @@ const Login = () => {
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [onboardButtonText, setOnboardButtonText] = useState<string>("");
   const [account, setAccount] = useState("");
+  
   const btnName = isLogin ? '로그아웃' : '로그인';
 
   useEffect(() => {
     initialize();
   }, []);
-
+  
   const { ethereum } = window;
+  // 지갑 변경시 잔고 조회 다시 하기!
+  
+
   // const currentUrl = new URL(window.location.href);
   // const forwarderOrigin ="https://j6e106.p.ssafy.io/";
   // const navigate = useNavigate();

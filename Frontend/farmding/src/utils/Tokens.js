@@ -3,7 +3,7 @@
  */
 import Web3 from 'web3';
 import { SSFTokenContract } from '../Web3Config';
-// import sendTransaction from './TxSender';
+import sendTransaction from './TxSender';
 
 // Contracts ABIs
 
@@ -66,30 +66,29 @@ const getBalance = async (fromAddr) => {
 //   return result;
 // };
 
-// // tokenTransfer : admin 계정에서 user 에게 token 부여
-// const tokenTransfer = async (fromAddr, privKey, toAddr, amount) => {
-//   const tokenContractInstance = new web3.eth.Contract(
-//     Token_ABI,
-//     process.env.VUE_APP_ERC20_CA,
-//     { from: fromAddr },
-//   );
-//   const data = tokenContractInstance.methods.transfer(toAddr, amount);
-//   const receipt = await sendTransaction(
-//     fromAddr,
-//     privKey,
-//     process.env.VUE_APP_ERC20_CA,
-//     data,
-//   );
+// tokenTransfer : admin 계정에서 user 에게 token 부여
+const tokenTransfer = async (fromAddr, privKey, toAddr, amount) => {
+  const tokenContractInstance = new web3.eth.Contract(
+    ...SSFTokenContract,
+    { from: fromAddr },
+  );
+  const data = tokenContractInstance.methods.transfer(toAddr, amount);
+  const receipt = await sendTransaction(
+    fromAddr,
+    privKey,
+    ERC20_CA,
+    data,
+  );
 
-//   const response = await data.call();
+  const response = await data.call();
 
-//   const result = {
-//     receipt: receipt,
-//     data: response,
-//   };
+  const result = {
+    receipt: receipt,
+    data: response,
+  };
 
-//   return result;
-// };
+  return result;
+};
 
 // export { getBalance, approve, tokenMint, tokenTransfer };
-export { getBalance };
+export { getBalance, tokenTransfer};

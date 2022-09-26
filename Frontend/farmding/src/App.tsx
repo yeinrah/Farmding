@@ -77,7 +77,15 @@ function App() {
         {/* <Route path="/project" element={<ProjectDetail/>}></Route> */}
         {/* <Route path="/nft" element={<NFT />}></Route> */}
 
-        <Route path="/test-metamask" element={<Balance />}></Route>
+        {/* <Route path="/test-metamask" element={<Balance />}></Route> */}
+        <Route
+          path="/test-metamask"
+          element={
+            <PrivateRoute>
+              <Balance />
+            </PrivateRoute>
+          }
+        />
 
         {/* 404 만들기! */}
         <Route path="*" element={<Test />}></Route>
