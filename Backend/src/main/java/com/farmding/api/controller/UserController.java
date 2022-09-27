@@ -125,13 +125,21 @@ public class UserController {
 	}
 	
 	@GetMapping("/confirm/{wallet_address}")
-	@ApiOperation(value = "회원정보조회", notes = "지갑주소로 회원정보를 조회한다")
+	@ApiOperation(value = "지갑주소로 회원정보조회", notes = "지갑주소로 회원정보를 조회한다")
 	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
-	public ResponseEntity<?> showNFT(@PathVariable String wallet_address) throws Exception {
-		boolean checkUser = userService.findUser(wallet_address);
-		return new ResponseEntity<>(checkUser, HttpStatus.OK);
+	public ResponseEntity<?> checkUserByWA(@PathVariable String wallet_address) throws Exception {
+		boolean checkUserWA = userService.findUserByWA(wallet_address);
+		return new ResponseEntity<>(checkUserWA, HttpStatus.OK);
 	}
 	
+	@GetMapping("/confirm/{nickname}")
+	@ApiOperation(value = "닉네임으로 회원정보조회", notes = "닉네임으로 회원정보를 조회한다")
+	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
+			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
+	public ResponseEntity<?> checkUserByNickName(@PathVariable String nickname) throws Exception {
+		boolean checkUserNN = userService.findUserByNN(nickname);
+		return new ResponseEntity<>(checkUserNN, HttpStatus.OK);
+	}
 
 }

@@ -144,10 +144,20 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	// 회원 정보 조회
+	// 지갑주소로 회원 정보 조회
 	@Transactional
-	public boolean findUser(String walletAddress) throws Exception {
+	public boolean findUserByWA(String walletAddress) throws Exception {
 		User user = userRepository.findOneByWalletAddress(walletAddress);
+		if (user == null) {
+			return false;
+		}
+		return true;
+	}
+	
+	// 닉네임으로 회원 정보 조회
+	@Transactional
+	public boolean findUserByNN(String nickname) throws Exception {
+		User user = userRepository.findOneByNickname(nickname);
 		if (user == null) {
 			return false;
 		}
