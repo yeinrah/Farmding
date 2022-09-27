@@ -18,4 +18,7 @@ const userAddressExistCheck = async (account: string) => {
   return result;
 };
 
+const userSignUp = async () => {
+  await api.post(`/user/join`);
+};
 export { userAddressExistCheck };
