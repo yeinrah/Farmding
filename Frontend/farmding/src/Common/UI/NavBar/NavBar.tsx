@@ -40,6 +40,7 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 
 
 const NavBar = () => {
+  const { ethereum } = window;
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
@@ -63,9 +64,10 @@ const NavBar = () => {
 
   };
   const logoutHandler = () => {
-    handleCloseUserMenu()
+    handleCloseUserMenu();
+    // ethereum.on('disconnect',handler: (error: ProviderRpcError) => void);
     setIsLogin(false);
-    // navigate('/landing')
+    // navigate('/login')
   };
   
   const goMyPageHandler = () => {
@@ -95,11 +97,11 @@ const NavBar = () => {
                 <img src="/Assets/farmer_1.png" alt="" className={styles.navbar__logo}/>
               </Link>
               <Link to="/test-metamask">
-                <h5>메타마스크 연결</h5>
+                <h5>잔액조회</h5>
               </Link>
-              <Link to="/landing">
+              {/* <Link to="/landing">
                 <h5>시작페이지</h5>
-              </Link>
+              </Link> */}
               <Typography
                 // variant="h5"
                 // noWrap
@@ -121,7 +123,6 @@ const NavBar = () => {
                 FARMDING
               </Typography>
             </div>
-          
             <div>
               <Modal
                 open={open}

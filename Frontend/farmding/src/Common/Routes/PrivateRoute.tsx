@@ -52,7 +52,8 @@ import { loginState } from "../../Recoil/atoms/auth";
     return isLogin ? (
       children
   ) : (
-    <Navigate to="/landing" state={{ from: pathname }} replace />
+    // <Navigate to="/landing" state={{ from: pathname }} replace />
+    <Navigate to="/login" state={{ from: pathname }} replace />
     );
   };
   export default PrivateRoute;
