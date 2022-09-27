@@ -4,20 +4,25 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import CustomCarousel from "../../../Common/UI/Carousel/CustomCarousel";
 import { Typography } from "@mui/material";
 
-
 interface InfoProjectDetailProps {
+  projtId: number;
   imgArray: string[];
   farm: string;
   projectInfo: string;
 }
 
-const InfoProjectDetail = ({ imgArray, farm, projectInfo }: InfoProjectDetailProps) => {
-
+const InfoProjectDetail = ({
+  projtId,
+  imgArray,
+  farm,
+  projectInfo,
+}: InfoProjectDetailProps) => {
+  const carouselImgArray = [projtId.toString(), ...imgArray];
   return (
     <>
-      <CustomCarousel imgArray={imgArray} />
+      <CustomCarousel imgArray={carouselImgArray} />
       <div className={styles.farm_name}>
-        <Typography variant="h5" gutterBottom fontWeight='bold'> 
+        <Typography variant="h5" gutterBottom fontWeight="bold">
           {farm}
         </Typography>
         <Typography variant="h6" gutterBottom color="text.secondary">
@@ -25,11 +30,10 @@ const InfoProjectDetail = ({ imgArray, farm, projectInfo }: InfoProjectDetailPro
         </Typography>
       </div>
       <div className={styles.farm_info}>
-        <Typography variant="subtitle1" gutterBottom >
+        <Typography variant="subtitle1" gutterBottom>
           {projectInfo}
         </Typography>
       </div>
-      
     </>
   );
 };
