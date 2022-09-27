@@ -39,7 +39,7 @@ public class UserService {
 		this.nftRepository = nftRepository;
 	}
 
-	// 닉네임 중복 검사
+	// 회원등록 시, 닉네임 중복 검사
 	@Transactional(readOnly = true)
 	public void checkNicknameDuplication(UserRegisterReq userRegisterReq) {
 		boolean nicknameDuplicate = userRepository.existsByNickname(userRegisterReq.getNickname());
@@ -75,7 +75,7 @@ public class UserService {
 	}
 
 	// 회원 정보(펀딩프로젝트) 조회
-	@Transactional
+	@Transactional(readOnly = true)
 	public HashMap<String, Object> findUserFunding(int id) throws Exception {
 		User user = userRepository.findOneByUserId(id);
 		// 내가 후원한 펀딩프로젝트
@@ -87,7 +87,7 @@ public class UserService {
 	}
 
 	// 회원 정보(NFT) 조회
-	@Transactional
+	@Transactional(readOnly = true)
 	public HashMap<String, Object> findUserNFT(int id) throws Exception {
 		User user = userRepository.findOneByUserId(id);
 		// 내 NFT
@@ -145,22 +145,32 @@ public class UserService {
 	}
 
 	// 지갑주소로 회원 정보 조회
-	@Transactional
+	@Transactional(readOnly = true)
 	public boolean findUserByWA(String walletAddress) throws Exception {
-		User user = userRepository.findOneByWalletAddress(walletAddress);
-		if (user == null) {
-			return false;
+		boolean checkwalletAddressDuplicate  = userRepository.existsByWalletAddress(walletAddress);
+		if (checkwalletAddressDuplicate) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
-	// 닉네임으로 회원 정보 조회
-	@Transactional
-	public boolean findUserByNN(String nickname) throws Exception {
-		User user = userRepository.findOneByNickname(nickname);
-		if (user == null) {
-			return false;
+//	// 닉네임으로 회원 정보 조회
+//	@Transactional(readOnly = true)
+//	public boolean findUserByNN(String nickname) throws Exception {
+//		User user = userRepository.findOneByNickname(nickname);
+//		if (user == null) {
+//			return false;
+//		}
+//		return true;
+//	}
+	
+	// Only 닉네임 중복 검사
+	@Transactional(readOnly = true)
+	public boolean onlyCheckNicknameDuplication(String nickname) {
+		boolean checknicknameDuplicate = userRepository.existsByNickname(nickname);
+		if (checknicknameDuplicate) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 }
