@@ -55,13 +55,12 @@ public class UserService {
 		if (user == null) {
 			User userinfo = User.builder().nickname(userRegisterReq.getNickname())
 					.walletAddress(userRegisterReq.getWalletAddress()).phoneNumber(userRegisterReq.getPhoneNumber())
-					.address(userRegisterReq.getAddress()).zipCode(userRegisterReq.getZipCode()).isActive(true).build();
+					.address(userRegisterReq.getAddress()).isActive(true).build();
 			return userRepository.save(userinfo);
 		} else if (userRegisterReq.getWalletAddress().equals(user.getWalletAddress()) && user.isActive() == false) {
 			user.setNickname(userRegisterReq.getNickname());
 			user.setPhoneNumber(userRegisterReq.getPhoneNumber());
 			user.setAddress(userRegisterReq.getAddress());
-			user.setZipCode(userRegisterReq.getZipCode());
 			user.setActive(true);
 			return userRepository.save(user);
 		} else if (userRegisterReq.getWalletAddress().equals(user.getWalletAddress()) && user.isActive() == true) {
@@ -69,7 +68,7 @@ public class UserService {
 		} else {
 			User userinfo = User.builder().nickname(userRegisterReq.getNickname())
 					.walletAddress(userRegisterReq.getWalletAddress()).phoneNumber(userRegisterReq.getPhoneNumber())
-					.address(userRegisterReq.getAddress()).zipCode(userRegisterReq.getZipCode()).isActive(true).build();
+					.address(userRegisterReq.getAddress()).isActive(true).build();
 			return userRepository.save(userinfo);
 		}
 	}
