@@ -5,7 +5,7 @@ import DaumPostcode from "react-daum-postcode";
 const SignUp = () => {
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const [address, setAddress] = useState("주소 검색");
+  const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("상세주소");
   const handleClose = () => {
     setOpen(false);
@@ -72,6 +72,7 @@ const SignUp = () => {
           <Box sx={{ display: "flex", margin: "1rem 0" }}>
             <TextField
               sx={{ width: "60%" }}
+              label="주소"
               disabled
               value={address}
             ></TextField>

@@ -12,7 +12,7 @@ import Login from "./Pages/Landing/Login";
 import Main from "./Pages/Main";
 import MyPage from "./Pages/MyPage/Mypage";
 import NFT from "./Pages/NFT/NFT";
-import SignUp from "./Pages/Signup/SignUp";
+import SignUp from "./Pages/User/SignUp";
 import { loginState } from "./Recoil/atoms/auth";
 import Test from "./Test";
 
