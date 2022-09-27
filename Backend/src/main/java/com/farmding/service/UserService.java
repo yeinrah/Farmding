@@ -116,7 +116,7 @@ public class UserService {
 
 	// 회원 프로필 사진 수정
 	@Transactional
-	public User updateImage(Integer id, UpdateImageReq updateImageReq) throws Exception {
+	public User updateImage(int id, UpdateImageReq updateImageReq) throws Exception {
 		User user = userRepository.findOneByUserId(id);
 		user.setProfileImage(updateImageReq.getProfileImage());
 		return userRepository.save(user);
@@ -124,7 +124,7 @@ public class UserService {
 
 	// 회원 프로필 정보(닉네임, 자기소개) 수정
 	@Transactional
-	public User updateProfile(Integer id, UpdateProfileReq updateProfileReq) throws Exception {
+	public User updateProfile(int id, UpdateProfileReq updateProfileReq) throws Exception {
 		User user = userRepository.findOneByUserId(id);
 		if (userRepository.existsByNickname(user.getNickname()) == false) {
 			user.setNickname(updateProfileReq.getNickname());
@@ -138,10 +138,19 @@ public class UserService {
 
 	// 회원 탈퇴(회원 정보 상태 변경)
 	@Transactional
-	public User updateUserState(Integer id) throws Exception {
+	public User updateUserState(int id) throws Exception {
 		User user = userRepository.findOneByUserId(id);
 		user.setActive(false);
 		return userRepository.save(user);
 	}
 
+	// 회원 정보 조회
+	@Transactional
+	public boolean findUser(String walletAddress) throws Exception {
+		User user = userRepository.findOneByWalletAddress(walletAddress);
+		if (user == null) {
+			return false;
+		}
+		return true;
+	}
 }
