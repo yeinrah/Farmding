@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 // import MetaMaskOnboarding from "@metamask/onboarding";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import userAddressDuplicateCheck from "../../Common/API/userAddressDuplicateCheck";
+import { userAddressExistCheck } from "../../Common/API/userApi";
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
 import { loginState } from "../../Recoil/atoms/auth";
 import { SSFTokenAddress, web3 } from "../../Web3Config";
@@ -13,7 +15,7 @@ const Login = () => {
   const [account, setAccount] = useState("");
 
   const btnName = isLogin ? "로그아웃" : "로그인";
-
+  const navigate = useNavigate();
   useEffect(() => {
     initialize();
   }, []);
@@ -64,10 +66,14 @@ const Login = () => {
     try {
       await ethereum.request({ method: "eth_requestAccounts" });
       const accounts = await ethereum.request({ method: "eth_accounts" });
+      if (!(await userAddressExistCheck(accounts[0])).data) {
+        navigate("/signup");
+        return;
+      }
       setAccount(accounts[0]);
       // NCT토큰 자동불러오기 (이미 등록되어있어도 뜸.. 이건 해결방법은 없음(못찾는게아니라 애초에 방법이없음))
       // https://coder-solution.com/solution-blog/288728 참고
-      console.log(accounts[0]);
+
       const chainId = 31221;
       const rpcurl = "http://20.196.209.2:8545";
 

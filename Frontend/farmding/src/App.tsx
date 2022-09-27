@@ -12,6 +12,7 @@ import Login from "./Pages/Landing/Login";
 import Main from "./Pages/Main";
 import MyPage from "./Pages/MyPage/Mypage";
 import NFT from "./Pages/NFT/NFT";
+import SignUp from "./Pages/Signup/SignUp";
 import { loginState } from "./Recoil/atoms/auth";
 import Test from "./Test";
 
@@ -21,7 +22,7 @@ function App() {
   return (
     <div className="app">
       {isLogin && <NavBar />}
-      
+
       <Routes>
         {/* <Route path="/login" element={<Login />}></Route> */}
         {/* <Route
@@ -32,6 +33,7 @@ function App() {
             </PublicRoute>
           }
         /> */}
+        <Route path="/signUp" element={<SignUp />} />
         <Route
           path="/login"
           element={
