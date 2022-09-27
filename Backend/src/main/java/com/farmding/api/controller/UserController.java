@@ -123,5 +123,15 @@ public class UserController {
 		HashMap<String, Object> user = userService.findUserNFT(user_id);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
+	
+	@GetMapping("/confirm/{wallet_address}")
+	@ApiOperation(value = "회원정보조회", notes = "지갑주소로 회원정보를 조회한다")
+	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
+			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
+	public ResponseEntity<?> showNFT(@PathVariable String wallet_address) throws Exception {
+		boolean checkUser = userService.findUser(wallet_address);
+		return new ResponseEntity<>(checkUser, HttpStatus.OK);
+	}
+	
 
 }
