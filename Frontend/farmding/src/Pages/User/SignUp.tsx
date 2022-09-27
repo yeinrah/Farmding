@@ -1,14 +1,40 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
+import { useNavigate } from "react-router-dom";
+import { userNicknameExistCheck, userSignUp } from "../../Common/API/userApi";
 
 const SignUp = () => {
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
+  const [nickname, setNickname] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("상세주소");
   const handleClose = () => {
     setOpen(false);
+  };
+  const { ethereum } = window;
+  const navigate = useNavigate();
+  const signup = async () => {
+    const accounts = await ethereum.request({ method: "eth_accounts" });
+    userSignUp(address, nickname, phoneNumber, accounts[0])
+      .then(() => {
+        alert("회원가입 완료");
+        navigate("/");
+      })
+      .catch((e) => {
+        console.log(e);
+        alert("회원가입 실패");
+      });
+  };
+  const nicknameCheck = async () => {
+    const result = await userNicknameExistCheck(nickname);
+    console.log(result);
+    const res = !result.data
+      ? "사용 가능한 닉네임 입니다"
+      : "사용 불가능한 닉네임 입니다.";
+    alert(res);
   };
   return (
     <Box sx={{ display: "flex", justifyContent: "center" }}>
@@ -48,7 +74,13 @@ const SignUp = () => {
           </Box>
           <Typography sx={{ color: "#595A66" }}>닉네임</Typography>
           <Box sx={{ display: "flex", margin: "1rem 0" }}>
-            <TextField sx={{ width: "60%" }} label="닉네임"></TextField>
+            <TextField
+              sx={{ width: "60%" }}
+              label="닉네임"
+              onChange={(v) => {
+                setNickname(v.target.value);
+              }}
+            ></TextField>
             <Button
               sx={{
                 backgroundColor: "#5DAE8B",
@@ -60,13 +92,20 @@ const SignUp = () => {
                   backgroundColor: "#5DAE8B",
                 },
               }}
+              onClick={nicknameCheck}
             >
               중복확인
             </Button>
           </Box>
           <Typography sx={{ color: "#595A66" }}>전화번호</Typography>
           <Box sx={{ display: "flex", margin: "1rem 0" }}>
-            <TextField sx={{ width: "60%" }} label="전화번호"></TextField>
+            <TextField
+              sx={{ width: "60%" }}
+              label="전화번호"
+              onChange={(v) => {
+                setPhoneNumber(v.target.value);
+              }}
+            ></TextField>
           </Box>
           <Typography sx={{ color: "#595A66" }}>배송주소</Typography>
           <Box sx={{ display: "flex", margin: "1rem 0" }}>
@@ -116,6 +155,7 @@ const SignUp = () => {
                   backgroundColor: "#5DAE8B",
                 },
               }}
+              onClick={signup}
             >
               회원 가입
             </Button>
