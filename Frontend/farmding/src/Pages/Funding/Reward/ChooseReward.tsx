@@ -134,12 +134,12 @@ const ChooseReward = ({ title }: IChooseRewardProps) => {
         .launch(5, unixFundingCloseDate)
         .send({ from: accounts[0] });
       console.log(launchRes);
-      const fundingId = launchRes.events.Launch.returnValues.id;
+      const projectId = launchRes.events.Launch.returnValues.id;
       const beneficiary = launchRes.events.Launch.returnValues.beneficiary;
       const goal = launchRes.events.Launch.returnValues.goal;
       const endAt = launchRes.events.Launch.returnValues.endAt;
-      fundingAddr = launchRes.events.Launch.returnValues.fundingAddr;
-      console.log(fundingId, beneficiary, goal, endAt, fundingAddr);
+      // fundingAddr = launchRes.events.Launch.returnValues.fundingAddr;
+      console.log(projectId, beneficiary, goal, endAt);
 
       // funding 요청
 
@@ -163,14 +163,14 @@ const ChooseReward = ({ title }: IChooseRewardProps) => {
         .send({ from: accounts[0] });
 
       const fundingRes = await CrowdFundingContract.methods
-        .pledge(1, price)
+        .fund(1, price)
         .send({ from: accounts[0] });
       console.log(fundingRes);
-      const pledgeId = fundingRes.events.Pledge.returnValues.id;
-      const caller = fundingRes.events.Pledge.returnValues.caller;
-      const amount = fundingRes.events.Pledge.returnValues.amount;
+      const fundId = fundingRes.events.Fund.returnValues.id;
+      const caller = fundingRes.events.Fund.returnValues.caller;
+      const amount = fundingRes.events.Fund.returnValues.amount;
 
-      console.log(pledgeId, caller, amount);
+      console.log(fundId, caller, amount);
 
       // funding 요청
 

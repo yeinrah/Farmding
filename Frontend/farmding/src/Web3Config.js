@@ -394,30 +394,6 @@ const CrowdFundingABI = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "_currencyAddress",
-        type: "address",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "Cid",
-        type: "uint256",
-      },
-    ],
-    name: "C",
-    type: "event",
-  },
-  {
-    inputs: [
-      {
         internalType: "uint256",
         name: "_id",
         type: "uint256",
@@ -427,6 +403,17 @@ const CrowdFundingABI = [
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "_currencyAddress",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "constructor",
   },
   {
     anonymous: false,
@@ -471,14 +458,44 @@ const CrowdFundingABI = [
     inputs: [
       {
         internalType: "uint256",
-        name: "campaignID",
+        name: "_id",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_amount",
         type: "uint256",
       },
     ],
-    name: "contribute",
+    name: "fund",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "uint256",
+        name: "id",
+        type: "uint256",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "caller",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "Fund",
+    type: "event",
   },
   {
     inputs: [
@@ -525,57 +542,8 @@ const CrowdFundingABI = [
         name: "endAt",
         type: "uint32",
       },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "fundingAddr",
-        type: "address",
-      },
     ],
     name: "Launch",
-    type: "event",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_id",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "_amount",
-        type: "uint256",
-      },
-    ],
-    name: "pledge",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: "uint256",
-        name: "id",
-        type: "uint256",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "caller",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "amount",
-        type: "uint256",
-      },
-    ],
-    name: "Pledge",
     type: "event",
   },
   {
@@ -629,7 +597,7 @@ const CrowdFundingABI = [
         type: "uint256",
       },
     ],
-    name: "unpledge",
+    name: "unfund",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -656,12 +624,12 @@ const CrowdFundingABI = [
         type: "uint256",
       },
     ],
-    name: "Unpledge",
+    name: "Unfund",
     type: "event",
   },
   {
     inputs: [],
-    name: "balanceOfSSF",
+    name: "CABalanceOfSSF",
     outputs: [
       {
         internalType: "uint256",
@@ -679,67 +647,13 @@ const CrowdFundingABI = [
         name: "",
         type: "uint256",
       },
-    ],
-    name: "campaigns",
-    outputs: [
-      {
-        internalType: "address",
-        name: "beneficiary",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "goal",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "pledged",
-        type: "uint256",
-      },
-      {
-        internalType: "uint32",
-        name: "endAt",
-        type: "uint32",
-      },
-      {
-        internalType: "bool",
-        name: "claimed",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "campaignsCount",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "currencyAddress",
-    outputs: [
       {
         internalType: "address",
         name: "",
         type: "address",
       },
     ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "currentBalance",
+    name: "fundedAmount",
     outputs: [
       {
         internalType: "uint256",
@@ -770,13 +684,41 @@ const CrowdFundingABI = [
         name: "",
         type: "uint256",
       },
+    ],
+    name: "projects",
+    outputs: [
       {
         internalType: "address",
-        name: "",
+        name: "beneficiary",
         type: "address",
       },
+      {
+        internalType: "uint256",
+        name: "goal",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "nowFundedAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint32",
+        name: "endAt",
+        type: "uint32",
+      },
+      {
+        internalType: "bool",
+        name: "claimed",
+        type: "bool",
+      },
     ],
-    name: "pledgedAmount",
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "projectsCount",
     outputs: [
       {
         internalType: "uint256",
@@ -805,7 +747,7 @@ const CrowdFundingABI = [
 // export const SaleFactoryAddress = "0x5A8834A1DFE35bcc8bC8d78644D238ada9d1cab6";
 export const SSFTokenAddress = "0x0c54E456CE9E4501D2c43C38796ce3F06846C966";
 // export const CrowdFundingAddress = "0xD9bf59d3ad939f3C9332Aab25FB1CE375966A267";
-export const CrowdFundingAddress = "0xFD5Cc28A082EA50C5E696e48f4226b3a6b6Ecf10";
+export const CrowdFundingAddress = "0x2332414e6339A21537Dd805486Fa5E55aA49e966";
 
 export const web3 = new Web3(window.ethereum);
 
