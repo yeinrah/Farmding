@@ -213,7 +213,7 @@ const ChooseReward = ({ title }: IChooseRewardProps) => {
         .claim(1)
         .send({ from: accounts[0] });
       console.log(claimRes);
-      const claimId = claimRes.events.Pledge.returnValues.id;
+      const claimId = claimRes.events.Claim.returnValues.id;
 
       console.log(claimId);
     } catch (error) {

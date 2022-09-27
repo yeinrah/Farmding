@@ -660,6 +660,19 @@ const CrowdFundingABI = [
     type: "event",
   },
   {
+    inputs: [],
+    name: "balanceOfSSF",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "uint256",
@@ -791,7 +804,8 @@ const CrowdFundingABI = [
 // export const NFTcreatorAddress = "0x6a2BBCa33ad091b4D95A290D18613D8466F3252d";
 // export const SaleFactoryAddress = "0x5A8834A1DFE35bcc8bC8d78644D238ada9d1cab6";
 export const SSFTokenAddress = "0x0c54E456CE9E4501D2c43C38796ce3F06846C966";
-export const CrowdFundingAddress = "0xD9bf59d3ad939f3C9332Aab25FB1CE375966A267";
+// export const CrowdFundingAddress = "0xD9bf59d3ad939f3C9332Aab25FB1CE375966A267";
+export const CrowdFundingAddress = "0xFD5Cc28A082EA50C5E696e48f4226b3a6b6Ecf10";
 
 export const web3 = new Web3(window.ethereum);
 
