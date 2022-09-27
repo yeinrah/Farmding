@@ -109,7 +109,7 @@ contract CrowdFunding {
       Project storage project = projects[_id];
       // require(block.timestamp >= project.startAt, "not started");
       require(block.timestamp <= project.endAt, "ended");
-      require(SSFTokenContract.balanceOf(msg.sender) > 0, "funder do not have enough ERC20 token");
+      require(SSFTokenContract.balanceOf(msg.sender) >= _amount, "funder do not have enough ERC20 token");
       require(SSFTokenContract.allowance(msg.sender, address(this)) != 0, "buyer did not approve this contract");
       require(SSFTokenContract.allowance(msg.sender, address(this)) >= _amount, "caller approve less amount of token");
       // project.funders[project.numFunders++] = Funder({addr: msg.sender, amount: msg.value});

@@ -30,6 +30,7 @@ import { getBalance, tokenTransfer } from "../../../utils/Tokens";
 import sendTransaction from "../../../utils/TxSender";
 
 export interface IChooseRewardProps {
+  pjtId: number;
   title: string;
 }
 
@@ -60,7 +61,7 @@ const dummyRewards = [
   },
 ];
 
-const ChooseReward = ({ title }: IChooseRewardProps) => {
+const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   const { ethereum } = window;
   const navigate = useNavigate();
   // const [chooseReward, setChooseReward] = useState([]);
@@ -131,7 +132,7 @@ const ChooseReward = ({ title }: IChooseRewardProps) => {
       // launching
 
       const launchRes = await CrowdFundingContract.methods
-        .launch(5, unixFundingCloseDate)
+        .launch(1, unixFundingCloseDate)
         .send({ from: accounts[0] });
       console.log(launchRes);
       const projectId = launchRes.events.Launch.returnValues.id;
@@ -163,7 +164,7 @@ const ChooseReward = ({ title }: IChooseRewardProps) => {
         .send({ from: accounts[0] });
 
       const fundingRes = await CrowdFundingContract.methods
-        .fund(1, price)
+        .fund(pjtId, price)
         .send({ from: accounts[0] });
       console.log(fundingRes);
       const fundId = fundingRes.events.Fund.returnValues.id;
@@ -210,12 +211,12 @@ const ChooseReward = ({ title }: IChooseRewardProps) => {
       // funding- pledge
 
       const claimRes = await CrowdFundingContract.methods
-        .claim(1)
+        .claim(pjtId)
         .send({ from: accounts[0] });
       console.log(claimRes);
       const claimId = claimRes.events.Claim.returnValues.id;
 
-      console.log(claimId);
+      console.log(claimId, "번 프로젝트 클레임 완료");
     } catch (error) {
       console.log(error);
       console.log("클레임 에러");

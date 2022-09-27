@@ -21,7 +21,7 @@ function App() {
   return (
     <div className="app">
       {isLogin && <NavBar />}
-      
+
       <Routes>
         {/* <Route path="/login" element={<Login />}></Route> */}
         {/* <Route
@@ -49,7 +49,7 @@ function App() {
           }
         />
         <Route
-          path="/project"
+          path="/project/:pjtId"
           element={
             <PrivateRoute>
               <ProjectDetail />
