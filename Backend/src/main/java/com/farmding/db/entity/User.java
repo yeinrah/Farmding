@@ -40,10 +40,7 @@ public class User {
 	
 	@Column(name = "address")
 	private String address;
-	
-	@Column(name = "zip_code")
-	private String zipCode;
-	
+		
 	@Column(name = "is_active")
 	private boolean isActive;
 	

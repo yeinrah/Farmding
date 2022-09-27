@@ -68,7 +68,6 @@ CREATE TABLE `USER` (
 	`phone_number` varchar(13) NOT NULL,
 	`profile_image` int	NOT NULL,
 	`address` varchar(100) NOT NULL,
-	`zip_code` varchar(5) NOT NULL,
 	`is_active` boolean	NOT NULL,
     `user_pr` varchar(200) NULL
 );
@@ -253,7 +252,5 @@ project_end_date, farmer_name, farmer_wallet_address, target_amount,
  value ("내년의 첫 수박을 가장 먼저 만나보세요.", "과일의 왕, 수박이 돌아왔다!! 싸피농장은 27년 간 수박만을 고집해 온 수박계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 수박을 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 수박 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 수박! 저희 수박로는 수박쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 수박 많이 사랑해주세요!", 
  9,"2022-05-27 00:00:00", "2022-07-31 23:59:59", "박싸피", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 10000, 7076, 46, "open", 47, 21);
 
-
+select * from user;
 select * from project;
-
-
