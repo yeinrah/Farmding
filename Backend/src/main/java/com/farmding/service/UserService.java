@@ -75,10 +75,10 @@ public class UserService {
 
 	// 회원 정보(펀딩프로젝트) 조회
 	@Transactional(readOnly = true)
-	public HashMap<String, Object> findUserFunding(int id) throws Exception {
-		User user = userRepository.findOneByUserId(id);
+	public HashMap<String, Object> findUserFunding(String walletAddress) throws Exception {
+		User user = userRepository.findOneByWalletAddress(walletAddress);
 		// 내가 후원한 펀딩프로젝트
-		List<Funding> funding = fundingRepository.findAllByUserId(id);
+		List<Funding> funding = fundingRepository.findAllByUserId(user.getUserId());
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		result.put("user", user);
 		result.put("funding", funding);
@@ -87,8 +87,8 @@ public class UserService {
 
 	// 회원 정보(NFT) 조회
 	@Transactional(readOnly = true)
-	public HashMap<String, Object> findUserNFT(int id) throws Exception {
-		User user = userRepository.findOneByUserId(id);
+	public HashMap<String, Object> findUserNFT(String walletAddress) throws Exception {
+		User user = userRepository.findOneByWalletAddress(walletAddress);
 		// 내 NFT
 		List<Nft> nft = nftRepository.findAllByOwnerWalletAddress(user.getWalletAddress());
 		HashMap<String, Object> result = new HashMap<String, Object>();

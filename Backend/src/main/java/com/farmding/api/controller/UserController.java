@@ -106,21 +106,21 @@ public class UserController {
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@GetMapping("/mypage/myproject/{user_id}")
+	@GetMapping("/mypage/myproject/{wallet_address}")
 	@ApiOperation(value = "회원 자신이 후원한 펀딩프로젝트", notes = "회원이 자신이 후원한 프로젝트를 조회한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
-	public ResponseEntity<?> showmyproject(@PathVariable int user_id) throws Exception {
-		HashMap<String, Object> user = userService.findUserFunding(user_id);
+	public ResponseEntity<?> showmyproject(@PathVariable String wallet_address) throws Exception {
+		HashMap<String, Object> user = userService.findUserFunding(wallet_address);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
-	@GetMapping("/mypage/mynft/{user_id}")
+	@GetMapping("/mypage/mynft/{wallet_address}")
 	@ApiOperation(value = "회원의 NFT", notes = "회원의 NFT 정보를 조회한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
-	public ResponseEntity<?> showNFT(@PathVariable int user_id) throws Exception {
-		HashMap<String, Object> user = userService.findUserNFT(user_id);
+	public ResponseEntity<?> showNFT(@PathVariable String wallet_address) throws Exception {
+		HashMap<String, Object> user = userService.findUserNFT(wallet_address);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 	
