@@ -247,15 +247,16 @@ project_end_date, farmer_name, farmer_wallet_address, target_amount,
  value ("여름엔 꼭 먹어줘야 하는 수박", "과일의 왕, 수박이 돌아왔다!! 싸피농장은 27년 간 수박만을 고집해 온 수박계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 수박을 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 수박 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 수박! 저희 수박로는 수박쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 수박 많이 사랑해주세요!", 
  9,"2022-05-27 00:00:00", "2022-07-31 23:59:59", "박싸피", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 6000, 7076, 46, "open", 114, 87);
 
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date)
+value (9,"reward이름",20,90,1,"2022-08-08 12:59:59");
+
+insert into user(nickname, wallet_address, phone_number, profile_image, address) 
+values('Harry','0x4323aaaa222222aaaa3333aaaa2222aa','01012345678',0,'서울시 강남구');
+
+insert into funding (user_id, project_id, reward_id, funding_amount)
+value (1,9,1,100);
+
 select * from user;
 select * from project;
 select * from nft;
 select * from funding;
-
-insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date)
-value (9,"reward이름",20,90,1,"2022-08-08 12:59:59");
-
-insert into funding (user_id, project_id, reward_id, funding_amount)
-value (1,9,1,100);
-insert into user(nickname, wallet_address, phone_number, profile_image, address) 
-values('youngjin','011','01080808080','1','011');

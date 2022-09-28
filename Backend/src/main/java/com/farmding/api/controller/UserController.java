@@ -57,52 +57,52 @@ public class UserController {
 //		return new ResponseEntity<>(user, HttpStatus.OK);
 //	}
 
-	@PatchMapping("/updateaddress/{user_id}")
+	@PatchMapping("/updateaddress/{wallet_address}")
 	@ApiOperation(value = "회원 배송지 수정", notes = "집주소와 우편번호를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "수정 실패") })
-	public ResponseEntity<?> updateaddress(@PathVariable int user_id,
+	public ResponseEntity<?> updateaddress(@PathVariable String wallet_address,
 			@Valid @RequestBody UpdateAddressReq updateAddressReq) throws Exception {
-		userService.updateAddress(user_id, updateAddressReq);
+		userService.updateAddress(wallet_address, updateAddressReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@PatchMapping("/updateprofile/{user_id}")
+	@PatchMapping("/updateprofile/{wallet_address}")
 	@ApiOperation(value = "회원 프로필 사진 수정", notes = "회원 프로필 사진을 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "수정 실패") })
-	public ResponseEntity<?> updateprofileimage(@PathVariable int user_id, @RequestBody UpdateImageReq updateImageReq)
+	public ResponseEntity<?> updateprofileimage(@PathVariable String wallet_address, @RequestBody UpdateImageReq updateImageReq)
 			throws Exception {
-		userService.updateImage(user_id, updateImageReq);
+		userService.updateImage(wallet_address, updateImageReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@PatchMapping("/updateuserpr/{user_id}")
+	@PatchMapping("/updateuserpr/{wallet_address}")
 	@ApiOperation(value = "회원 프로필정보 수정", notes = "회원 닉네임, 자기소개를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "수정 실패") })
-	public ResponseEntity<?> updateprofileimage(@PathVariable int user_id,
+	public ResponseEntity<?> updateprofileimage(@PathVariable String wallet_address,
 			@Valid @RequestBody UpdateProfileReq updateProfileReq) throws Exception {
-		userService.updateProfile(user_id, updateProfileReq);
+		userService.updateProfile(wallet_address, updateProfileReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@PatchMapping("/updateuserphone/{user_id}")
+	@PatchMapping("/updateuserphone/{wallet_address}")
 	@ApiOperation(value = "회원 전화번호 수정", notes = "회원 전화번호를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "수정 실패") })
-	public ResponseEntity<?> updateuserphone(@PathVariable int user_id,
+	public ResponseEntity<?> updateuserphone(@PathVariable String wallet_address,
 			@Valid @RequestBody UpdatePhoneReq updatePhoneReq) throws Exception {
-		userService.updatePhone(user_id, updatePhoneReq);
+		userService.updatePhone(wallet_address, updatePhoneReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
-	@PatchMapping("/delete/{user_id}")
+	@PatchMapping("/delete/{wallet_address}")
 	@ApiOperation(value = "회원 탈퇴", notes = "회원이 탈퇴된다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "탈퇴 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "탈퇴 실패"), @ApiResponse(code = 500, message = "탈퇴 실패") })
-	public ResponseEntity<?> withdraw(@PathVariable int user_id) throws Exception {
-		userService.updateUserState(user_id);
+	public ResponseEntity<?> withdraw(@PathVariable String wallet_address) throws Exception {
+		userService.updateUserState(wallet_address);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
@@ -125,7 +125,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/confirm/{wallet_address}")
-	@ApiOperation(value = "지갑주소로 회원정보조회", notes = "지갑주소로 회원정보를 조회한다.")
+	@ApiOperation(value = "지갑주소로 회원정보 유무 조회", notes = "지갑주소로 회원정보 유무를 조회한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "조회 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "조회 실패"), @ApiResponse(code = 500, message = "조회 실패") })
 	public ResponseEntity<?> checkUserByWA(@PathVariable String wallet_address) throws Exception {

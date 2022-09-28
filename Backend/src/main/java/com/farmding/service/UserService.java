@@ -99,32 +99,32 @@ public class UserService {
 
 	// 회원 배송지 수정
 	@Transactional
-	public User updateAddress(int id, UpdateAddressReq updateAddressReq) throws Exception {
-		User user = userRepository.findOneByUserId(id);
+	public User updateAddress(String walletAddress, UpdateAddressReq updateAddressReq) throws Exception {
+		User user = userRepository.findOneByWalletAddress(walletAddress);
 		user.setAddress(updateAddressReq.getAddress());
 		return userRepository.save(user);
 	}
 
 	// 회원 전화번호 수정
 	@Transactional
-	public User updatePhone(int id, UpdatePhoneReq updatePhoneReq) throws Exception {
-		User user = userRepository.findOneByUserId(id);
+	public User updatePhone(String walletAddress, UpdatePhoneReq updatePhoneReq) throws Exception {
+		User user = userRepository.findOneByWalletAddress(walletAddress);
 		user.setPhoneNumber(updatePhoneReq.getPhone());
 		return userRepository.save(user);
 	}
 
 	// 회원 프로필 사진 수정
 	@Transactional
-	public User updateImage(int id, UpdateImageReq updateImageReq) throws Exception {
-		User user = userRepository.findOneByUserId(id);
+	public User updateImage(String walletAddress, UpdateImageReq updateImageReq) throws Exception {
+		User user = userRepository.findOneByWalletAddress(walletAddress);
 		user.setProfileImage(updateImageReq.getProfileImage());
 		return userRepository.save(user);
 	}
 
 	// 회원 프로필 정보(닉네임, 자기소개) 수정
 	@Transactional
-	public User updateProfile(int id, UpdateProfileReq updateProfileReq) throws Exception {
-		User user = userRepository.findOneByUserId(id);
+	public User updateProfile(String walletAddress, UpdateProfileReq updateProfileReq) throws Exception {
+		User user = userRepository.findOneByWalletAddress(walletAddress);
 		if (userRepository.existsByNickname(user.getNickname()) == false) {
 			user.setNickname(updateProfileReq.getNickname());
 			user.setUserPr(updateProfileReq.getUserPr());
@@ -137,8 +137,8 @@ public class UserService {
 
 	// 회원 탈퇴(회원 정보 상태 변경)
 	@Transactional
-	public User updateUserState(int id) throws Exception {
-		User user = userRepository.findOneByUserId(id);
+	public User updateUserState(String walletAddress) throws Exception {
+		User user = userRepository.findOneByWalletAddress(walletAddress);
 		user.setActive(false);
 		return userRepository.save(user);
 	}

@@ -17,7 +17,6 @@ import com.farmding.api.request.NftAddReq;
 import com.farmding.api.request.NftUpdateCurReq;
 import com.farmding.db.entity.Nft;
 import com.farmding.service.NftService;
-import com.farmding.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
