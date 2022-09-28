@@ -20,6 +20,11 @@ const userNicknameExistCheck = async (nickname: string) => {
   let result = await api.get(`/user/confirm/checkuser/${nickname}`);
   return result;
 };
+const chagneMyAddress = async () => {};
+const getMyInfo = async (walletAddress: string) => {
+  let userInfo = await api.get(`~~~~~`);
+  return userInfo;
+};
 const userSignUp = async (
   address: string,
   nickname: string,
@@ -32,15 +37,5 @@ const userSignUp = async (
     phoneNumber: phoneNumber,
     walletAddress: walletAddress,
   });
-  // .then(() => {
-  //   const navigate = useNavigate();
-  //   alert("회원가입 완료");
-  //   navigate("/");
-  //   return <Navigate to="/" />;
-  // })
-  // .catch((e) => {
-  //   console.log(e);
-  //   alert("회원가입 실패");
-  // });
 };
-export { userAddressExistCheck, userNicknameExistCheck, userSignUp };
+export { userAddressExistCheck, userNicknameExistCheck, userSignUp, getMyInfo };

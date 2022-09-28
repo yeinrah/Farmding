@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 // import MetaMaskOnboarding from "@metamask/onboarding";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
-import userAddressDuplicateCheck from "../../Common/API/userAddressDuplicateCheck";
 import { userAddressExistCheck } from "../../Common/API/userApi";
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
 import { loginState } from "../../Recoil/atoms/auth";
@@ -106,6 +105,7 @@ const Login = () => {
       // login
       setIsLogin(true);
     } catch (error) {
+      console.log(error);
       alert("메타마스크에 연결중 오류가 발생하였습니다.");
     }
   };

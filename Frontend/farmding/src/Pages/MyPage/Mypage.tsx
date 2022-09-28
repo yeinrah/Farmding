@@ -9,18 +9,23 @@ import {
 } from "@mui/material";
 import styles from "./MyPage.module.scss";
 import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyProject from "./MyProject";
 import MyNFT from "./MyNFT";
 import UserInfoUpdate from "./UserInfoUpdate";
 import UpdateNickName from "./UpdateNickName";
 import UpdateProfileImg from "./UpdateProfileImg";
+import { nftContract } from "../../Common/ABI/abi";
+import { registerNFT } from "../../Common/API/NFTApi";
+import { getMyInfo } from "../../Common/API/userApi";
 const MyPage = () => {
   const [value, setValue] = useState("one");
   const [open, setOpen] = useState(false);
   const [addrOpen, setAddrOpen] = useState<Boolean>(false);
   const [nickOpen, setNickOpen] = useState<Boolean>(false);
   const [profileOpen, setProfileOpen] = useState<Boolean>(false);
+  const [account, setAccount] = useState("");
+  const { ethereum } = window;
   const handleOpen = () => setOpen(true);
   const handleAddrOpen = () => setAddrOpen(true);
   const handleNickOpen = () => setNickOpen(true);
@@ -34,7 +39,7 @@ const MyPage = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-
+  useEffect(() => {});
   return (
     <>
       <Modal
@@ -136,6 +141,22 @@ const MyPage = () => {
             <MyNFT />
           </>
         )}
+        <Button
+          onClick={async () => {
+            const accounts = await ethereum.request({
+              method: "eth_requestAccounts",
+            });
+            setAccount(accounts[0]);
+            alert(accounts[0]);
+            await nftContract.methods
+              .mint(accounts[0], 1)
+              .send({ from: accounts[0] });
+            const nowNickName = await getMyInfo(accounts[0]);
+            await registerNFT("", accounts[0], nowNickName);
+          }}
+        >
+          Minting
+        </Button>
       </Box>
     </>
   );
