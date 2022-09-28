@@ -32,12 +32,6 @@ public class Nft {
 	@Column(name = "original_file_name")
 	private String originalFileName;
 	
-	@Column(name = "file_path")
-	private String filePath;
-	
-	@Column(name = "file_size")
-	private long fileSize;
-	
 	@Column(name = "nft_address")
 	private String nftAddress;
 	
@@ -53,6 +47,6 @@ public class Nft {
 	@Column(name = "current_price")
 	private double currentPrice;
 	
-	@Column(name = "expire_date")
-	private String expireDate;
+	@Column(name = "owner_nickname")
+	private String ownerNickname;
 }

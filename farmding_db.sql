@@ -7,14 +7,12 @@ CREATE TABLE `NFT` (
 	`nft_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `funding_id` int NOT NULL,
     `original_file_name` varchar(200) NOT NULL,
-    `file_path` varchar(200) NOT NULL,
-    `file_size` bigint NULL,
     `nft_address` varchar(200) NOT NULL,
     `nft_name` varchar(200) NOT NULL,
     `owner_wallet_address` varchar(200) NOT NULL,
     `is_on_sale` boolean NOT NULL,
     `current_price` double NOT NULL,
-    `expire_date` datetime NOT NULL
+    `owner_nickname` varchar(50) NOT NULL
 );
 
 CREATE TABLE `DEALS` (
