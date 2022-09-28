@@ -45,8 +45,8 @@ public class NftService {
 	@Transactional
 	public void updateIsOnSale(int nftId) throws Exception {
 		Nft id = nftRepository.findOneByNftId(nftId);
-		System.out.println("가격이 제대로 들어왔나요 ? = "+id.getCurrentPrice());
-		System.out.println("불린값이 제대로 들어왔나요 ? = "+id.isOnSale());
+//		System.out.println("가격이 제대로 들어왔나요 ? = "+id.getCurrentPrice());
+//		System.out.println("불린값이 제대로 들어왔나요 ? = "+id.isOnSale());
 		if(id.isOnSale()) {
 			nftRepository.updateIsOnSale(0, nftId);
 		}else {
