@@ -29,14 +29,8 @@ public class Nft {
 	@Column(name = "funding_id")
 	private int fundingId;
 	
-	@Column(name = "original_file_name")
-	private String originalFileName;
-	
 	@Column(name = "nft_address")
 	private String nftAddress;
-	
-	@Column(name = "nft_name")
-	private String nftName;
 	
 	@Column(name = "owner_wallet_address")
 	private String ownerWalletAddress;
