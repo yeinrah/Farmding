@@ -35,5 +35,24 @@ public class NftService {
 		return nftRepository.save(nft);
 
 	}
+	
+	@Transactional
+	public void updateCurrentPrice(double currentPrice, int nftId) throws Exception {
+		nftRepository.updateCurrentPrice(currentPrice, nftId);
+		
+	}
+	
+	@Transactional
+	public void updateIsOnSale(int nftId) throws Exception {
+		Nft id = nftRepository.findOneByNftId(nftId);
+		System.out.println("가격이 제대로 들어왔나요 ? = "+id.getCurrentPrice());
+		System.out.println("불린값이 제대로 들어왔나요 ? = "+id.isOnSale());
+		if(id.isOnSale()) {
+			nftRepository.updateIsOnSale(0, nftId);
+		}else {
+			nftRepository.updateIsOnSale(1, nftId);
+		}
+		
+	}
 
 }

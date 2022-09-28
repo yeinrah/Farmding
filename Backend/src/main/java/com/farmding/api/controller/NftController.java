@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.farmding.api.request.NftAddReq;
+import com.farmding.api.request.NftUpdateCurReq;
 import com.farmding.db.entity.Nft;
 import com.farmding.service.NftService;
 import com.farmding.service.UserService;
@@ -47,5 +50,23 @@ public class NftController {
 	public ResponseEntity<?> addNFT(@RequestBody NftAddReq nftAddReq) throws Exception {
 		nftService.addNft(nftAddReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+	
+	@PatchMapping("/updateCurrentPrice")
+	@ApiOperation(value = "currentPrice 업데이트", notes = "currentPrice 업데이트")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400 Error"),
+			@ApiResponse(code = 409, message = "409 Error"), @ApiResponse(code = 500, message = "500 Error") })
+	public ResponseEntity<?> updateCurrentPrice(@RequestBody NftUpdateCurReq nftUpdateCurReq) throws Exception {
+		nftService.updateCurrentPrice(nftUpdateCurReq.getCurrentPrice(), nftUpdateCurReq.getNftId());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PatchMapping("/updateIsOnSale/{nft_id}")
+	@ApiOperation(value = "isonsale업데이트", notes = "isonsale업데이트")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400 Error"),
+		@ApiResponse(code = 409, message = "409 Error"), @ApiResponse(code = 500, message = "500 Error") })
+	public ResponseEntity<?> updateIsOnSale(@PathVariable int nft_id) throws Exception {
+		nftService.updateIsOnSale(nft_id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
