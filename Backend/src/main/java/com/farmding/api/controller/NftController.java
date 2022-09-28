@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.farmding.api.request.NftAddReq;
 import com.farmding.db.entity.Nft;
 import com.farmding.service.NftService;
+import com.farmding.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -34,5 +38,14 @@ public class NftController {
 	public ResponseEntity<?> nftList() throws Exception {
 		List<Nft> nftData = nftService.NftList();
 		return new ResponseEntity<List<Nft>>(nftData, HttpStatus.OK);
+	}
+	
+	@PostMapping("/addNFT")
+	@ApiOperation(value = "NFT 추가", notes = "펀딩ID, NFT주소, 소유자 지갑주소, 판매여부, 현재가격, 소유자 닉네임을 통해 NFT를 추가한다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "등록 성공"), @ApiResponse(code = 400, message = "입력 오류"),
+			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "정보 중복(등록 불가)") })
+	public ResponseEntity<?> addNFT(@RequestBody NftAddReq nftAddReq) throws Exception {
+		nftService.addNft(nftAddReq);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }
