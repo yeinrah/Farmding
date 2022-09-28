@@ -14,7 +14,6 @@ import MyPage from "./Pages/MyPage/Mypage";
 import NFT from "./Pages/NFT/NFT";
 import SignUp from "./Pages/User/SignUp";
 import { loginState } from "./Recoil/atoms/auth";
-import Test from "./Test";
 
 function App() {
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
@@ -90,7 +89,7 @@ function App() {
         />
 
         {/* 404 만들기! */}
-        <Route path="*" element={<Test />}></Route>
+        {/* <Route path="*" element={<Test />}></Route> */}
       </Routes>
     </div>
   );
