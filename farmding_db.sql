@@ -6,12 +6,10 @@ USE `farmding`;
 CREATE TABLE `NFT` (
 	`nft_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `funding_id` int NOT NULL,
-    `original_file_name` varchar(200) NOT NULL,
     `nft_address` varchar(200) NOT NULL,
-    `nft_name` varchar(200) NOT NULL,
     `owner_wallet_address` varchar(200) NOT NULL,
-    `is_on_sale` boolean NOT NULL,
-    `current_price` double NOT NULL,
+    `is_on_sale` boolean NOT NULL DEFAULT false,
+    `current_price` double NOT NULL DEFAULT 0,
     `owner_nickname` varchar(50) NOT NULL
 );
 
@@ -32,8 +30,7 @@ CREATE TABLE `FUNDING` (
 	`user_id` int NOT NULL,
 	`project_id` int NOT NULL,
     `reward_id` int NOT NULL,
-	`funding_amount` double	NULL,
-	`funding_transaction_hash` varchar(200) NULL
+	`funding_amount` double	NULL
 );
 
 CREATE TABLE `PROJECT` (
@@ -252,3 +249,11 @@ project_end_date, farmer_name, farmer_wallet_address, target_amount,
 
 select * from user;
 select * from project;
+select * from nft;
+select * from funding;
+
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date)
+value (9,"reward이름",20,90,1,"2022-08-08 12:59:59");
+
+insert into funding (user_id, project_id, reward_id, funding_amount)
+value (1,9,1,100);
