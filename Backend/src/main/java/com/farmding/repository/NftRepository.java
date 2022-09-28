@@ -14,7 +14,7 @@ public interface NftRepository extends JpaRepository<Nft, String> {
 	
 	List<Nft> findAll();
 	
-	List<Nft> findAllByIsOnSale();
+//	List<Nft> findAllByIsOnSale();
 	
 	Nft findOneByNftId(int nftId);
 	@Modifying
