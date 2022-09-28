@@ -11,16 +11,19 @@ import {
 } from "@mui/material";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import { modalStyle } from "../../Common/data/Style";
-interface BuyingNFT {
+interface IBuyingNFT {
   NFTInfo: NFTInfo;
 }
 interface NFTInfo {
-  userName: string;
-  nftName: string;
-  nftPrice: number;
-  image: string;
+  nftId: number;
+  fundingId: number;
+  nftAddress: string;
+  ownerWalletAddress: string;
+  currentPrice: number;
+  ownerNickname: string;
+  onSale: boolean;
 }
-const BuyingNFT = ({ NFTInfo }: BuyingNFT) => {
+const BuyingNFT = ({ NFTInfo }: IBuyingNFT) => {
   return (
     <Box
       sx={{
@@ -39,13 +42,17 @@ const BuyingNFT = ({ NFTInfo }: BuyingNFT) => {
           fontWeight="bold"
           sx={{ mb: 3, marginLeft: "10px" }}
         >
-          {NFTInfo.userName}
+          {NFTInfo.ownerNickname}
         </Typography>
       </Box>
-      <img src={NFTInfo.image} alt="ntfImage" className={styles.NFTimg} />
+      <img
+        src={`https://${NFTInfo.nftAddress}`}
+        alt="ntfImage"
+        className={styles.NFTimg}
+      />
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <LocalAtmIcon />
-        <span className={styles.nftPrice}>{NFTInfo.nftPrice}</span>
+        <span className={styles.nftPrice}>{NFTInfo.currentPrice}</span>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-around" }}>
         <Button variant="contained" color="success" size="large">

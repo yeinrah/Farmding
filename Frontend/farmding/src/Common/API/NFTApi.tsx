@@ -29,4 +29,8 @@ const getMyNfts = async (walletAddress: string) => {
   let result = await api.get(`/user/mypage/mynft/${walletAddress}`);
   return result;
 };
-export { registerNFT, changeOnSale, changePrice, getMyNfts };
+const sellingNFTList = async () => {
+  let result = await api.get(`/findAllByIsOnSale`);
+  return result;
+};
+export { registerNFT, changeOnSale, changePrice, getMyNfts, sellingNFTList };
