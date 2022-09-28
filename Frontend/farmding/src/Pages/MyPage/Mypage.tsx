@@ -16,7 +16,7 @@ import UserInfoUpdate from "./UserInfoUpdate";
 import UpdateNickName from "./UpdateNickName";
 import UpdateProfileImg from "./UpdateProfileImg";
 import { nftContract } from "../../Common/ABI/abi";
-import { registerNFT } from "../../Common/API/NFTApi";
+import { getMyNfts, registerNFT } from "../../Common/API/NFTApi";
 import { getMyInfo } from "../../Common/API/userApi";
 const MyPage = () => {
   const [value, setValue] = useState("one");
@@ -25,6 +25,8 @@ const MyPage = () => {
   const [nickOpen, setNickOpen] = useState<Boolean>(false);
   const [profileOpen, setProfileOpen] = useState<Boolean>(false);
   const [account, setAccount] = useState("");
+  const [userInfo, setUserInfo] = useState("");
+  const [NFTInfo, setNFTInfo] = useState("");
   const { ethereum } = window;
   const handleOpen = () => setOpen(true);
   const handleAddrOpen = () => setAddrOpen(true);
@@ -39,7 +41,30 @@ const MyPage = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-  useEffect(() => {});
+  const getInfoUser = async () => {
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    setAccount(accounts[0]);
+    await getMyNfts(accounts[0]).then((info) => {
+      console.log(info.data.user);
+      setUserInfo(info.data.user);
+    });
+  };
+  const getInfoNFT = async () => {
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    setAccount(accounts[0]);
+    await getMyNfts(accounts[0]).then((info) => {
+      console.log(info.data.nft);
+      setNFTInfo(info.data.nft);
+    });
+  };
+  useEffect(() => {
+    getInfoUser();
+    getInfoNFT();
+  }, []);
   return (
     <>
       <Modal
@@ -138,7 +163,7 @@ const MyPage = () => {
         )}
         {value === "two" && (
           <>
-            <MyNFT />
+            <MyNFT nfts={NFTInfo} getInfoNFT={getInfoNFT} />
           </>
         )}
         <Button
@@ -148,11 +173,22 @@ const MyPage = () => {
             });
             setAccount(accounts[0]);
             alert(accounts[0]);
-            await nftContract.methods
+            const a = await nftContract.methods
               .mint(accounts[0], 1)
               .send({ from: accounts[0] });
-            const nowNickName = await getMyInfo(accounts[0]);
-            await registerNFT("", accounts[0], nowNickName);
+            console.log(a.events.getNFTData.returnValues[0]);
+            const nowNickName = await (
+              await getMyInfo(accounts[0])
+            ).data.user.nickname;
+            await registerNFT(
+              1,
+              a.events.getNFTData.returnValues[0],
+              nowNickName,
+              accounts[0]
+            );
+            // await getMyNfts(accounts[0]).then((b) => {
+            //   console.log(b.data);
+            // });
           }}
         >
           Minting

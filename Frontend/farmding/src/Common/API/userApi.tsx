@@ -22,7 +22,7 @@ const userNicknameExistCheck = async (nickname: string) => {
 };
 const chagneMyAddress = async () => {};
 const getMyInfo = async (walletAddress: string) => {
-  let userInfo = await api.get(`~~~~~`);
+  let userInfo = await api.get(`/user/mypage/mynft/${walletAddress}`);
   return userInfo;
 };
 const userSignUp = async (
