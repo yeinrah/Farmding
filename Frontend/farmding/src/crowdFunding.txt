@@ -34,7 +34,7 @@ contract CrowdFunding {
     address beneficiary;
     // Amount of tokens to raise
     uint goal;
-    // uint numFunders;
+    uint numFunders;
     // Total amount funded unitl now
     uint nowFundedAmount;
     // Timestamp of start of project
@@ -60,6 +60,7 @@ contract CrowdFunding {
   // { 1: project, 2: project ...}
   mapping(uint => Project) public projects;
 
+  mapping(uint => uint) public fundersCount;
   // Mapping from project id => funder => amount funded
   mapping(uint => mapping(address => uint)) public fundedAmount;
 
@@ -83,7 +84,7 @@ contract CrowdFunding {
       projects[projectsCount] = Project({
           beneficiary: msg.sender,
           goal: _goal,
-          // numFunders: 0,
+          numFunders: 0,
           nowFundedAmount: 0,
           // startAt: _startAt,
           endAt: _endAt,
@@ -115,6 +116,8 @@ contract CrowdFunding {
       // project.funders[project.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
       project.nowFundedAmount += _amount;
       fundedAmount[_id][msg.sender] += _amount;
+      project.numFunders++;
+    //   project.funders[project.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
       fundingCA = address(this);
 
       // approve 안해도 됨!!
@@ -130,6 +133,7 @@ contract CrowdFunding {
 
       project.nowFundedAmount -= _amount;
       fundedAmount[_id][msg.sender] -= _amount;
+      project.numFunders--;
       // SSFTokenContract.approve(msg.sender, _amount);
       SSFTokenContract.transfer(msg.sender, _amount);
 
@@ -140,7 +144,7 @@ contract CrowdFunding {
       Project storage project = projects[_id];
       require(project.beneficiary == msg.sender, "not beneficiary");
       // require(block.timestamp > project.endAt, "not ended");
-      require(project.nowFundedAmount >= project.goal, "fundd < goal");
+      require(project.nowFundedAmount >= project.goal, "funded < goal");
       require(!project.claimed, "already claimed");
 
       project.claimed = true;
@@ -163,6 +167,22 @@ contract CrowdFunding {
   function CABalanceOfSSF() public view returns(uint256){
       return SSFTokenContract.balanceOf(address(this));
   }
+  function getNowFundedAmount(uint256 _projectId) public view returns (uint256) {
+      Project memory project = projects[_projectId];
+      return project.nowFundedAmount;
+  }
+  function getNowFundersCnt(uint256 _projectId) public view returns (uint256) {
+      Project memory project = projects[_projectId];
+      return project.numFunders;
+  }
+    function getCloseDate(uint256 _projectId) public view returns (uint32) {
+        Project memory project = projects[_projectId];
+        return project.endAt;
+    }
+    function getClaimOrNot(uint256 _projectId) public view returns (bool) {
+        Project memory project = projects[_projectId];
+        return project.claimed;
+    }
 
   function _getMyCurrentBalanceAmount() private view returns (uint256) {
       return SSFTokenContract.balanceOf(msg.sender);

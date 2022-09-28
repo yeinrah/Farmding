@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CustomBtn from "../../../Common/UI/CustomBtn/CustomBtn";
 import { mainGreen, mainPink } from "../../../Common/data/Style";
 // scss
@@ -7,6 +7,10 @@ import styles from "./FundingProjectDetail.module.scss";
 import { Typography } from "@mui/material";
 import Modal from "@mui/material/Modal";
 import ChooseReward from "../Reward/ChooseReward";
+import { CrowdFundingContract } from "../../../Web3Config";
+import { useRecoilState } from "recoil";
+import { loginState } from "../../../Recoil/atoms/auth";
+import { isAccountChangedState } from "../../../Recoil/atoms/account";
 
 interface FundingProjectDetailProps {
   projtId: number;
@@ -25,15 +29,54 @@ const FundingProjectDetail = ({
   remainingDays,
   title,
 }: FundingProjectDetailProps) => {
+  const { ethereum } = window;
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const [isAccountChanged, SetIsAccountChanged] = useRecoilState<boolean>(
+    isAccountChangedState
+  );
+  const [nowFundedAmount, setNowFundedAmount] = useState(0);
+  const [fundersCount, setFundersCount] = useState(0);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const fundingAchieveRate = parseFloat(
-    (fundingAmount / targetAmount).toFixed(2)
+    (nowFundedAmount / targetAmount).toFixed(2)
   );
   const chooseRewardModalHandler = () => {
     handleOpen();
   };
+
+  useEffect(() => {
+    (async function () {
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      if (!accounts.length) {
+        // console.log(accounts);
+        setIsLogin(false);
+        // navigate("/login");
+        // return;
+      }
+
+      const fundedAmount = await CrowdFundingContract.methods
+        .getNowFundedAmount(projtId)
+        .call();
+      setNowFundedAmount(fundedAmount);
+      console.log(fundedAmount, "nowfundedAMount");
+
+      const fundersCnt = await CrowdFundingContract.methods
+        .getNowFundersCnt(projtId)
+        .call();
+      setFundersCount(fundersCnt);
+      console.log(fundersCnt, "펀딩한 사람들 수");
+
+      // setCurrentAccount(accounts[0]);
+      // console.log(accounts[0]);
+
+      // const projtDetail: any = await fetchProjectDetail(Number(pjtId));
+      // setPjtDetail(projtDetail);
+      // SetIsAccountChanged(false);
+      // SetIsLoading(false);
+    })();
+  }, [isAccountChanged]);
 
   return (
     <>
@@ -44,7 +87,7 @@ const FundingProjectDetail = ({
           fontWeight="bold"
           color={mainGreen}
         >
-          {fundingAmount}
+          {nowFundedAmount}
         </Typography>
         <Typography variant="h2" gutterBottom fontWeight="bold" sx={{ ml: 2 }}>
           SSF
@@ -73,7 +116,7 @@ const FundingProjectDetail = ({
       </div>
       <div className={styles.funding_funders}>
         <Typography variant="h4" gutterBottom fontWeight="bold" sx={{ ml: 1 }}>
-          {funders}명
+          {fundersCount}명
         </Typography>
         <Typography
           variant="h6"
