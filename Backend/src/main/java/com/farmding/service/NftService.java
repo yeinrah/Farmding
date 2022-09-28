@@ -43,6 +43,12 @@ public class NftService {
 	}
 	
 	@Transactional
+	public List<Nft> findAllByIsOnSale(int isOnSale) throws Exception {
+		return nftRepository.findAllByIsOnSale(isOnSale);
+		
+	}
+	
+	@Transactional
 	public void updateIsOnSale(int nftId) throws Exception {
 		Nft id = nftRepository.findOneByNftId(nftId);
 //		System.out.println("가격이 제대로 들어왔나요 ? = "+id.getCurrentPrice());
@@ -54,5 +60,9 @@ public class NftService {
 		}
 		
 	}
-
+	
+	@Transactional
+	public void updateOwnerOfNft(String ownerNickname, String ownerWalletAddress, int nftId) throws Exception {
+		nftRepository.updateOwnerOfNft(ownerNickname, ownerWalletAddress, nftId);
+	}
 }

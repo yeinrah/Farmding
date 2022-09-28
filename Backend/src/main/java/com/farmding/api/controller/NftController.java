@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.farmding.api.request.NftAddReq;
 import com.farmding.api.request.NftUpdateCurReq;
+import com.farmding.api.request.UpdateOwnerOfNftReq;
 import com.farmding.db.entity.Nft;
 import com.farmding.service.NftService;
 
@@ -66,6 +67,24 @@ public class NftController {
 		@ApiResponse(code = 409, message = "409 Error"), @ApiResponse(code = 500, message = "500 Error") })
 	public ResponseEntity<?> updateIsOnSale(@PathVariable int nft_id) throws Exception {
 		nftService.updateIsOnSale(nft_id);
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@GetMapping("/findAllByIsOnSale")
+	@ApiOperation(value = "isonsale이 true인걸 리턴", notes = "isonsale이 true인걸 리턴")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400 Error"),
+		@ApiResponse(code = 409, message = "409 Error"), @ApiResponse(code = 500, message = "500 Error") })
+	public ResponseEntity<?> updateIsOnSale() throws Exception {
+		List<Nft> nftIsOnSale = nftService.findAllByIsOnSale(1);
+		return new ResponseEntity<List<Nft>>(nftIsOnSale, HttpStatus.OK);
+	}
+	
+	@PatchMapping("/updateOwnerOfNft")
+	@ApiOperation(value = "updateOwnerOfNft 업데이트", notes = "updateOwnerOfNft 업데이트")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400 Error"),
+		@ApiResponse(code = 409, message = "409 Error"), @ApiResponse(code = 500, message = "500 Error") })
+	public ResponseEntity<?> updateOwnerOfNft(@RequestBody UpdateOwnerOfNftReq updateOwnerOfNft) throws Exception {
+		nftService.updateOwnerOfNft(updateOwnerOfNft.getOwnerNickname(), updateOwnerOfNft.getOwnerWalletAddress(), updateOwnerOfNft.getNftId());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }
