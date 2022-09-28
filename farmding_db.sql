@@ -63,7 +63,7 @@ CREATE TABLE `USER` (
 	`phone_number` varchar(13) NOT NULL,
 	`profile_image` int	NOT NULL,
 	`address` varchar(100) NOT NULL,
-	`is_active` boolean	NOT NULL,
+	`is_active` boolean	NOT NULL default true,
     `user_pr` varchar(200) NULL
 );
 
@@ -257,3 +257,5 @@ value (9,"reward이름",20,90,1,"2022-08-08 12:59:59");
 
 insert into funding (user_id, project_id, reward_id, funding_amount)
 value (1,9,1,100);
+insert into user(nickname, wallet_address, phone_number, profile_image, address) 
+values('youngjin','011','01080808080','1','011');
