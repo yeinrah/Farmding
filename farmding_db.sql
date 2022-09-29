@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS `farmding`;
 CREATE DATABASE IF NOT EXISTS `farmding` collate utf8mb4_general_ci;
 USE `farmding`;
 
-CREATE TABLE `NFT` (
+CREATE TABLE `nft` (
 	`nft_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `funding_id` int NOT NULL,
     `nft_address` varchar(200) NOT NULL,
@@ -13,27 +13,27 @@ CREATE TABLE `NFT` (
     `owner_nickname` varchar(50) NOT NULL
 );
 
-CREATE TABLE `DEALS` (
+CREATE TABLE `deals` (
 	`deal_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`nft_id` int NOT NULL,
-	`deals_address`	varchar(200) NOT NULL,
+	`deals_address` varchar(200) NOT NULL,
 	`deals_created_date` datetime NOT NULL,
 	`deals_ended_date`	datetime NOT NULL,
-	`deals_status`	boolean	NOT NULL,
-	`deals_token_address`	varchar(200) NOT NULL,
-	`seller_wallet_address`	varchar(200) NOT NULL,
-	`buyer_wallet_address`	varchar(200) NOT NULL
+	`deals_status` boolean NOT NULL,
+	`deals_token_address` varchar(200) NOT NULL,
+	`seller_wallet_address` varchar(200) NOT NULL,
+	`buyer_wallet_address` varchar(200) NOT NULL
 );
 
-CREATE TABLE `FUNDING` (
-	`funding_id` int AUTO_INCREMENT	NOT NULL PRIMARY KEY,
+CREATE TABLE `funding` (
+	`funding_id` int AUTO_INCREMENT NOT NULL PRIMARY KEY,
 	`user_id` int NOT NULL,
 	`project_id` int NOT NULL,
-    `reward_id` int NOT NULL,
-	`funding_amount` double	NULL
+	`reward_id` int NOT NULL,
+	`funding_amount` double NULL
 );
 
-CREATE TABLE `PROJECT` (
+CREATE TABLE `project` (
 	`project_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`project_title` varchar(100) NOT NULL,
 	`project_explanation` text NULL,
@@ -41,43 +41,43 @@ CREATE TABLE `PROJECT` (
 	`project_created_date` datetime NOT NULL,
 	`project_end_date` datetime NOT NULL,
 	`farmer_name` varchar(10) NOT NULL,
-	`farmer_wallet_address`	varchar(200) NOT NULL,
+	`farmer_wallet_address` varchar(200) NOT NULL,
 	`target_amount` double NOT NULL,
-    `current_amount` double NOT NULL,
+	`current_amount` double NOT NULL,
 	`project_period` int NOT NULL,
 	`funding_status` varchar(20) NOT NULL,
 	`like_amount` int NOT NULL,
 	`funder_count` int NOT NULL
 );
 
-CREATE TABLE `LIKE` (
+CREATE TABLE `like` (
 	`like_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`user_id` int NOT NULL,
 	`project_id` int NOT NULL
 );
 
-CREATE TABLE `USER` (
+CREATE TABLE `user` (
 	`user_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`nickname` varchar(50) NOT NULL,
 	`wallet_address` varchar(200) NOT NULL,
 	`phone_number` varchar(13) NOT NULL,
-	`profile_image` int	NOT NULL,
+	`profile_image` int NOT NULL,
 	`address` varchar(100) NOT NULL,
-	`is_active` boolean	NOT NULL default true,
-    `user_pr` varchar(200) NULL
+	`is_active` boolean NOT NULL default true,
+	`user_pr` varchar(200) NULL
 );
 
-CREATE TABLE `REWARD` (
-	`reward_id`	int NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE `reward` (
+	`reward_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`project_id` int NOT NULL,
 	`reward_name` varchar(50) NULL,
 	`ssf_price` double NULL,
 	`amount` int NULL,
 	`delivery_fee` int NULL,
-	`delivery_date`	datetime NOT NULL
+	`delivery_date` datetime NOT NULL
 );
 
-CREATE TABLE `IMAGES` (
+CREATE TABLE `images` (
 	`image_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`project_id` int NOT NULL,
 	`project_file_name` varchar(200) NOT NULL,
@@ -85,66 +85,66 @@ CREATE TABLE `IMAGES` (
 	`is_main` boolean NULL
 );
 
-ALTER TABLE `NFT` ADD CONSTRAINT `FK_FUNDING_TO_NFT_1` FOREIGN KEY (
+ALTER TABLE `nft` ADD CONSTRAINT `FK_funding_TO_nft_1` FOREIGN KEY (
 	`funding_id`
 )
-REFERENCES `FUNDING` (
+REFERENCES `funding` (
 	`funding_id`
 );
 
-ALTER TABLE `DEALS` ADD CONSTRAINT `FK_NFT_TO_DEALS_1` FOREIGN KEY (
+ALTER TABLE `deals` ADD CONSTRAINT `FK_nft_TO_deals_1` FOREIGN KEY (
 	`nft_id`
 )
-REFERENCES `NFT` (
+REFERENCES `nft` (
 	`nft_id`
 );
 
-ALTER TABLE `FUNDING` ADD CONSTRAINT `FK_USER_TO_FUNDING_1` FOREIGN KEY (
+ALTER TABLE `funding` ADD CONSTRAINT `FK_user_TO_funding_1` FOREIGN KEY (
 	`user_id`
 )
-REFERENCES `USER` (
+REFERENCES `user` (
 	`user_id`
 );
 
-ALTER TABLE `FUNDING` ADD CONSTRAINT `FK_PROJECT_TO_FUNDING_1` FOREIGN KEY (
+ALTER TABLE `funding` ADD CONSTRAINT `FK_project_TO_funding_1` FOREIGN KEY (
 	`project_id`
 )
-REFERENCES `PROJECT` (
+REFERENCES `project` (
 	`project_id`
 );
 
-ALTER TABLE `FUNDING` ADD CONSTRAINT `FK_REWARD_TO_FUNDING_1` FOREIGN KEY (
+ALTER TABLE `funding` ADD CONSTRAINT `FK_reward_TO_funding_1` FOREIGN KEY (
 	`reward_id`
 )
-REFERENCES `REWARD` (
+REFERENCES `reward` (
 	`reward_id`
 );
 
-ALTER TABLE `LIKE` ADD CONSTRAINT `FK_USER_TO_LIKE_1` FOREIGN KEY (
+ALTER TABLE `like` ADD CONSTRAINT `FK_user_TO_like_1` FOREIGN KEY (
 	`user_id`
 )
-REFERENCES `USER` (
+REFERENCES `user` (
 	`user_id`
 );
 
-ALTER TABLE `LIKE` ADD CONSTRAINT `FK_PROJECT_TO_LIKE_1` FOREIGN KEY (
+ALTER TABLE `like` ADD CONSTRAINT `FK_project_TO_like_1` FOREIGN KEY (
 	`project_id`
 )
-REFERENCES `PROJECT` (
+REFERENCES `project` (
 	`project_id`
 );
 
-ALTER TABLE `REWARD` ADD CONSTRAINT `FK_PROJECT_TO_REWARD_1` FOREIGN KEY (
+ALTER TABLE `reward` ADD CONSTRAINT `FK_project_TO_reward_1` FOREIGN KEY (
 	`project_id`
 )
-REFERENCES `PROJECT` (
+REFERENCES `project` (
 	`project_id`
 );
 
-ALTER TABLE `IMAGES` ADD CONSTRAINT `FK_PROJECT_TO_IMAGES_1` FOREIGN KEY (
+ALTER TABLE `images` ADD CONSTRAINT `FK_project_TO_images_1` FOREIGN KEY (
 	`project_id`
 )
-REFERENCES `PROJECT` (
+REFERENCES `project` (
 	`project_id`
 );
 
@@ -250,13 +250,9 @@ project_end_date, farmer_name, farmer_wallet_address, target_amount,
 insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date)
 value (9,"reward이름",20,90,1,"2022-08-08 12:59:59");
 
-insert into user(nickname, wallet_address, phone_number, profile_image, address) 
+insert into user (nickname, wallet_address, phone_number, profile_image, address) 
 values('Harry','0x4323aaaa222222aaaa3333aaaa2222aa','01012345678',0,'서울시 강남구');
 
 insert into funding (user_id, project_id, reward_id, funding_amount)
 value (1,9,1,100);
 
-select * from user;
-select * from project;
-select * from nft;
-select * from funding;
