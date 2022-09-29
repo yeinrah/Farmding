@@ -34,7 +34,7 @@ const NFT = () => {
         aria-labelledby="modal-title"
         // aria-describedby="modal-modal-description"
       >
-        <BuyingNFT NFTInfo={nfts[nowItem]} />
+        <BuyingNFT NFTInfo={nfts[nowItem]} onClose={handleClose} />
         {/* <SuccessModal /> */}
       </Modal>
       <Banner imgSrc={"/Assets/farmerNFTs.PNG"} isMain={false} />

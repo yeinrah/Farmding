@@ -1,21 +1,15 @@
 import styles from "./BuyingNFT.module.scss";
-import {
-  Avatar,
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Avatar, Box, Button, Typography } from "@mui/material";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import { modalStyle } from "../../Common/data/Style";
+import { nftContract, ssafyTokenContract } from "../../Common/ABI/abi";
+import { changeOnSale, updateNFTOwner } from "../../Common/API/NFTApi";
 interface IBuyingNFT {
   NFTInfo: NFTInfo;
+  onClose: () => void;
 }
 interface NFTInfo {
-  nftId: number;
+  nftId: string;
   fundingId: number;
   nftAddress: string;
   ownerWalletAddress: string;
@@ -23,7 +17,8 @@ interface NFTInfo {
   ownerNickname: string;
   onSale: boolean;
 }
-const BuyingNFT = ({ NFTInfo }: IBuyingNFT) => {
+const BuyingNFT = ({ NFTInfo, onClose }: IBuyingNFT) => {
+  const { ethereum } = window;
   return (
     <Box
       sx={{
@@ -55,10 +50,39 @@ const BuyingNFT = ({ NFTInfo }: IBuyingNFT) => {
         <span className={styles.nftPrice}>{NFTInfo.currentPrice}</span>
       </Box>
       <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-        <Button variant="contained" color="success" size="large">
+        <Button
+          variant="contained"
+          color="success"
+          size="large"
+          onClick={async () => {
+            const accounts = await ethereum.request({
+              method: "eth_requestAccounts",
+            });
+            await ssafyTokenContract.methods
+              .approve(
+                "0xcF39B0Da1C6946349971D80983800E54a8D43495",
+                NFTInfo.currentPrice
+              )
+              .send({ from: accounts[0] });
+            await nftContract.methods
+              .purchase(NFTInfo.currentPrice)
+              .send({ from: accounts[0] });
+            await updateNFTOwner(
+              NFTInfo.nftId,
+              NFTInfo.ownerNickname,
+              NFTInfo.ownerWalletAddress
+            );
+            await changeOnSale(NFTInfo.nftId)
+          }}
+        >
           구매
         </Button>
-        <Button variant="contained" color="error" size="large">
+        <Button
+          variant="contained"
+          color="error"
+          size="large"
+          onClick={onClose}
+        >
           취소
         </Button>
       </Box>
