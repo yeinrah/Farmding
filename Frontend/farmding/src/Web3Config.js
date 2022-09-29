@@ -843,11 +843,10 @@ const CrowdFundingABI = [
     type: "function",
   },
 ];
-// export const NFTcreatorAddress = "0x6a2BBCa33ad091b4D95A290D18613D8466F3252d";
-// export const SaleFactoryAddress = "0x5A8834A1DFE35bcc8bC8d78644D238ada9d1cab6";
+
 export const SSFTokenAddress = "0x0c54E456CE9E4501D2c43C38796ce3F06846C966";
-// export const CrowdFundingAddress = "0xD9bf59d3ad939f3C9332Aab25FB1CE375966A267";
-export const CrowdFundingAddress = "0xACbcD023a839B115F772db2F912175Ff5404FdEF";
+
+export const CrowdFundingAddress = "0x10D42BC219CC9146ec499e93691B0781892326ce";
 
 export const web3 = new Web3(window.ethereum);
 
