@@ -65,6 +65,7 @@ export const claimHandler = async (pjtId: number) => {
 export const fundingHandler = async (
   pjtId: number,
   fundingAmount: number,
+  selectedQuantity: number,
   shippingFee: number,
   rewardId: number
 ) => {
@@ -84,7 +85,7 @@ export const fundingHandler = async (
     const caller = fundingRes.events.Fund.returnValues.caller;
     const amount = fundingRes.events.Fund.returnValues.amount;
     alert(`${caller}가 ${amount}만큼 펀딩 완료했습니다`);
-    await updateRewardResidual(rewardId, fundingAmount);
+    await updateRewardResidual(rewardId, selectedQuantity);
     console.log(fundId, caller, amount);
 
     // funding 요청

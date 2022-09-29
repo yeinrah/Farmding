@@ -54,9 +54,11 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   // 잔고랑 계좌, 계좌 변경 상태 전역 상태관리 하기! recoil로!!!!!!!
 
   let fundingAmount: number;
+  let selectedQuantity: number;
 
   const getAmountHandler = (amount: number) => {
-    fundingAmount = amount;
+    selectedQuantity = amount;
+    fundingAmount = amount * reward.ssfPrice;
   };
 
   const rewardDetail = {
@@ -113,6 +115,7 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
             fundingHandler(
               pjtId,
               fundingAmount,
+              selectedQuantity,
               rewardDetail.shippingFee,
               rewardDetail.rewardId
             )

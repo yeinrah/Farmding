@@ -36,9 +36,9 @@ const EachRewardItem = ({
     // }
   };
   const selectChangeHandler = (selectedAmount: number) => {
-    const nowFunded = selectedAmount * price;
-    console.log("얼마 할건지!!! 배송비빼고", nowFunded);
-    getAmount(nowFunded);
+    // const nowFunded = selectedAmount * price;
+    // console.log("얼마 할건지!!! 배송비빼고", nowFunded);
+    getAmount(selectedAmount);
   };
 
   return (
