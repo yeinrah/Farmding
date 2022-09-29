@@ -43,6 +43,11 @@ public class NftService {
 	}
 	
 	@Transactional
+	public int countNft() throws Exception {
+		return nftRepository.CountNft();
+	}
+	
+	@Transactional
 	public List<Nft> findAllByIsOnSale(int isOnSale) throws Exception {
 		return nftRepository.findAllByIsOnSale(isOnSale);
 		

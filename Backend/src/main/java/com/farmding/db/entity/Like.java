@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "LIKE")
+@Table(name = "like")
 @Getter
 @Setter
 @Builder

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "NFT")
+@Table(name = "nft")
 @Getter
 @Setter
 @Builder

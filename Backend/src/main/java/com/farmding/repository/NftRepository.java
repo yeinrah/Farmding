@@ -14,6 +14,9 @@ public interface NftRepository extends JpaRepository<Nft, String> {
 	
 	List<Nft> findAll();
 	
+	@Query(value = "select count(*) from nft", nativeQuery = true)
+	int CountNft();
+
 	@Query(value = "select * from nft where is_on_sale = ?1", nativeQuery = true)
 	List<Nft> findAllByIsOnSale(int isOnSale);
 	

@@ -79,6 +79,15 @@ public class NftController {
 		return new ResponseEntity<List<Nft>>(nftIsOnSale, HttpStatus.OK);
 	}
 	
+	@GetMapping("/countNft")
+	@ApiOperation(value = "nft개수 리턴", notes = "nft개수 리턴")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400 Error"),
+		@ApiResponse(code = 409, message = "409 Error"), @ApiResponse(code = 500, message = "500 Error") })
+	public ResponseEntity<?> countNft() throws Exception {
+		int countNft = nftService.countNft();
+		return new ResponseEntity<Integer>(countNft, HttpStatus.OK);
+	}
+	
 	@PatchMapping("/updateOwnerOfNft")
 	@ApiOperation(value = "updateOwnerOfNft 업데이트", notes = "updateOwnerOfNft 업데이트")
 	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400 Error"),
