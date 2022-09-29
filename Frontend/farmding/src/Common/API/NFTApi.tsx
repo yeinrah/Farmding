@@ -33,4 +33,22 @@ const sellingNFTList = async () => {
   let result = await api.get(`/findAllByIsOnSale`);
   return result;
 };
-export { registerNFT, changeOnSale, changePrice, getMyNfts, sellingNFTList };
+const updateNFTOwner = async (
+  nftId: string,
+  ownerNickname: string,
+  ownerWalletAddress: string
+) => {
+  await api.patch(`/updateOwnerOfNft`, {
+    nftId: nftId,
+    ownerNickname: ownerNickname,
+    ownerWalletAddress: ownerWalletAddress,
+  });
+};
+export {
+  registerNFT,
+  changeOnSale,
+  changePrice,
+  getMyNfts,
+  sellingNFTList,
+  updateNFTOwner,
+};
