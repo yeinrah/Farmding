@@ -1,7 +1,9 @@
 package com.farmding.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,9 +50,43 @@ public class FundingService {
 	}
 	
 	@Transactional
-	public List<FundingList> GetFundingList(int fundingListId) throws Exception {
-		List<FundingList> list = fundingListRepository.findAllByUserId(fundingListId);
-		return list;
+	public FundingList InsertFundingList(int userId, int projectId, int rewardId, int amount) throws Exception {
+		FundingList list = FundingList.builder().userId(userId).projectId(projectId).
+				rewardId(rewardId).amount(amount).build();
+		return fundingListRepository.save(list);
+	}
+	
+	@Transactional
+	public List<Map> findAllByUserid(int userId) throws Exception {
+		List<FundingList> list = fundingListRepository.findAllByUserId(userId);
+		List<Map> mapList = new ArrayList<Map>();
+		
+		for(int i=0; i<list.size();i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			//보내줘야 할 것 = 수량, 총 펀딩 금액(수량*ssfPrice+delivery_fee)
+			// ,project_title, reward_name, delivery_fee, delivery_date
+			int amount = list.get(i).getAmount();		//총 수량
+			
+			Project project = projectRepository.findOneByProjectId(list.get(i).getProjectId());
+			String projectTitle = project.getProjectTitle();
+			Reward reward = rewardRepository.findOneByRewardId(list.get(i).getRewardId());
+			String rewardName = reward.getRewardName();
+			double ssfPrice = reward.getSsfPrice();
+			int deliveryFee = reward.getDeliveryFee();
+			double allOfFundingFee = amount * ssfPrice + deliveryFee;		//총 펀딩 금액
+			String deliveryDate = reward.getDeliveryDate();
+			
+			map.put("amount", amount);
+			map.put("allOfFundingFee", allOfFundingFee);
+			map.put("projectTitle", projectTitle);
+			map.put("rewardName", rewardName);
+			map.put("deliveryFee", deliveryFee);
+			map.put("deliveryDate", deliveryDate);
+			
+			mapList.add(map);
+		}
+		
+		return mapList;
 	}
 
 //	@Transactional

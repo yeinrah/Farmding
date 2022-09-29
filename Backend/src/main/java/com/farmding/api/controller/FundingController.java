@@ -2,6 +2,7 @@ package com.farmding.api.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,10 +10,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.farmding.api.request.InsertFundingReq;
 import com.farmding.api.request.UpdateAmountReq;
 import com.farmding.db.entity.Images;
 //import com.farmding.db.entity.Like;
@@ -94,6 +97,17 @@ public class FundingController {
 		return new ResponseEntity<List<Reward>>(list,HttpStatus.OK);
 	}
 	
+	@GetMapping("/detail/MyPageFundingList/{user_id}")
+	@ApiOperation(value = "나의 FundingList를 가져온다", notes = "나의 FundingList를 가져온다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> MyPageFundingList(@PathVariable int user_id) throws Exception {
+		
+		List<Map> list = fundingService.findAllByUserid(user_id);
+		
+		return new ResponseEntity<List<Map>>(list,HttpStatus.OK);
+	}
+	
 	@PatchMapping("/detail/updateAmount")
 	@ApiOperation(value = "reward의 남은 수량을 update한다.", notes = "reward의 남은 수량을 update한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
@@ -101,6 +115,18 @@ public class FundingController {
 	public ResponseEntity<?> updateAmount(@RequestBody UpdateAmountReq updateAmountReq) throws Exception {
 		
 		fundingService.updateAmount(updateAmountReq.getAmount(), updateAmountReq.getRewardId());
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/detail/insertFundingList")
+	@ApiOperation(value = "FundingList table을 생성한다.", notes = "FundingList table을 생성한다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> insertFundingList(@RequestBody InsertFundingReq insertFundingReq) throws Exception {
+		
+		fundingService.InsertFundingList(insertFundingReq.getUserId(), insertFundingReq.getProjectId()
+				, insertFundingReq.getRewardId(), insertFundingReq.getAmount());
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

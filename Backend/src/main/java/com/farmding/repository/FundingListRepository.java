@@ -11,6 +11,6 @@ import com.farmding.db.entity.FundingList;
 @Repository
 public interface FundingListRepository extends JpaRepository<FundingList, String> {
 //	List<Like> findAll();
-	@Query(value = "SELECT * FROM fundingList", nativeQuery = true)
+	@Query(value = "select * from fundingList where user_id = ?1", nativeQuery = true)
 	List<FundingList> findAllByUserId(int userId);
 }
