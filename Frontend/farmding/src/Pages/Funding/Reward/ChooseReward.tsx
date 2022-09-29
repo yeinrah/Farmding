@@ -24,7 +24,10 @@ import { getBalance } from "../../../utils/Tokens";
 import { useRecoilState } from "recoil";
 import { isAccountChangedState } from "../../../Recoil/atoms/account";
 import { fundingHandler } from "../../../utils/fundingProject";
-import { fetchRewardDetail } from "../../../Common/API/fundingAPI";
+import {
+  fetchRewardDetail,
+  updateRewardResidual,
+} from "../../../Common/API/fundingAPI";
 
 export interface IChooseRewardProps {
   pjtId: number;
@@ -34,6 +37,7 @@ export interface IChooseRewardProps {
 const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   const { ethereum } = window;
   const [balance, setBalance] = useState("");
+  const [isFunded, setIsFunded] = useState(false);
   const [reward, setReward] = useState({
     rewardId: 0,
     ssfPrice: 0,
@@ -61,6 +65,16 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
     fundingAmount = amount * reward.ssfPrice;
   };
 
+  const onFundingClick = async () => {
+    const fundedOrNot: boolean = await fundingHandler(
+      pjtId,
+      fundingAmount,
+      rewardDetail.shippingFee
+    );
+    setIsFunded(fundedOrNot);
+    await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
+  };
+
   const rewardDetail = {
     rewardId: reward.rewardId,
     price: reward.ssfPrice,
@@ -82,48 +96,55 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
 
   return (
     <Box sx={{ ...modalStyle, width: 500, height: 500 }}>
-      <Typography
-        id="modal-title"
-        variant="h5"
-        component="h2"
-        fontWeight="bold"
-        color={mainGreen}
-        sx={{ mb: 3 }}
-      >
-        리워드 선택
-      </Typography>
-      <div>
-        <EachRewardItem
-          title={cutLongTitle(title, 12)}
-          price={rewardDetail.price}
-          unit={rewardDetail.unit}
-          residual={rewardDetail.residual}
-          shippingFee={rewardDetail.shippingFee}
-          expectedDate={rewardDetail.expectedDate}
-          getAmount={getAmountHandler}
-        />
-      </div>
-      <div className={styles.btn}>
-        <CustomBtn
-          customSx={{
-            width: "200px",
-            height: "50px",
-            fontSize: "20px",
-            letterSpacing: 3,
-          }}
-          onclick={() =>
-            fundingHandler(
-              pjtId,
-              fundingAmount,
-              selectedQuantity,
-              rewardDetail.shippingFee,
-              rewardDetail.rewardId
-            )
-          }
-          // btnWord={"다음 단계로"}
-          btnWord={"펀딩하기"}
-        />
-      </div>
+      {isFunded ? (
+        <Typography
+          id="modal-title"
+          variant="h5"
+          component="h2"
+          fontWeight="bold"
+          color={mainGreen}
+          sx={{ mb: 3 }}
+        >
+          펀딩이 완료되었습니다.
+        </Typography>
+      ) : (
+        <>
+          <div>
+            <Typography
+              id="modal-title"
+              variant="h5"
+              component="h2"
+              fontWeight="bold"
+              color={mainGreen}
+              sx={{ mb: 3 }}
+            >
+              리워드 선택
+            </Typography>
+            <EachRewardItem
+              title={cutLongTitle(title, 12)}
+              price={rewardDetail.price}
+              unit={rewardDetail.unit}
+              residual={rewardDetail.residual}
+              shippingFee={rewardDetail.shippingFee}
+              expectedDate={rewardDetail.expectedDate}
+              getAmount={getAmountHandler}
+            />
+          </div>
+          <div className={styles.btn}>
+            <CustomBtn
+              customSx={{
+                width: "200px",
+                height: "50px",
+                fontSize: "20px",
+                letterSpacing: 3,
+              }}
+              onclick={onFundingClick}
+              // btnWord={"다음 단계로"}
+              btnWord={"펀딩하기"}
+            />
+          </div>
+        </>
+      )}
     </Box>
   );
 };

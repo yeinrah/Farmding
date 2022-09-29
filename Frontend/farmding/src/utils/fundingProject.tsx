@@ -1,4 +1,3 @@
-import { updateRewardResidual } from "../Common/API/fundingAPI";
 import { dateToUnixConverter } from "../Common/functions/DateConverter";
 import {
   CrowdFundingAddress,
@@ -65,10 +64,9 @@ export const claimHandler = async (pjtId: number) => {
 export const fundingHandler = async (
   pjtId: number,
   fundingAmount: number,
-  selectedQuantity: number,
-  shippingFee: number,
-  rewardId: number
+  shippingFee: number
 ) => {
+  let result;
   try {
     const accounts = await ethereum.request({ method: "eth_accounts" });
     const fundingPrice = fundingAmount + shippingFee;
@@ -85,12 +83,14 @@ export const fundingHandler = async (
     const caller = fundingRes.events.Fund.returnValues.caller;
     const amount = fundingRes.events.Fund.returnValues.amount;
     alert(`${caller}가 ${amount}만큼 펀딩 완료했습니다`);
-    await updateRewardResidual(rewardId, selectedQuantity);
+    result = true;
     console.log(fundId, caller, amount);
 
     // funding 요청
   } catch (error) {
     console.log(error);
+    result = false;
     console.log("펀딩 에러");
   }
+  return result;
 };
