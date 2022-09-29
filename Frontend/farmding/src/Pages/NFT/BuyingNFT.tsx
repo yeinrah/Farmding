@@ -7,6 +7,7 @@ import { changeOnSale, updateNFTOwner } from "../../Common/API/NFTApi";
 interface IBuyingNFT {
   NFTInfo: NFTInfo;
   onClose: () => void;
+  loadSellingNFTList: () => void;
 }
 interface NFTInfo {
   nftId: string;
@@ -17,7 +18,7 @@ interface NFTInfo {
   ownerNickname: string;
   onSale: boolean;
 }
-const BuyingNFT = ({ NFTInfo, onClose }: IBuyingNFT) => {
+const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
   const { ethereum } = window;
   return (
     <Box
@@ -60,7 +61,7 @@ const BuyingNFT = ({ NFTInfo, onClose }: IBuyingNFT) => {
             });
             const a = await ssafyTokenContract.methods
               .approve(
-                "0xDB3e5F13c59a0F31f1A660fF98e7A1890A94cE77",
+                "0x59539507810C20FDD381b8c9D17465D353F52ED6",
                 NFTInfo.currentPrice
               )
               .send({ from: accounts[0] });
@@ -75,6 +76,9 @@ const BuyingNFT = ({ NFTInfo, onClose }: IBuyingNFT) => {
               accounts[0]
             );
             await changeOnSale(NFTInfo.nftId);
+            onClose();
+            alert("구매완료");
+            loadSellingNFTList();
           }}
         >
           구매

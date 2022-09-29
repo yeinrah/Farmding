@@ -28,7 +28,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
   const changeSell = async () => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
     await nftContract.methods
-      .approve("0xDB3e5F13c59a0F31f1A660fF98e7A1890A94cE77", MyNFTInfo.nftId)
+      .approve("0x59539507810C20FDD381b8c9D17465D353F52ED6", MyNFTInfo.nftId)
       .send({ from: accounts[0] });
     await nftContract.methods
       .createSell(MyNFTInfo.nftId, MyNFTInfo.currentPrice)
@@ -43,6 +43,9 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
   const changePrice = (price: number) => {
     setPrice(price);
   };
+  useEffect(() => {
+    getInfoNFT();
+  }, [price]);
   return (
     <>
       <Modal

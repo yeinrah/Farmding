@@ -275,19 +275,6 @@ const NFTAbi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "count",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "uint256",
@@ -410,6 +397,11 @@ const NFTAbi = [
       {
         internalType: "uint256",
         name: "_mintAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "nftId",
         type: "uint256",
       },
     ],
@@ -769,13 +761,6 @@ const NFTAbi = [
       },
     ],
     name: "transferOwnership",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "useMint",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -1202,7 +1187,7 @@ const ssafyTokenAbi = [
     type: "function",
   },
 ];
-export const NFTAddress = "0xDB3e5F13c59a0F31f1A660fF98e7A1890A94cE77";
+export const NFTAddress = "0x59539507810C20FDD381b8c9D17465D353F52ED6";
 export const SSFTokenAddress = "0x0c54E456CE9E4501D2c43C38796ce3F06846C966";
 
 export const web3 = new Web3(window.ethereum);

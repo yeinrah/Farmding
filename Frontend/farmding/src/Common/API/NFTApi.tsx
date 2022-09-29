@@ -44,6 +44,10 @@ const updateNFTOwner = async (
     ownerWalletAddress: ownerWalletAddress,
   });
 };
+const countNFT = async () => {
+  const result = await api.get(`/countNft`);
+  return result;
+};
 export {
   registerNFT,
   changeOnSale,
@@ -51,4 +55,5 @@ export {
   getMyNfts,
   sellingNFTList,
   updateNFTOwner,
+  countNFT,
 };

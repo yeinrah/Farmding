@@ -16,7 +16,7 @@ import UserInfoUpdate from "./UserInfoUpdate";
 import UpdateNickName from "./UpdateNickName";
 import UpdateProfileImg from "./UpdateProfileImg";
 import { nftContract } from "../../Common/ABI/abi";
-import { getMyNfts, registerNFT } from "../../Common/API/NFTApi";
+import { countNFT, getMyNfts, registerNFT } from "../../Common/API/NFTApi";
 import { getMyInfo } from "../../Common/API/userApi";
 const MyPage = () => {
   const [value, setValue] = useState("one");
@@ -61,10 +61,18 @@ const MyPage = () => {
       setNFTInfo(info.data.nft);
     });
   };
+  // const setNFTCnt = async () => {
+  //   const cntNFT = await countNFT();
+  //   setNftCount(cntNFT.data);
+  //   return cntNFT.data;
+  // };
   useEffect(() => {
     getInfoUser();
     getInfoNFT();
   }, []);
+  // useEffect(() => {
+  //   setNFTCnt();
+  // }, [nftCount]);
   return (
     <>
       <Modal
@@ -173,8 +181,10 @@ const MyPage = () => {
             });
             setAccount(accounts[0]);
             alert(accounts[0]);
+            //0번부터 시작해서 +1
+            let cnt = (await (await countNFT()).data) + 1;
             const a = await nftContract.methods
-              .mint(accounts[0], 1)
+              .mint(accounts[0], 1, cnt)
               .send({ from: accounts[0] });
             console.log(a);
             console.log(a.events.getNFTData.returnValues[0]);
