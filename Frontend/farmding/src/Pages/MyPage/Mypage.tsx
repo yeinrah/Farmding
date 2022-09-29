@@ -176,6 +176,7 @@ const MyPage = () => {
             const a = await nftContract.methods
               .mint(accounts[0], 1)
               .send({ from: accounts[0] });
+            console.log(a);
             console.log(a.events.getNFTData.returnValues[0]);
             const nowNickName = await (
               await getMyInfo(accounts[0])
