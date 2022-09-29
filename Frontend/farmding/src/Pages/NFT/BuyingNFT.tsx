@@ -58,21 +58,23 @@ const BuyingNFT = ({ NFTInfo, onClose }: IBuyingNFT) => {
             const accounts = await ethereum.request({
               method: "eth_requestAccounts",
             });
-            await ssafyTokenContract.methods
+            const a = await ssafyTokenContract.methods
               .approve(
-                "0xcF39B0Da1C6946349971D80983800E54a8D43495",
+                "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8",
                 NFTInfo.currentPrice
               )
               .send({ from: accounts[0] });
-            await nftContract.methods
-              .purchase(NFTInfo.currentPrice)
+            console.log(a);
+            const b = await nftContract.methods
+              .purchase(NFTInfo.nftId)
               .send({ from: accounts[0] });
+            console.log(b);
             await updateNFTOwner(
               NFTInfo.nftId,
               NFTInfo.ownerNickname,
-              NFTInfo.ownerWalletAddress
+              accounts[0]
             );
-            await changeOnSale(NFTInfo.nftId)
+            await changeOnSale(NFTInfo.nftId);
           }}
         >
           구매
