@@ -14,21 +14,27 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "like")
+@Table(name = "fundinglist")
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Like {
+public class  FundingList{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "like_id")
-	private int likeId;
+	@Column(name = "fundinglist_id")
+	private int fundingListId;
 
 	@Column(name = "user_id")
 	private int userId;
 
 	@Column(name = "project_id")
 	private int projectId;
+
+	@Column(name = "reward_id")
+	private int rewardId;
+	
+	@Column(name = "amount")
+	private int amount;
 }

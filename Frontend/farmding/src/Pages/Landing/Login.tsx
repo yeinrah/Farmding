@@ -6,6 +6,8 @@ import { userAddressExistCheck } from "../../Common/API/userApi";
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
 import { loginState } from "../../Recoil/atoms/auth";
 import { SSFTokenAddress, web3 } from "../../Web3Config";
+import styles from "./Login.module.scss";
+// import "./Login.css";
 
 //// component
 const Login = () => {
@@ -128,7 +130,7 @@ const Login = () => {
   // );
 
   return (
-    <>
+    <div style={{backgroundImage:`url("/Assets/login_background.png")`}}className={styles.back}>     
       {isMetaMaskInstalled() ? (
         <h1>지갑에 연결하세요</h1>
       ) : (
@@ -162,7 +164,7 @@ const Login = () => {
       ) : (
         <div className="text-center">로그인해주세요!</div>
       )}
-    </>
+      </div>
   );
 };
 

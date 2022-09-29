@@ -50,10 +50,13 @@ CREATE TABLE `project` (
 	`funder_count` int NOT NULL
 );
 
-CREATE TABLE `like` (
-	`like_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`user_id` int NOT NULL,
-	`project_id` int NOT NULL
+CREATE TABLE `fundingList` (
+	`fundinglist_id`	int NOT NULL AUTO_INCREMENT,
+	`user_id`	int	NOT NULL,
+	`project_id` int NOT NULL,
+	`reward_id`	int	NOT NULL,
+	`amount`	int	NOT NULL,
+    PRIMARY KEY(`fundinglist_id`)
 );
 
 CREATE TABLE `user` (
@@ -120,16 +123,12 @@ REFERENCES `reward` (
 	`reward_id`
 );
 
-ALTER TABLE `like` ADD CONSTRAINT `FK_user_TO_like_1` FOREIGN KEY (
-	`user_id`
-)
+
 REFERENCES `user` (
 	`user_id`
 );
 
-ALTER TABLE `like` ADD CONSTRAINT `FK_project_TO_like_1` FOREIGN KEY (
-	`project_id`
-)
+
 REFERENCES `project` (
 	`project_id`
 );
@@ -255,4 +254,26 @@ values('Harry','0x4323aaaa222222aaaa3333aaaa2222aa','01012345678',0,'서울시 �
 
 insert into funding (user_id, project_id, reward_id, funding_amount)
 value (1,9,1,100);
+
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (1,"1번프로젝트리워드",11, 100, 1, "2022-08-08");
+ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (2,"2번프로젝트리워드",22, 100, 1, "2022-08-08");
+ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (3,"3번프로젝트리워드",33, 100, 1, "2022-08-08");
+ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (4,"4번프로젝트리워드",44, 100, 1, "2022-08-08");
+ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (5,"5번프로젝트리워드",55, 100, 1, "2022-08-08");
+ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (6,"6번프로젝트리워드",66, 100, 1, "2022-08-08");
+ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (7,"7번프로젝트리워드",77, 100, 1, "2022-08-08");
+ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (8,"8번프로젝트리워드",88, 100, 1, "2022-08-08");
+ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (9,"9번프로젝트리워드",99, 100, 1, "2022-08-08");
+ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+ (10,"10번프로젝트리워드",110, 100, 1, "2022-08-08");
+ SELECT * FROM farmding.reward;
 

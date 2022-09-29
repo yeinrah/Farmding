@@ -6,12 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.farmding.db.entity.Like;
+import com.farmding.db.entity.FundingList;
 
 @Repository
-public interface LikeRepository extends JpaRepository<Like, String> {
+public interface FundingListRepository extends JpaRepository<FundingList, String> {
 //	List<Like> findAll();
-	
-	@Query(value = "SELECT * FROM `like` where user_id=?1", nativeQuery = true)
-	List<Like> findAllByUserId(int userId);
+	@Query(value = "SELECT * FROM fundingList", nativeQuery = true)
+	List<FundingList> findAllByUserId(int userId);
 }
