@@ -4,6 +4,8 @@ import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import { modalStyle } from "../../Common/data/Style";
 import { nftContract, ssafyTokenContract } from "../../Common/ABI/abi";
 import { changeOnSale, updateNFTOwner } from "../../Common/API/NFTApi";
+import { Console } from "console";
+import { getMyInfo } from "../../Common/API/userApi";
 interface IBuyingNFT {
   NFTInfo: NFTInfo;
   onClose: () => void;
@@ -61,18 +63,21 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
             });
             const a = await ssafyTokenContract.methods
               .approve(
-                "0x1B525BACF85485f2655bc33931ecB36AAde990f0",
+                "0xb2b0d8d32D4861dF47e308f2DDD970CDADb79eEa",
                 NFTInfo.currentPrice
               )
               .send({ from: accounts[0] });
             console.log(a);
+            console.log(NFTInfo);
+            const myInfo = await getMyInfo(accounts[0]);
+            console.log(myInfo.data.user.nickname);
             const b = await nftContract.methods
               .purchase(NFTInfo.nftId)
               .send({ from: accounts[0] });
             console.log(b);
             await updateNFTOwner(
               NFTInfo.nftId,
-              NFTInfo.ownerNickname,
+              myInfo.data.user.nickname,
               accounts[0]
             );
             await changeOnSale(NFTInfo.nftId);
