@@ -22,7 +22,10 @@ import CustomBtn from "../../../Common/UI/CustomBtn/CustomBtn";
 
 import { getBalance } from "../../../utils/Tokens";
 import { useRecoilState } from "recoil";
-import { isAccountChangedState } from "../../../Recoil/atoms/account";
+import {
+  isAccountChangedState,
+  userNameState,
+} from "../../../Recoil/atoms/account";
 import { fundingHandler } from "../../../utils/fundingProject";
 import {
   addUserRewardQuantityInfo,
@@ -32,6 +35,7 @@ import {
 import { loginState } from "../../../Recoil/atoms/auth";
 import { getMyInfo } from "../../../Common/API/userApi";
 import DisabledBtn from "../../../Common/UI/CustomBtn/DisabledBtn";
+import FundingComplete from "./FundingComplete";
 
 export interface IChooseRewardProps {
   pjtId: number;
@@ -41,8 +45,11 @@ export interface IChooseRewardProps {
 const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   const { ethereum } = window;
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const [currentUserName, setCurrentUserName] =
+    useRecoilState<string>(userNameState);
   const [balance, setBalance] = useState("");
   const [isRewardClicked, setIsRewardClicked] = useState(false);
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [currentUserInfo, setCurrentUserInfo] = useState({
     userId: 0,
   });
@@ -68,10 +75,9 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   // 잔고랑 계좌, 계좌 변경 상태 전역 상태관리 하기! recoil로!!!!!!!
 
   let fundingAmount: number;
-  let selectedQuantity: number;
 
   const getAmountHandler = (amount: number) => {
-    selectedQuantity = amount;
+    setSelectedQuantity(amount);
     fundingAmount = amount * reward.ssfPrice;
   };
   const getClickOrNotHandler = (clickOrNot: boolean) => {
@@ -85,16 +91,14 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
       rewardDetail.shippingFee
     );
     setIsFunded(fundedOrNot);
-    console.log("ddddddddddddddddddddddddddddddddd");
-    if (selectedQuantity >= 1) {
-      await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
-      await addUserRewardQuantityInfo(
-        currentUserInfo.userId,
-        pjtId,
-        rewardDetail.rewardId,
-        selectedQuantity
-      );
-    }
+
+    await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
+    await addUserRewardQuantityInfo(
+      currentUserInfo.userId,
+      pjtId,
+      rewardDetail.rewardId,
+      selectedQuantity
+    );
   };
 
   const rewardDetail = {
@@ -115,6 +119,7 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
       const userInfo = await getMyInfo(ethereum.selectedAddress);
       console.log(userInfo.data.user, "유저 정보!!!!!!!!!!!!");
       setCurrentUserInfo(userInfo.data.user);
+      setCurrentUserName(userInfo.data.user.nickname);
       SetIsAccountChanged(false);
     })();
   }, [isAccountChanged]);
@@ -122,16 +127,14 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   return (
     <Box sx={{ ...modalStyle, width: 500, height: 500 }}>
       {isFunded ? (
-        <Typography
-          id="modal-title"
-          variant="h5"
-          component="h2"
-          fontWeight="bold"
-          color={mainGreen}
-          sx={{ mb: 3 }}
-        >
-          펀딩이 완료되었습니다.
-        </Typography>
+        <FundingComplete
+          title={cutLongTitle(title, 12)}
+          price={rewardDetail.price}
+          unit={rewardDetail.unit}
+          shippingFee={rewardDetail.shippingFee}
+          expectedDate={rewardDetail.expectedDate}
+          selectedQuantity={selectedQuantity}
+        />
       ) : (
         <>
           <div>

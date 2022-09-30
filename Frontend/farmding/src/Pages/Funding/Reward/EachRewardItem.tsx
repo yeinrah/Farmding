@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomSelect from "../../../Common/UI/Select/CustomSelect";
 import styles from "./EachRewardItem.module.scss";
 
