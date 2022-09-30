@@ -1,18 +1,20 @@
 package com.farmding.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.farmding.db.entity.FundingList;
 import com.farmding.db.entity.Images;
-import com.farmding.db.entity.Like;
 import com.farmding.db.entity.Project;
 import com.farmding.db.entity.Reward;
+import com.farmding.repository.FundingListRepository;
 import com.farmding.repository.ImagesRepository;
-import com.farmding.repository.LikeRepository;
 import com.farmding.repository.ProjectRepository;
 import com.farmding.repository.RewardRepository;
 
@@ -21,18 +23,18 @@ public class FundingService {
 	@Autowired
 	private ProjectRepository projectRepository;
 	@Autowired
-	private LikeRepository likeRepository;
+	private FundingListRepository fundingListRepository;
 	@Autowired
 	private ImagesRepository imagesRepository;
 	@Autowired
 	private RewardRepository rewardRepository;
 	
 	
-	public FundingService(ProjectRepository projectRepository, LikeRepository likeRepository,
+	public FundingService(ProjectRepository projectRepository, FundingListRepository fundingListRepository,
 			ImagesRepository imagesRepository, RewardRepository rewardRepository) {
 		super();
 		this.projectRepository = projectRepository;
-		this.likeRepository = likeRepository;
+		this.fundingListRepository = fundingListRepository;
 		this.imagesRepository = imagesRepository;
 		this.rewardRepository = rewardRepository;
 	}
@@ -48,27 +50,61 @@ public class FundingService {
 	}
 	
 	@Transactional
-	public List<Like> likeFunding(int userId) throws Exception {
-		List<Like> list = likeRepository.findAllByUserId(userId);
-		return list;
+	public FundingList InsertFundingList(int userId, int projectId, int rewardId, int amount) throws Exception {
+		FundingList list = FundingList.builder().userId(userId).projectId(projectId).
+				rewardId(rewardId).amount(amount).build();
+		return fundingListRepository.save(list);
+	}
+	
+	@Transactional
+	public List<Map> findAllByUserid(int userId) throws Exception {
+		List<FundingList> list = fundingListRepository.findAllByUserId(userId);
+		List<Map> mapList = new ArrayList<Map>();
+		
+		for(int i=0; i<list.size();i++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			//보내줘야 할 것 = 수량, 총 펀딩 금액(수량*ssfPrice+delivery_fee)
+			// ,project_title, reward_name, delivery_fee, delivery_date
+			int amount = list.get(i).getAmount();		//총 수량
+			
+			Project project = projectRepository.findOneByProjectId(list.get(i).getProjectId());
+			String projectTitle = project.getProjectTitle();
+			Reward reward = rewardRepository.findOneByRewardId(list.get(i).getRewardId());
+			String rewardName = reward.getRewardName();
+			double ssfPrice = reward.getSsfPrice();
+			int deliveryFee = reward.getDeliveryFee();
+			double allOfFundingFee = amount * ssfPrice + deliveryFee;		//총 펀딩 금액
+			String deliveryDate = reward.getDeliveryDate();
+			int projectId = project.getProjectId();
+			map.put("amount", amount);
+			map.put("allOfFundingFee", allOfFundingFee);
+			map.put("projectTitle", projectTitle);
+			map.put("rewardName", rewardName);
+			map.put("deliveryFee", deliveryFee);
+			map.put("deliveryDate", deliveryDate);
+			map.put("projectId", projectId);
+			mapList.add(map);
+		}
+		
+		return mapList;
 	}
 
-	@Transactional
-	public List<Project> getUserLikeProject(List<Like> likeData) throws Exception {
-		
-		List<Integer> idData = new ArrayList<>();
-		for(int i=0; i<likeData.size();i++) {
-			idData.add(likeData.get(i).getProjectId());
-//			System.out.println("getProjectId==> "+likeData.get(i).getProjectId());
-		}
-		
-		List<Project> list = new ArrayList<Project>();
-		for(int i=0; i<idData.size();i++) {
-			list.add(projectRepository.findOneByProjectId(idData.get(i)));
-		}
-		
-		return list;
-	}
+//	@Transactional
+//	public List<Project> getUserLikeProject(List<Like> likeData) throws Exception {
+//		
+//		List<Integer> idData = new ArrayList<>();
+//		for(int i=0; i<likeData.size();i++) {
+//			idData.add(likeData.get(i).getProjectId());
+////			System.out.println("getProjectId==> "+likeData.get(i).getProjectId());
+//		}
+//		
+//		List<Project> list = new ArrayList<Project>();
+//		for(int i=0; i<idData.size();i++) {
+//			list.add(projectRepository.findOneByProjectId(idData.get(i)));
+//		}
+//		
+//		return list;
+//	}
 	
 	@Transactional
 	public Project FindOneByProjectId(int projectId) throws Exception {
@@ -83,6 +119,15 @@ public class FundingService {
 	@Transactional
 	public List<Reward> findSsfReward(int projectId) throws Exception {
 		return rewardRepository.findAllByProjectId(projectId);
+	}
+	
+	@Transactional
+	public void updateAmount(int amount, int rewardId) throws Exception {
+		
+		Reward reward = rewardRepository.findOneByRewardId(rewardId);
+		int result = reward.getAmount() - amount;
+		rewardRepository.updateAmount(result, rewardId);
+		
 	}
 
 	

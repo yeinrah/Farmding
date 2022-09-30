@@ -1,3 +1,4 @@
+import { env } from "process";
 import React, { useEffect, useState } from "react";
 // import MetaMaskOnboarding from "@metamask/onboarding";
 import { useNavigate } from "react-router-dom";
@@ -6,6 +7,8 @@ import { userAddressExistCheck } from "../../Common/API/userApi";
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
 import { loginState } from "../../Recoil/atoms/auth";
 import { SSFTokenAddress, web3 } from "../../Web3Config";
+import styles from "./Login.module.scss";
+// import "./Login.css";
 
 //// component
 const Login = () => {
@@ -128,24 +131,30 @@ const Login = () => {
   // );
 
   return (
-    <>
+    <div className={styles.LoginMain}>
+    {/* <div style={{backgroundImage:`url("/Assets/login_background.png")`}}className={styles.back}> 
+    </div>     */}
+    <img src={process.env.PUBLIC_URL+"/Assets/login_background.png"} className={styles.back}/>
+    <div className={styles.LoginMenu}>
       {isMetaMaskInstalled() ? (
-        <h1>지갑에 연결하세요</h1>
+        <h1 className={styles.p}>지갑에 연결하세요</h1>
       ) : (
-        <h1>지갑이 없으신가요?</h1>
+        <h1 className={styles.p}>지갑이 없으신가요?</h1>
       )}
       {account && <p>연결된 지갑 주소 : {account}</p>}
-      <p>저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는</p>
-      <p>
+      <p className={styles.p}>저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는</p>
+      <p className={styles.p}>
         구글 확장프로그램인 <span>메타마스크</span>를 이용하여 로그인 합니다
       </p>
-      <p>이미 지갑을 소유하셨다면 회원가입 절차 필요없이</p>
-      <p>서비스를 바로 이용할 수 있습니다</p>
+      <p className={styles.p}>이미 지갑을 소유하셨다면 회원가입 절차 필요없이</p>
+      <p className={styles.p}>서비스를 바로 이용할 수 있습니다</p>
+      <br></br>
+      <br></br>
       {/* <Button onClick={onClickButton}>
         <Logo src="/essets/images/metamask_logo.png" alt="Logo" />
         {onboardButtonText}
       </Button> */}
-
+      <div className={styles.p}>
       <CustomBtn
         customSx={{
           width: "300px",
@@ -157,12 +166,16 @@ const Login = () => {
         // btnWord={btnName}
         btnWord={onboardButtonText}
       />
+      </div>
+      <br></br>
+      <br></br>
       {isLogin ? (
         <div className="text-center">My Wallet: {account}</div>
       ) : (
-        <div className="text-center">로그인해주세요!</div>
+        <div  className={styles.p}>로그인해주세요!</div>
       )}
-    </>
+      </div>
+      </div>
   );
 };
 

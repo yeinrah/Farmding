@@ -81,9 +81,8 @@ public class UserController {
 	@ApiOperation(value = "회원 프로필정보 수정", notes = "회원 닉네임, 자기소개를 수정한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "수정 성공"), @ApiResponse(code = 400, message = "입력 오류"),
 			@ApiResponse(code = 409, message = "수정 실패"), @ApiResponse(code = 500, message = "수정 실패") })
-	public ResponseEntity<?> updateprofileimage(@PathVariable String wallet_address,
-			@Valid @RequestBody UpdateProfileReq updateProfileReq) throws Exception {
-		userService.updateProfile(wallet_address, updateProfileReq);
+	public ResponseEntity<?> updateprofileimage(@Valid @RequestBody UpdateProfileReq updateProfileReq) throws Exception {
+		userService.updateProfile(updateProfileReq);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
