@@ -80,8 +80,8 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
               const accounts = await ethereum.request({
                 method: "eth_requestAccounts",
               });
-              changeMyNickNamePr(accounts[0], nowNickname, nowPr);
-              changeInfo({ ...userInfo, nickname: nowNickname, UserPr: nowPr });
+              changeMyNickNamePr(nowNickname, nowPr, accounts[0]);
+              changeInfo({ ...userInfo, nickname: nowNickname, userPr: nowPr });
               handleClose();
             }}
           >

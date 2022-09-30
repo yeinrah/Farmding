@@ -21,13 +21,14 @@ const userNicknameExistCheck = async (nickname: string) => {
   return result;
 };
 const changeMyNickNamePr = async (
-  walletAddress: string,
   nickname: string,
-  userPr: string
+  userPr: string,
+  walletAddress: string
 ) => {
   await api.patch(`/user/updateuserpr/${walletAddress}`, {
     nickname: nickname,
     userPr: userPr,
+    walletAddress: walletAddress,
   });
 };
 const changeMyProfile = async (walletAddress: string, profileImage: number) => {

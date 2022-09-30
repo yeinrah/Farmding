@@ -3,12 +3,11 @@ import Banner from "../../Common/UI/Banner/Banner";
 import SearchBar from "../../Common/UI/SearchBar/SearchBar";
 import NFTItem from "./NFTItem";
 import { modalStyle } from "../../Common/data/Style";
-import { Modal, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Modal } from "@mui/material";
 import { useEffect, useState } from "react";
 import BuyingNFT from "./BuyingNFT";
-import SuccessModal from "./SuccessModal";
 import { sellingNFTList } from "../../Common/API/NFTApi";
+import { getMyInfo } from "../../Common/API/userApi";
 const NFT = () => {
   const [open, setOpen] = useState(false);
   const [nowItem, setNowItem] = useState(0);
@@ -21,6 +20,7 @@ const NFT = () => {
   };
   useEffect(() => {
     loadSellingNFTList();
+    // loadUserImage();
   }, []);
   const showModal = (selectedNumber: number) => {
     handleOpen();
@@ -47,15 +47,17 @@ const NFT = () => {
       </div>
       <div className={styles.NFTsBox}>
         <span className={styles.title}>NFT 목록</span>
-        {nfts.map((item, index) => (
-          <div
-            onClick={() => {
-              showModal(index);
-            }}
-          >
-            <NFTItem NFTInfo={item} />
-          </div>
-        ))}
+        {nfts.map((item, index) => {
+          return (
+            <div
+              onClick={() => {
+                showModal(index);
+              }}
+            >
+              <NFTItem NFTInfo={item} getMyInfo={getMyInfo} />
+            </div>
+          );
+        })}
       </div>
     </>
   );

@@ -37,6 +37,7 @@ const MyPage = () => {
     nickname: "",
     address: "",
     profileImage: 0,
+    userPr: "",
   });
   const [NFTInfo, setNFTInfo] = useState("");
   const { ethereum } = window;
@@ -153,7 +154,7 @@ const MyPage = () => {
                 }}
               />
             </Box>
-            <Typography sx={{ margin: "1rem 0" }}>안녕하세요</Typography>
+            <Typography sx={{ margin: "1rem 0" }}>{userInfo.userPr}</Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
                 sx={{ color: "#5DAE8B", fontWeight: "bold", margin: "auto 0" }}

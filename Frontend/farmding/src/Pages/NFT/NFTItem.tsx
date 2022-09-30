@@ -1,6 +1,8 @@
 import { Avatar } from "@mui/material";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import styles from "./NFTItem.module.scss";
+import profileImages from "../../Assets/profile/profileImages";
+import { useEffect, useState } from "react";
 interface NFTInfo {
   nftId: number;
   fundingId: number;
@@ -12,12 +14,26 @@ interface NFTInfo {
 }
 interface NFTitemProps {
   NFTInfo: NFTInfo;
+  getMyInfo: (wallet: string) => {};
 }
-const NFTItem = ({ NFTInfo }: NFTitemProps) => {
+const NFTItem = ({ NFTInfo, getMyInfo }: NFTitemProps) => {
+  const [image, setImage] = useState(0);
+  const loadUserImage = async () => {
+    const account = NFTInfo.ownerWalletAddress;
+    const result: any = await getMyInfo(account);
+    setImage(result.data.user.profileImage);
+  };
+  useEffect(() => {
+    loadUserImage();
+  });
   return (
     <div className={styles.NFTBox}>
       <div className={styles.userInfo}>
-        <Avatar alt={NFTInfo.ownerNickname} sx={{ width: 24, height: 24 }} />
+        <Avatar
+          alt={NFTInfo.ownerNickname}
+          sx={{ width: 24, height: 24 }}
+          src={profileImages[image]}
+        />
         <span className={styles.userTitle}>{NFTInfo.ownerNickname}</span>
       </div>
       <img
