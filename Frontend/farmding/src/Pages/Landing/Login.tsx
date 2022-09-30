@@ -48,6 +48,8 @@ const Login = () => {
     }
   };
 
+
+
   // 메타마스크 설치 여부에 따라 onClick함수 변경(설치 or 연결)
   const onClickButton = () => {
     if (!isMetaMaskInstalled()) {
@@ -129,6 +131,10 @@ const Login = () => {
   //     },
   //   }
   // );
+  const onclickAlert = ()=>{
+    alert("저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는 구글 확장프로그램인 메타마스크를 이용하여 로그인 합니다.\n"
+     +"이미 지갑을 소유하셨다면 회원가입 절차 필요없이 서비스를 바로 이용할 수 있습니다.");
+  };
 
   return (
     <div className={styles.LoginMain}>
@@ -141,13 +147,16 @@ const Login = () => {
       ) : (
         <h1 className={styles.p}>지갑이 없으신가요?</h1>
       )}
+      <div className={styles.p}>
+      <img src={process.env.PUBLIC_URL+"/Assets/farmer_removebg.png"} className={styles.farmer}/>
+      </div>
       {account && <p>연결된 지갑 주소 : {account}</p>}
-      <p className={styles.p}>저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는</p>
+      {/* <p className={styles.p}></p>
       <p className={styles.p}>
-        구글 확장프로그램인 <span>메타마스크</span>를 이용하여 로그인 합니다
+        <span></span>
       </p>
-      <p className={styles.p}>이미 지갑을 소유하셨다면 회원가입 절차 필요없이</p>
-      <p className={styles.p}>서비스를 바로 이용할 수 있습니다</p>
+      <p className={styles.p}></p>
+      <p className={styles.p}></p> */}
       <br></br>
       <br></br>
       {/* <Button onClick={onClickButton}>
@@ -166,6 +175,7 @@ const Login = () => {
         // btnWord={btnName}
         btnWord={onboardButtonText}
       />
+          <img src={process.env.PUBLIC_URL+"/Assets/helpButton.png"} className={styles.help} onClick={onclickAlert}/>
       </div>
       <br></br>
       <br></br>
