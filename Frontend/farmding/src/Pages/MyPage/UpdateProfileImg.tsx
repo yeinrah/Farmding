@@ -1,7 +1,10 @@
 import { Box } from "@mui/material";
 import { modalStyle } from "../../Common/data/Style";
 import profileImages from "../../Assets/profile/profileImages";
-const UpdateProfileImg = () => {
+import { changeMyProfile } from "../../Common/API/userApi";
+import { useState } from "react";
+const UpdateProfileImg = ({ handleClose, changeProfile, userInfo }: any) => {
+  const { ethereum } = window;
   return (
     <>
       <Box
@@ -22,9 +25,16 @@ const UpdateProfileImg = () => {
                 src={profileImages[index]}
                 alt="images"
                 style={{ width: "90px", height: "80px", cursor: "pointer" }}
+                onClick={async () => {
+                  const accounts = await ethereum.request({
+                    method: "eth_requestAccounts",
+                  });
+                  changeMyProfile(accounts[0], index);
+                  changeProfile({ ...userInfo, profileImage: index });
+                  handleClose();
+                }}
               />
             </Box>
-            // <div>ha!!!!!!!!!!!!!!1123</div>
           ))}
         </Box>
       </Box>

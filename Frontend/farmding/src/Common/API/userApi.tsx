@@ -20,7 +20,26 @@ const userNicknameExistCheck = async (nickname: string) => {
   let result = await api.get(`/user/confirm/checkuser/${nickname}`);
   return result;
 };
-const chagneMyAddress = async () => {};
+const changeMyNickNamePr = async (
+  walletAddress: string,
+  nickname: string,
+  userPr: string
+) => {
+  await api.patch(`/user/updateuserpr/${walletAddress}`, {
+    nickname: nickname,
+    userPr: userPr,
+  });
+};
+const changeMyProfile = async (walletAddress: string, profileImage: number) => {
+  await api.patch(`/user/updateprofile/${walletAddress}`, {
+    profileImage: profileImage,
+  });
+};
+const changeMyAddress = async (walletAddress: string, address: string) => {
+  await api.patch(`/user/updateaddress/${walletAddress}`, {
+    address: address,
+  });
+};
 const getMyInfo = async (walletAddress: string) => {
   let userInfo = await api.get(`/user/mypage/mynft/${walletAddress}`);
   return userInfo;
@@ -38,4 +57,12 @@ const userSignUp = async (
     walletAddress: walletAddress,
   });
 };
-export { userAddressExistCheck, userNicknameExistCheck, userSignUp, getMyInfo };
+export {
+  userAddressExistCheck,
+  userNicknameExistCheck,
+  changeMyNickNamePr,
+  changeMyProfile,
+  changeMyAddress,
+  getMyInfo,
+  userSignUp,
+};
