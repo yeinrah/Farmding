@@ -1,7 +1,12 @@
 import { Box, Button, TextareaAutosize, TextField } from "@mui/material";
+import { useState } from "react";
+import { changeMyNickNamePr } from "../../Common/API/userApi";
 import { modalStyle } from "../../Common/data/Style";
 
-const UpdateNickName = () => {
+const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
+  const [nowNickname, setNowNickname] = useState("");
+  const [nowPr, setNowPr] = useState("");
+  const { ethereum } = window;
   return (
     <>
       <Box
@@ -15,7 +20,12 @@ const UpdateNickName = () => {
       >
         <Box sx={{ fontWeight: "bold" }}>소개를 작성하세요</Box>
         <Box sx={{ display: "flex", margin: "2rem 0" }}>
-          <TextField label="닉네임"></TextField>
+          <TextField
+            label="닉네임"
+            onChange={(v) => {
+              setNowNickname(v.target.value);
+            }}
+          ></TextField>
           <Button
             sx={{
               backgroundColor: "#5DAE8B",
@@ -30,7 +40,12 @@ const UpdateNickName = () => {
           </Button>
         </Box>
         <Box sx={{ display: "flex", margin: "2rem 0" }}>
-          <TextField label="자기소개"></TextField>
+          <TextField
+            label="자기소개"
+            onChange={(v) => {
+              setNowPr(v.target.value);
+            }}
+          ></TextField>
           <Button
             sx={{
               backgroundColor: "#5DAE8B",
@@ -60,6 +75,14 @@ const UpdateNickName = () => {
                 color: "#fff",
                 backgroundColor: "#5DAE8B",
               },
+            }}
+            onClick={async () => {
+              const accounts = await ethereum.request({
+                method: "eth_requestAccounts",
+              });
+              changeMyNickNamePr(nowNickname, nowPr, accounts[0]);
+              changeInfo({ ...userInfo, nickname: nowNickname, userPr: nowPr });
+              handleClose();
             }}
           >
             확인

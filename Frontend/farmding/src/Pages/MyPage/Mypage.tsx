@@ -18,6 +18,14 @@ import UpdateProfileImg from "./UpdateProfileImg";
 import { nftContract } from "../../Common/ABI/abi";
 import { countNFT, getMyNfts, registerNFT } from "../../Common/API/NFTApi";
 import { getMyInfo } from "../../Common/API/userApi";
+import profileImages from "../../Assets/profile/profileImages";
+// interface UserInfo {
+//   userId: number;
+//   nickname: string;
+//   walletAddress: string;
+//   phoneNumber: string;
+//   profileImage: number;
+// }
 const MyPage = () => {
   const [value, setValue] = useState("one");
   const [open, setOpen] = useState(false);
@@ -25,7 +33,12 @@ const MyPage = () => {
   const [nickOpen, setNickOpen] = useState<Boolean>(false);
   const [profileOpen, setProfileOpen] = useState<Boolean>(false);
   const [account, setAccount] = useState("");
-  const [userInfo, setUserInfo] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    nickname: "",
+    address: "",
+    profileImage: 0,
+    userPr: "",
+  });
   const [NFTInfo, setNFTInfo] = useState("");
   const { ethereum } = window;
   const handleOpen = () => setOpen(true);
@@ -82,9 +95,27 @@ const MyPage = () => {
         // aria-describedby="modal-modal-description"
       >
         <>
-          {addrOpen && <UserInfoUpdate />}
-          {nickOpen && <UpdateNickName />}
-          {profileOpen && <UpdateProfileImg />}
+          {addrOpen && (
+            <UserInfoUpdate
+              handleClose1={handleClose}
+              changeAddress={setUserInfo}
+              userInfo={userInfo}
+            />
+          )}
+          {nickOpen && (
+            <UpdateNickName
+              handleClose={handleClose}
+              changeInfo={setUserInfo}
+              userInfo={userInfo}
+            />
+          )}
+          {profileOpen && (
+            <UpdateProfileImg
+              handleClose={handleClose}
+              changeProfile={setUserInfo}
+              userInfo={userInfo}
+            />
+          )}
         </>
         {/* <SuccessModal /> */}
       </Modal>
@@ -102,6 +133,7 @@ const MyPage = () => {
               cursor: "pointer",
               margin: "2rem 0",
             }}
+            src={profileImages[userInfo.profileImage]}
             onClick={() => {
               handleOpen();
               handleProfileOpen();
@@ -112,7 +144,7 @@ const MyPage = () => {
               <Typography
                 sx={{ color: "#5DAE8B", fontSize: "2rem", fontWeight: "bold" }}
               >
-                nickname
+                {userInfo.nickname}
               </Typography>
               <EditIcon
                 sx={{ margin: "auto 1rem", cursor: "pointer" }}
@@ -122,11 +154,11 @@ const MyPage = () => {
                 }}
               />
             </Box>
-            <Typography sx={{ margin: "1rem 0" }}>안녕하세요</Typography>
+            <Typography sx={{ margin: "1rem 0" }}>{userInfo.userPr}</Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
                 sx={{ color: "#5DAE8B", fontWeight: "bold", margin: "auto 0" }}
-              >{`배송지주소 : `}</Typography>
+              >{`배송지주소 : ${userInfo.address}`}</Typography>
               <Button
                 variant="contained"
                 color="error"

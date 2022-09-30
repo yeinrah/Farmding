@@ -3,11 +3,13 @@ import { modalStyle } from "../../Common/data/Style";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
-const UserInfoUpdate = () => {
+import { changeMyAddress } from "../../Common/API/userApi";
+const UserInfoUpdate = ({ handleClose1, userInfo, changeAddress }: any) => {
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("상세주소");
+  const { ethereum } = window;
   const handleClose = () => {
     setOpen(false);
   };
@@ -62,7 +64,13 @@ const UserInfoUpdate = () => {
               주소 찾기
             </Button>
           </Box>
-          <TextField label="상세 주소" sx={{ margin: "1.6rem 0" }}></TextField>
+          <TextField
+            label="상세 주소"
+            sx={{ margin: "1.6rem 0" }}
+            onChange={(v) => {
+              setAddressDetail(v.target.value);
+            }}
+          ></TextField>
         </Box>
 
         <Box sx={{ display: "flex", justifyContent: "space-around" }}>
@@ -74,6 +82,17 @@ const UserInfoUpdate = () => {
                 color: "#fff",
                 backgroundColor: "#5DAE8B",
               },
+            }}
+            onClick={async () => {
+              const accounts = await ethereum.request({
+                method: "eth_requestAccounts",
+              });
+              changeMyAddress(accounts[0], `${address} ${addressDetail}`);
+              changeAddress({
+                ...userInfo,
+                address: `${address} ${addressDetail}`,
+              });
+              handleClose1();
             }}
           >
             확인
