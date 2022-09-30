@@ -1,3 +1,4 @@
+import { env } from "process";
 import React, { useEffect, useState } from "react";
 // import MetaMaskOnboarding from "@metamask/onboarding";
 import { useNavigate } from "react-router-dom";
@@ -130,14 +131,18 @@ const Login = () => {
   // );
 
   return (
-    <div style={{backgroundImage:`url("/Assets/login_background.png")`}}className={styles.back}>     
+    <div className={styles.LoginMain}>
+    {/* <div style={{backgroundImage:`url("/Assets/login_background.png")`}}className={styles.back}> 
+    </div>     */}
+    <img src={process.env.PUBLIC_URL+"/Assets/login_background.png"} className={styles.back}/>
+    <div className={styles.LoginMenu}>
       {isMetaMaskInstalled() ? (
         <h1>지갑에 연결하세요</h1>
       ) : (
         <h1>지갑이 없으신가요?</h1>
       )}
       {account && <p>연결된 지갑 주소 : {account}</p>}
-      <p>저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는</p>
+      <p className={styles.p}>저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는</p>
       <p>
         구글 확장프로그램인 <span>메타마스크</span>를 이용하여 로그인 합니다
       </p>
@@ -164,6 +169,7 @@ const Login = () => {
       ) : (
         <div className="text-center">로그인해주세요!</div>
       )}
+      </div>
       </div>
   );
 };

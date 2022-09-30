@@ -11,7 +11,7 @@ interface CustomBtnProps {
 
 const CustomButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText(mainGreen),
-  backgroundColor: mainGreen,
+  backgroundColor: "#FF7676",
   border: "3px solid #CAD6E2",
   '&:hover': {
     backgroundColor: "#3C7B60",

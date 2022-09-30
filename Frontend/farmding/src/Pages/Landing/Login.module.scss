@@ -1,3 +1,15 @@
+.LoginMain{
+    display:flex;
+    background-color: #5DAE8B;
+}
+.LoginMenu{
+    display: flex;
+    flex-direction: column;
+}
+.p{
+    text-align: center;
+}
 .back{
     height:100vh;
+    background-size: 3000px;
 }

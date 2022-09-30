@@ -13,6 +13,9 @@ import lombok.*;
 @ApiModel("UpdateNProfileReq")
 public class UpdateProfileReq {
 	
+	@ApiModelProperty(name = "userId", example = "1")
+	private int userId;
+	
 	@ApiModelProperty(name = "유저 Nickname", example = "Harry")
 	@NotNull(message = "닉네임 칸을 채워주세요.")
 	@Pattern(regexp = "^[0-9a-zA-Z가-힣]*$", message = "닉네임은 숫자, 영어, 한글만 가능하며 1자 ~ 50자의 닉네임이 가능합니다.")
@@ -21,4 +24,5 @@ public class UpdateProfileReq {
 
 	@ApiModelProperty(name = "유저 자기소개", example = "저는 사과를 좋아해요")
 	private String userPr;
+	
 }
