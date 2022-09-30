@@ -75,14 +75,14 @@ public class FundingService {
 			int deliveryFee = reward.getDeliveryFee();
 			double allOfFundingFee = amount * ssfPrice + deliveryFee;		//총 펀딩 금액
 			String deliveryDate = reward.getDeliveryDate();
-			
+			int projectId = project.getProjectId();
 			map.put("amount", amount);
 			map.put("allOfFundingFee", allOfFundingFee);
 			map.put("projectTitle", projectTitle);
 			map.put("rewardName", rewardName);
 			map.put("deliveryFee", deliveryFee);
 			map.put("deliveryDate", deliveryDate);
-			
+			map.put("projectId", projectId);
 			mapList.add(map);
 		}
 		
