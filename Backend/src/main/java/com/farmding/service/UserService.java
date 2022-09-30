@@ -124,7 +124,7 @@ public class UserService {
 	// 회원 프로필 정보(닉네임, 자기소개) 수정
 	@Transactional
 	public User updateProfile(UpdateProfileReq updateProfileReq) throws Exception {
-		User user = userRepository.findOneByUserId(updateProfileReq.getUserId());
+		User user = userRepository.findOneByWalletAddress(updateProfileReq.getWalletAddress());
 		if (userRepository.existsByNickname(user.getNickname())) {
 			user.setNickname(updateProfileReq.getNickname());
 			user.setUserPr(updateProfileReq.getUserPr());

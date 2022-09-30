@@ -13,8 +13,8 @@ import lombok.*;
 @ApiModel("UpdateNProfileReq")
 public class UpdateProfileReq {
 	
-	@ApiModelProperty(name = "userId", example = "1")
-	private int userId;
+	@ApiModelProperty(name = "walletAddress", example = "0x4323aaaa222222aaaa3333aaaa2222aa")
+	private String walletAddress;
 	
 	@ApiModelProperty(name = "유저 Nickname", example = "Harry")
 	@NotNull(message = "닉네임 칸을 채워주세요.")
