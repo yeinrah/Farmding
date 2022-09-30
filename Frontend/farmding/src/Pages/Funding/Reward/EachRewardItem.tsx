@@ -11,6 +11,7 @@ export interface IEachRewardItemProps {
   shippingFee: number;
   expectedDate: string;
   getAmount: (selectAmount: number) => void;
+  onClickOrNot: (clickOrNot: boolean) => void;
 }
 
 const EachRewardItem = ({
@@ -21,11 +22,13 @@ const EachRewardItem = ({
   shippingFee,
   expectedDate,
   getAmount = () => {},
+  onClickOrNot = () => {},
 }: IEachRewardItemProps) => {
   const [selectedReward, setSelectedReward] = useState<null | number>(null);
   const [isClicked, setIsClicked] = useState(false);
 
   const chooseRewardHandler = () => {
+    onClickOrNot(!isClicked);
     setIsClicked(!isClicked);
     // if (!isClicked) {
     //   setIsClicked(true)

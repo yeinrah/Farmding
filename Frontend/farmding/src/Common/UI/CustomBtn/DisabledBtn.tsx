@@ -1,28 +1,23 @@
 import Button, { ButtonProps } from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
-import { mainGreen } from "../../../Common/data/Style";
+import { mainGreen } from "../../data/Style";
 
-interface CustomBtnProps {
+interface DisabledBtnProps {
   customSx: object;
   btnWord: string;
-  onclick: () => void;
 }
 
 const CustomButton = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.getContrastText(mainGreen),
   backgroundColor: mainGreen,
-  border: "3px solid #CAD6E2",
-  "&:hover": {
-    backgroundColor: "#3C7B60",
-  },
 }));
 
-const CustomBtn = ({ customSx, btnWord, onclick }: CustomBtnProps) => {
+const DisabledBtn = ({ customSx, btnWord }: DisabledBtnProps) => {
   return (
     <>
       <CustomButton
         variant="contained"
-        onClick={onclick}
+        disabled
         sx={{
           ...customSx,
           fontWeight: "bold",
@@ -36,4 +31,4 @@ const CustomBtn = ({ customSx, btnWord, onclick }: CustomBtnProps) => {
   );
 };
 
-export default CustomBtn;
+export default DisabledBtn;

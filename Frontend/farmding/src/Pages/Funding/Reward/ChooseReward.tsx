@@ -25,9 +25,13 @@ import { useRecoilState } from "recoil";
 import { isAccountChangedState } from "../../../Recoil/atoms/account";
 import { fundingHandler } from "../../../utils/fundingProject";
 import {
+  addUserRewardQuantityInfo,
   fetchRewardDetail,
   updateRewardResidual,
 } from "../../../Common/API/fundingAPI";
+import { loginState } from "../../../Recoil/atoms/auth";
+import { getMyInfo } from "../../../Common/API/userApi";
+import DisabledBtn from "../../../Common/UI/CustomBtn/DisabledBtn";
 
 export interface IChooseRewardProps {
   pjtId: number;
@@ -36,7 +40,12 @@ export interface IChooseRewardProps {
 
 const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   const { ethereum } = window;
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [balance, setBalance] = useState("");
+  const [isRewardClicked, setIsRewardClicked] = useState(false);
+  const [currentUserInfo, setCurrentUserInfo] = useState({
+    userId: 0,
+  });
   const [isFunded, setIsFunded] = useState(false);
   const [reward, setReward] = useState({
     rewardId: 0,
@@ -50,7 +59,8 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
     isAccountChangedState
   );
   ethereum.on("accountsChanged", (accounts: any) => {
-    SetIsAccountChanged(true);
+    setIsLogin(false);
+    // SetIsAccountChanged(true);
   });
   const navigate = useNavigate();
   // const [account, setAccount] = useRecoilState<string>(AccountState);
@@ -64,6 +74,9 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
     selectedQuantity = amount;
     fundingAmount = amount * reward.ssfPrice;
   };
+  const getClickOrNotHandler = (clickOrNot: boolean) => {
+    setIsRewardClicked(clickOrNot);
+  };
 
   const onFundingClick = async () => {
     const fundedOrNot: boolean = await fundingHandler(
@@ -72,7 +85,16 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
       rewardDetail.shippingFee
     );
     setIsFunded(fundedOrNot);
-    await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
+    console.log("ddddddddddddddddddddddddddddddddd");
+    if (selectedQuantity >= 1) {
+      await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
+      await addUserRewardQuantityInfo(
+        currentUserInfo.userId,
+        pjtId,
+        rewardDetail.rewardId,
+        selectedQuantity
+      );
+    }
   };
 
   const rewardDetail = {
@@ -90,6 +112,9 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
       setBalance(currentBalance);
       const rwrdDetail: any = await fetchRewardDetail(pjtId);
       setReward(rwrdDetail);
+      const userInfo = await getMyInfo(ethereum.selectedAddress);
+      console.log(userInfo.data.user, "유저 정보!!!!!!!!!!!!");
+      setCurrentUserInfo(userInfo.data.user);
       SetIsAccountChanged(false);
     })();
   }, [isAccountChanged]);
@@ -128,20 +153,33 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
               shippingFee={rewardDetail.shippingFee}
               expectedDate={rewardDetail.expectedDate}
               getAmount={getAmountHandler}
+              onClickOrNot={getClickOrNotHandler}
             />
           </div>
           <div className={styles.btn}>
-            <CustomBtn
-              customSx={{
-                width: "200px",
-                height: "50px",
-                fontSize: "20px",
-                letterSpacing: 3,
-              }}
-              onclick={onFundingClick}
-              // btnWord={"다음 단계로"}
-              btnWord={"펀딩하기"}
-            />
+            {isRewardClicked ? (
+              <CustomBtn
+                customSx={{
+                  width: "200px",
+                  height: "50px",
+                  fontSize: "20px",
+                  letterSpacing: 3,
+                }}
+                onclick={onFundingClick}
+                // btnWord={"다음 단계로"}
+                btnWord={"펀딩하기"}
+              />
+            ) : (
+              <DisabledBtn
+                customSx={{
+                  width: "200px",
+                  height: "50px",
+                  fontSize: "20px",
+                  letterSpacing: 3,
+                }}
+                btnWord={"펀딩하기"}
+              />
+            )}
           </div>
         </>
       )}

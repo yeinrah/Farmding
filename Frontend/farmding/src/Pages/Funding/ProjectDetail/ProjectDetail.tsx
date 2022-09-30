@@ -40,7 +40,8 @@ const ProjectDetail = () => {
     isAccountChangedState
   );
   ethereum.on("accountsChanged", (accounts: any) => {
-    SetIsAccountChanged(true);
+    // SetIsAccountChanged(true);
+    setIsLogin(false);
   });
   const { pjtId } = useParams();
   const [isLoading, SetIsLoading] = useState(true);
