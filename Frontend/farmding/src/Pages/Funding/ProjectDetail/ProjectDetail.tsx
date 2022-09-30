@@ -1,64 +1,154 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TitleProjectDetail from "./TitleProjectDetail";
 import FundingProjectDetail from "./FundingProjectDetail";
+
+import { useParams, useNavigate } from "react-router-dom";
 
 // scss
 import styles from "./ProjectDetail.module.scss";
 import InfoProjectDetail from "./InfoProjectDetail";
+import { fetchProjectDetail } from "../../../Common/API/fundingAPI";
+import CustomBtn from "../../../Common/UI/CustomBtn/CustomBtn";
+import { claimHandler, launchingHandler } from "../../../utils/fundingProject";
+import { adminAddress } from "../../../Common/data/adminAddress";
+import { useRecoilState } from "recoil";
+import { isAccountChangedState } from "../../../Recoil/atoms/account";
+import { loginState } from "../../../Recoil/atoms/auth";
+import {
+  dateToUnixConverter,
+  getRemainingDays,
+} from "../../../Common/functions/DateConverter";
+
+export interface IPjtDetail {
+  category: number;
+  projectId: number;
+  projectTitle: string;
+  projectExplanation: string;
+  farmerName: string;
+  funderCount: number;
+  currentAmount: number;
+  targetAmount: number;
+  likeAmount: number;
+  projectPeriod: number;
+}
 
 const ProjectDetail = () => {
-  const projectDetailInfo = {
-    title: "올해의 마지막 영동포도",
-    farm: "정서농장",
-    images: ["grape.png", "farm1.jpg", "grape.png", "farm1.jpg", "grape.png", "farm1.jpg", "grape.png"],
-    likeCnt: 5,
-    fundingAmount: 1240,
-    targetAmount: 800,
-    funders: 17,
-    remainingDays: 13,
-    projectInfo: 
-    '8월부터 11월까지는 포도 제철이에요.이에 많은 분들이 원하셨던 영영농장의 포도를 선보입니다.당일 수확 당일 배송! 20brix의 고당도 포도!영영 농장의 농부님은 이미 오래전부터 곶감, 인삼,사과, 복숭아 등 다양한 과일을 재배하고 계신 농사계의 베테랑입니다.8월부터 11월까지는 포도 제철이에요.이에 많은 분들이 원하셨던 영영농장의 포도를 선보입니다.당일 수확 당일 배송! 20brix의 고당도 포도!영영 농장의 농부님은 이미 오래전부터 곶감, 인삼,사과, 복숭아 등 다양한 과일을 재배하고 계신 농사계의 베테랑입니다.'
-  };
+  const navigate = useNavigate();
+  const { ethereum } = window;
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const [isAccountChanged, SetIsAccountChanged] = useRecoilState<boolean>(
+    isAccountChangedState
+  );
+  ethereum.on("accountsChanged", (accounts: any) => {
+    SetIsAccountChanged(true);
+  });
+  const { pjtId } = useParams();
+  const [isLoading, SetIsLoading] = useState(true);
+  const [currentAccount, setCurrentAccount] = useState("");
+  const [pjtDetail, setPjtDetail] = useState({
+    category: 0,
+    projectId: 0,
+    projectTitle: "",
+    projectExplanation: "",
+    farmerName: "",
+    funderCount: 0,
+    currentAmount: 0,
+    targetAmount: 0,
+    likeAmount: 0,
+    projectEndDate: "",
+    // remainingDays: 0,
+  });
 
-  // const [projectDetailInfo, setProjectDetailInfo] = useState({
-  //   title: "올해의 마지막 제주감귤",
-  //   farm: "정서농장",
-  //   images: ["grape.png", "grape.png", "grape.png", "grape.png", "grape.png"],
-  //   likeCnt: 5,
-  //   farmInfo: 
-  //   '8월부터 11월까지는 포도 제철이에요.이에 많은 분들이 원하셨던 영영농장의 포도를 선보입니다.당일 수확 당일 배송! 20brix의 고당도 포도!영영 농장의 농부님은 이미 오래전부터 곶감, 인삼,사과, 복숭아 등 다양한 과일을 재배하고 계신 농사계의 베테랑입니다.'
-  // })
-  
+  const images = ["1_2", "1_3", "1_4", "1_5", "1_6"];
+  const remainingDays = getRemainingDays(pjtDetail.projectEndDate);
+  console.log(remainingDays, "디데이!!!!!!!!!!!!!!!!!!!");
+
+  useEffect(() => {
+    (async function () {
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      if (!accounts.length) {
+        console.log(accounts);
+        setIsLogin(false);
+        // navigate("/login");
+        // return;
+      }
+
+      setCurrentAccount(accounts[0]);
+      console.log(accounts[0]);
+
+      const projtDetail: any = await fetchProjectDetail(Number(pjtId));
+      setPjtDetail(projtDetail);
+      SetIsAccountChanged(false);
+      SetIsLoading(false);
+    })();
+  }, [isAccountChanged]);
+
   return (
     <>
-      <div>
-        <TitleProjectDetail 
-          mainImg={projectDetailInfo.images[0]}
-          title ={projectDetailInfo.title}
-          farm = {projectDetailInfo.farm}
-          likeCnt = {projectDetailInfo.likeCnt}
-        />
-
-      </div>
-      <div className={styles.project_detail}>
-        <div className={styles.project_detail_info}>
-          <InfoProjectDetail 
-            imgArray={projectDetailInfo.images}
-            farm = {projectDetailInfo.farm}
-            projectInfo = {projectDetailInfo.projectInfo}
-          />
-        </div>
-        <div className={styles.project_detail_funding}> 
-          <FundingProjectDetail 
-            fundingAmount= {projectDetailInfo.fundingAmount}
-            targetAmount= {projectDetailInfo.targetAmount}
-            funders= {projectDetailInfo.funders}
-            remainingDays={projectDetailInfo.remainingDays}
-            title={projectDetailInfo.title}
-          />
-
-        </div>
-      </div>
+      {!isLoading ? (
+        <>
+          <div>
+            <TitleProjectDetail
+              projtId={pjtDetail.projectId}
+              title={pjtDetail.projectTitle}
+              farm={pjtDetail.farmerName}
+              likeCnt={pjtDetail.likeAmount}
+            />
+          </div>
+          <div className={styles.project_detail}>
+            <div className={styles.project_detail_info}>
+              <InfoProjectDetail
+                projtId={pjtDetail.projectId}
+                imgArray={images}
+                farm={pjtDetail.farmerName}
+                projectInfo={pjtDetail.projectExplanation}
+              />
+            </div>
+            <div className={styles.project_detail_funding}>
+              {currentAccount === adminAddress && (
+                <div>
+                  <CustomBtn
+                    customSx={{
+                      width: "200px",
+                      height: "50px",
+                      fontSize: "20px",
+                      letterSpacing: 3,
+                    }}
+                    onclick={() =>
+                      launchingHandler(
+                        pjtDetail.targetAmount,
+                        pjtDetail.projectEndDate
+                      )
+                    }
+                    btnWord={"런칭"}
+                  />
+                  <CustomBtn
+                    customSx={{
+                      width: "200px",
+                      height: "50px",
+                      fontSize: "20px",
+                      letterSpacing: 3,
+                    }}
+                    onclick={() => claimHandler(pjtDetail.projectId)}
+                    // btnWord={"다음 단계로"}
+                    btnWord={"claim"}
+                  />
+                </div>
+              )}
+              <FundingProjectDetail
+                projtId={pjtDetail.projectId}
+                fundingAmount={pjtDetail.currentAmount}
+                targetAmount={pjtDetail.targetAmount}
+                funders={pjtDetail.funderCount}
+                remainingDays={remainingDays}
+                title={pjtDetail.projectTitle}
+              />
+            </div>
+          </div>
+        </>
+      ) : (
+        "로딩중"
+      )}
     </>
   );
 };

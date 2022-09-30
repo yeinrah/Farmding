@@ -3,21 +3,10 @@ pragma solidity >=0.7.0 <0.9.0;
 import "./token/ERC20/ERC20.sol";
 import "./SSFToken.sol";
 import "./access/Ownable.sol";
-// interface IERC20 {
-//     function transfer(address, uint) external returns (bool);
-//     function transferFrom(
-//         address,
-//         address,
-//         uint
-//     ) external returns (bool);
-// }
 
 contract CrowdFunding {
-  // 생성자에 의해 정해지는 값
-    address public currencyAddress; // 거래시 사용할 ERC-20의 주소
     SSFToken public SSFTokenContract;
 
-//   IERC20 public erc20Contract;
 
   struct Funder {
     address _addr;
@@ -30,28 +19,27 @@ contract CrowdFunding {
       address indexed beneficiary,
       uint goal,
       // uint32 startAt,
-      uint32 endAt,
-      address indexed fundingAddr
+      uint32 endAt
+      // address indexed fundingAddr
   );
   event Cancel(uint id);
-  event C(uint Cid);
-  event Pledge(uint indexed id, address indexed caller, uint amount);
-  event Unpledge(uint indexed id, address indexed caller, uint amount);
+  event Fund(uint indexed id, address indexed caller, uint amount);
+  event Unfund(uint indexed id, address indexed caller, uint amount);
   event Claim(uint id);
   event Refund(uint id, address indexed caller, uint amount);
 
 
-  struct Campaign {
-    // Creator(beneficiary) of campaign
+  struct Project {
+    // Creator(beneficiary) of project
     address beneficiary;
     // Amount of tokens to raise
     uint goal;
-    // uint numFunders;
-    // Total amount pledged(funded)
-    uint pledged;
-    // Timestamp of start of campaign
+    uint numFunders;
+    // Total amount funded unitl now
+    uint nowFundedAmount;
+    // Timestamp of start of project
     // uint32 startAt;
-    // Timestamp of end of campaign
+    // Timestamp of end of project
     uint32 endAt;
     // True if goal was reached and creator has claimed the tokens.
     bool claimed;
@@ -61,28 +49,25 @@ contract CrowdFunding {
   // IERC20 public immutable token;
 
 
-  // Total count of campaigns created.
-  // It is also used to generate id for new campaigns.
-  uint public campaignsCount;
+  // Total count of projects created.
+  // It is also used to generate id for new projects.
+  uint public projectsCount;
   address public fundingCA;
-  uint public currentBalance;
 
-  // Mapping from id to Campaign
-  //  key를 uint, value를 Campaign 구조체로 갖는 mapping(객체 같은 것)을 만들고
-  // 이런 map을 campaigns라는 이름의 state 변수로 선언.
-  // { 1: Campaign, 2: Campaign ...}
-  mapping(uint => Campaign) public campaigns;
+  // Mapping from id to project
+  //  key를 uint, value를 project 구조체로 갖는 mapping(객체 같은 것)을 만들고
+  // 이런 map을 projects라는 이름의 state 변수로 선언.
+  // { 1: project, 2: project ...}
+  mapping(uint => Project) public projects;
 
-  // Mapping from campaign id => pledger => amount pledged
-  mapping(uint => mapping(address => uint)) public pledgedAmount;
+  mapping(uint => uint) public fundersCount;
+  // Mapping from project id => funder => amount funded
+  mapping(uint => mapping(address => uint)) public fundedAmount;
 
-  // constructor(address _token) { 
-  //     token = IERC20(_token);
-  // }
+
   constructor(address  _currencyAddress) { 
     // admin = msg.sender;
-    currencyAddress = _currencyAddress; 
-    SSFTokenContract = SSFToken(currencyAddress);
+    SSFTokenContract = SSFToken(_currencyAddress);
   }
 
   function launch(
@@ -93,114 +78,129 @@ contract CrowdFunding {
       // require(_startAt >= block.timestamp, "start at < now");
       // require(_endAt >= _startAt, "end at < start at");
       require(_endAt <= block.timestamp + 90 days, "end at > max duration");
-      
 
-      campaignsCount += 1;
-      emit C(campaignsCount);
+      projectsCount += 1;
       fundingCA = address(this);
-      campaigns[campaignsCount] = Campaign({
+      projects[projectsCount] = Project({
           beneficiary: msg.sender,
           goal: _goal,
-          // numFunders: 0,
-          pledged: 0,
+          numFunders: 0,
+          nowFundedAmount: 0,
           // startAt: _startAt,
           endAt: _endAt,
           claimed: false
       });
 
-      // emit Launch(campaignsCount, msg.sender, _goal, _startAt, _endAt);
-      emit Launch(campaignsCount, msg.sender, _goal, _endAt, fundingCA);
+      // emit Launch(projectsCount, msg.sender, _goal, _startAt, _endAt);
+      emit Launch(projectsCount, msg.sender, _goal, _endAt);
   }
 
   
   function cancel(uint _id) public {
-      Campaign memory campaign = campaigns[_id];
-      require(campaign.beneficiary == msg.sender, "not beneficiary");
-      // require(block.timestamp < campaign.startAt, "started");
+      Project memory project = projects[_id];
+      require(project.beneficiary == msg.sender, "not beneficiary");
+      // require(block.timestamp < project.startAt, "started");
 
-      delete campaigns[_id];
+      delete projects[_id];
       emit Cancel(_id);
   }
 
 
-  function pledge(uint _id, uint _amount) public {
-      Campaign storage campaign = campaigns[_id];
-      // require(block.timestamp >= campaign.startAt, "not started");
-      require(block.timestamp <= campaign.endAt, "ended");
-      require(SSFTokenContract.balanceOf(msg.sender) > 0, "funder do not have enough ERC20 token");
+  function fund(uint _id, uint _amount) public {
+      Project storage project = projects[_id];
+      // require(block.timestamp >= project.startAt, "not started");
+      require(block.timestamp <= project.endAt, "ended");
+      require(SSFTokenContract.balanceOf(msg.sender) >= _amount, "funder do not have enough ERC20 token");
       require(SSFTokenContract.allowance(msg.sender, address(this)) != 0, "buyer did not approve this contract");
       require(SSFTokenContract.allowance(msg.sender, address(this)) >= _amount, "caller approve less amount of token");
-      // campaign.funders[campaign.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
-      campaign.pledged += _amount;
-      pledgedAmount[_id][msg.sender] += _amount;
+      // project.funders[project.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
+      project.nowFundedAmount += _amount;
+      fundedAmount[_id][msg.sender] += _amount;
+      project.numFunders++;
+    //   project.funders[project.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
       fundingCA = address(this);
-      // funderAddress = address(this);
-      currentBalance = SSFTokenContract.balanceOf(0x2113D5636FF11747176A23E79989f1eBa7f3cA60);
+
       // approve 안해도 됨!!
       // SSFTokenContract.approve(address(this), _amount);
       SSFTokenContract.transferFrom(msg.sender, address(this), _amount);
-      // SSFTokenContract.transferFrom(0x406397D506e8C189047753b63BeE6674E413504B, address(this), _amount);
-
-      // SSFTokenContract.transfer(address(this), _amount);
-      // token.transferFrom(msg.sender, address(this), _amount);
-
-      emit Pledge(_id, msg.sender, _amount);
+      emit Fund(_id, msg.sender, _amount);
   }
 
 
-  function unpledge(uint _id, uint _amount) public {
-      Campaign storage campaign = campaigns[_id];
-      require(block.timestamp <= campaign.endAt, "ended");
+  function unfund(uint _id, uint _amount) public {
+      Project storage project = projects[_id];
+      require(block.timestamp <= project.endAt, "ended");
 
-      campaign.pledged -= _amount;
-      pledgedAmount[_id][msg.sender] -= _amount;
-      SSFTokenContract.approve(msg.sender, _amount);
+      project.nowFundedAmount -= _amount;
+      fundedAmount[_id][msg.sender] -= _amount;
+      project.numFunders--;
+      // SSFTokenContract.approve(msg.sender, _amount);
       SSFTokenContract.transfer(msg.sender, _amount);
 
-      emit Unpledge(_id, msg.sender, _amount);
+      emit Unfund(_id, msg.sender, _amount);
   }
 
   function claim(uint _id) public {
-      Campaign storage campaign = campaigns[_id];
-      require(campaign.beneficiary == msg.sender, "not beneficiary");
-      require(block.timestamp > campaign.endAt, "not ended");
-      require(campaign.pledged >= campaign.goal, "pledged < goal");
-      require(!campaign.claimed, "already claimed");
+      Project storage project = projects[_id];
+      require(project.beneficiary == msg.sender, "not beneficiary");
+      // require(block.timestamp > project.endAt, "not ended");
+      require(project.nowFundedAmount >= project.goal, "funded < goal");
+      require(!project.claimed, "already claimed");
 
-      campaign.claimed = true;
-      SSFTokenContract.transfer(campaign.beneficiary, campaign.pledged);
+      project.claimed = true;
+      SSFTokenContract.transfer(project.beneficiary, project.nowFundedAmount);
 
       emit Claim(_id);
   }
 
   function refund(uint _id) public {
-      Campaign memory campaign = campaigns[_id];
-      require(block.timestamp > campaign.endAt, "not ended");
-      require(campaign.pledged < campaign.goal, "pledged >= goal");
+      Project memory project = projects[_id];
+      require(block.timestamp > project.endAt, "not ended");
+      require(project.nowFundedAmount < project.goal, "funded >= goal");
 
-      uint bal = pledgedAmount[_id][msg.sender];
-      pledgedAmount[_id][msg.sender] = 0;
+      uint bal = fundedAmount[_id][msg.sender];
+      fundedAmount[_id][msg.sender] = 0;
       SSFTokenContract.transfer(msg.sender, bal);
-
       emit Refund(_id, msg.sender, bal);
   }
 
-   function _getCurrencyAmount() private view returns (uint256) {
-        return SSFTokenContract.balanceOf(msg.sender);
+  function CABalanceOfSSF() public view returns(uint256){
+      return SSFTokenContract.balanceOf(address(this));
+  }
+  function getNowFundedAmount(uint256 _projectId) public view returns (uint256) {
+      Project memory project = projects[_projectId];
+      return project.nowFundedAmount;
+  }
+  function getNowFundersCnt(uint256 _projectId) public view returns (uint256) {
+      Project memory project = projects[_projectId];
+      return project.numFunders;
+  }
+    function getCloseDate(uint256 _projectId) public view returns (uint32) {
+        Project memory project = projects[_projectId];
+        return project.endAt;
+    }
+    function getClaimOrNot(uint256 _projectId) public view returns (bool) {
+        Project memory project = projects[_projectId];
+        return project.claimed;
     }
 
-  // function newCampaign(address _beneficiary, uint _goalAmount)  public returns (uint campaignID)  {
-  //   campaignID = numCampaigns++; 
-  //   // campaigns[campaignID] = Campaign(beneficiary, goal, 0, 0);
-  // }
-  function contribute(uint campaignID) public {
-    // Campaign storage c = campaigns[campaignID];
-    // c.funders[c.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
-    // c.amount += msg.value;
+  function _getMyCurrentBalanceAmount() private view returns (uint256) {
+      return SSFTokenContract.balanceOf(msg.sender);
   }
 
-  // function checkGoalReached(uint campaignID) public returns (bool reached) {
-  //   // Campaign c = campaigns[campaignID];
+  // function newproject(address _beneficiary, uint _goalAmount)  public returns (uint projectID)  {
+  //   projectID = numprojects++; 
+  //   // projects[projectID] = project(beneficiary, goal, 0, 0);
+  // }
+
+  // function contribute(uint projectID) public {
+  //   project storage c = projects[projectID];
+  //   c.funders[c.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
+  //   c.amount += msg.value;
+  // }
+
+  // function checkGoalReached(uint projectID) public returns (bool reached) {
+  //   // project c = projects[projectID];
   //   // if (c.amount < c.fundingGoal)
   //   //   return false;
   //   // c.beneficiary.send(c.amount);
@@ -208,4 +208,3 @@ contract CrowdFunding {
   //   // return true;
   // }
 }
-
