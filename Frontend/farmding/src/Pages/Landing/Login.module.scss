@@ -1,0 +1,27 @@
+.LoginMain{
+    display:flex;
+    
+}
+.LoginMenu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    background-color: #5DAE8B;
+}
+.p{
+    text-align: center;
+}
+.back{
+    height:100vh;
+    background-size: 3000px;
+}
+.help{
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+.farmer{
+    width: 200px;
+    height: 100px;
+}

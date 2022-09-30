@@ -1,52 +1,25 @@
 import { Box } from "@mui/material";
+import { useEffect } from "react";
 import styles from "./MyNFT.module.scss";
 import MyNFTItem from "./MyNFTItem";
-const MyNFT = () => {
-  const nfts = [
-    {
-      userName: "wjdtj",
-      nftName: "Farmer1#123",
-      nftPrice: 0.05,
-      image: "/Assets/NFT1.PNG",
-      show: true,
-    },
-    {
-      userName: "wjdtj1",
-      nftName: "Farmer1#124",
-      nftPrice: 0.15,
-      image: "/Assets/NFT1.PNG",
-      show: true,
-    },
-    {
-      userName: "wjdtj2",
-      nftName: "Farmer1#124",
-      nftPrice: 0.15,
-      image: "/Assets/NFT1.PNG",
-      show: true,
-    },
-    {
-      userName: "wjdtj3",
-      nftName: "Farmer1#124",
-      nftPrice: 0.15,
-      image: "/Assets/NFT1.PNG",
-      show: true,
-    },
-    {
-      userName: "wjdtj4",
-      nftName: "Farmer1#124",
-      nftPrice: 0.15,
-      image: "/Assets/NFT1.PNG",
-      show: true,
-    },
-  ];
+const MyNFT = (props: any) => {
   return (
     <>
       <div className={styles.NFTsBox}>
-        {nfts.map((item, index) => (
-          <div>
-            <MyNFTItem MyNFTInfo={item} />
-          </div>
-        ))}
+        {props.nfts &&
+          props.nfts.map((item: any, index: number) => (
+            <div
+              onClick={() => {
+                console.log(props.nfts[index]);
+              }}
+            >
+              <MyNFTItem
+                MyNFTInfo={item}
+                getInfoNFT={props.getInfoNFT}
+                key={index}
+              />
+            </div>
+          ))}
       </div>
     </>
   );

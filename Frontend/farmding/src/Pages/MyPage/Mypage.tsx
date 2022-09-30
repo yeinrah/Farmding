@@ -9,18 +9,38 @@ import {
 } from "@mui/material";
 import styles from "./MyPage.module.scss";
 import EditIcon from "@mui/icons-material/Edit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyProject from "./MyProject";
 import MyNFT from "./MyNFT";
 import UserInfoUpdate from "./UserInfoUpdate";
 import UpdateNickName from "./UpdateNickName";
 import UpdateProfileImg from "./UpdateProfileImg";
+import { nftContract } from "../../Common/ABI/abi";
+import { countNFT, getMyNfts, registerNFT } from "../../Common/API/NFTApi";
+import { getMyInfo } from "../../Common/API/userApi";
+import profileImages from "../../Assets/profile/profileImages";
+// interface UserInfo {
+//   userId: number;
+//   nickname: string;
+//   walletAddress: string;
+//   phoneNumber: string;
+//   profileImage: number;
+// }
 const MyPage = () => {
   const [value, setValue] = useState("one");
   const [open, setOpen] = useState(false);
   const [addrOpen, setAddrOpen] = useState<Boolean>(false);
   const [nickOpen, setNickOpen] = useState<Boolean>(false);
   const [profileOpen, setProfileOpen] = useState<Boolean>(false);
+  const [account, setAccount] = useState("");
+  const [userInfo, setUserInfo] = useState({
+    nickname: "",
+    address: "",
+    profileImage: 0,
+    userPr: "",
+  });
+  const [NFTInfo, setNFTInfo] = useState("");
+  const { ethereum } = window;
   const handleOpen = () => setOpen(true);
   const handleAddrOpen = () => setAddrOpen(true);
   const handleNickOpen = () => setNickOpen(true);
@@ -34,7 +54,38 @@ const MyPage = () => {
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-
+  const getInfoUser = async () => {
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    setAccount(accounts[0]);
+    await getMyNfts(accounts[0]).then((info) => {
+      console.log(info.data.user);
+      setUserInfo(info.data.user);
+    });
+  };
+  const getInfoNFT = async () => {
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    setAccount(accounts[0]);
+    await getMyNfts(accounts[0]).then((info) => {
+      console.log(info.data.nft);
+      setNFTInfo(info.data.nft);
+    });
+  };
+  // const setNFTCnt = async () => {
+  //   const cntNFT = await countNFT();
+  //   setNftCount(cntNFT.data);
+  //   return cntNFT.data;
+  // };
+  useEffect(() => {
+    getInfoUser();
+    getInfoNFT();
+  }, []);
+  // useEffect(() => {
+  //   setNFTCnt();
+  // }, [nftCount]);
   return (
     <>
       <Modal
@@ -44,9 +95,27 @@ const MyPage = () => {
         // aria-describedby="modal-modal-description"
       >
         <>
-          {addrOpen && <UserInfoUpdate />}
-          {nickOpen && <UpdateNickName />}
-          {profileOpen && <UpdateProfileImg />}
+          {addrOpen && (
+            <UserInfoUpdate
+              handleClose1={handleClose}
+              changeAddress={setUserInfo}
+              userInfo={userInfo}
+            />
+          )}
+          {nickOpen && (
+            <UpdateNickName
+              handleClose={handleClose}
+              changeInfo={setUserInfo}
+              userInfo={userInfo}
+            />
+          )}
+          {profileOpen && (
+            <UpdateProfileImg
+              handleClose={handleClose}
+              changeProfile={setUserInfo}
+              userInfo={userInfo}
+            />
+          )}
         </>
         {/* <SuccessModal /> */}
       </Modal>
@@ -64,6 +133,7 @@ const MyPage = () => {
               cursor: "pointer",
               margin: "2rem 0",
             }}
+            src={profileImages[userInfo.profileImage]}
             onClick={() => {
               handleOpen();
               handleProfileOpen();
@@ -74,7 +144,7 @@ const MyPage = () => {
               <Typography
                 sx={{ color: "#5DAE8B", fontSize: "2rem", fontWeight: "bold" }}
               >
-                nickname
+                {userInfo.nickname}
               </Typography>
               <EditIcon
                 sx={{ margin: "auto 1rem", cursor: "pointer" }}
@@ -84,11 +154,11 @@ const MyPage = () => {
                 }}
               />
             </Box>
-            <Typography sx={{ margin: "1rem 0" }}>안녕하세요</Typography>
+            <Typography sx={{ margin: "1rem 0" }}>{userInfo.userPr}</Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
                 sx={{ color: "#5DAE8B", fontWeight: "bold", margin: "auto 0" }}
-              >{`배송지주소 : `}</Typography>
+              >{`배송지주소 : ${userInfo.address}`}</Typography>
               <Button
                 variant="contained"
                 color="error"
@@ -133,9 +203,39 @@ const MyPage = () => {
         )}
         {value === "two" && (
           <>
-            <MyNFT />
+            <MyNFT nfts={NFTInfo} getInfoNFT={getInfoNFT} />
           </>
         )}
+        <Button
+          onClick={async () => {
+            const accounts = await ethereum.request({
+              method: "eth_requestAccounts",
+            });
+            setAccount(accounts[0]);
+            alert(accounts[0]);
+            //0번부터 시작해서 +1
+            let cnt = (await (await countNFT()).data) + 1;
+            const a = await nftContract.methods
+              .mint(accounts[0], 1, cnt)
+              .send({ from: accounts[0] });
+            console.log(a);
+            console.log(a.events.getNFTData.returnValues[0]);
+            const nowNickName = await (
+              await getMyInfo(accounts[0])
+            ).data.user.nickname;
+            await registerNFT(
+              1,
+              a.events.getNFTData.returnValues[0],
+              nowNickName,
+              accounts[0]
+            );
+            // await getMyNfts(accounts[0]).then((b) => {
+            //   console.log(b.data);
+            // });
+          }}
+        >
+          Minting
+        </Button>
       </Box>
     </>
   );
