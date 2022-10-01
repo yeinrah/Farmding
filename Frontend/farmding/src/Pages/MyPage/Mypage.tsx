@@ -17,8 +17,9 @@ import UpdateNickName from "./UpdateNickName";
 import UpdateProfileImg from "./UpdateProfileImg";
 import { nftContract } from "../../Common/ABI/abi";
 import { countNFT, getMyNfts, registerNFT } from "../../Common/API/NFTApi";
-import { getMyInfo } from "../../Common/API/userApi";
+import { deleteUser, getMyInfo } from "../../Common/API/userApi";
 import profileImages from "../../Assets/profile/profileImages";
+import { useNavigate } from "react-router-dom";
 // interface UserInfo {
 //   userId: number;
 //   nickname: string;
@@ -38,9 +39,12 @@ const MyPage = () => {
     address: "",
     profileImage: 0,
     userPr: "",
+    walletAddress: "",
+    active: false,
   });
   const [NFTInfo, setNFTInfo] = useState("");
   const { ethereum } = window;
+  const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
   const handleAddrOpen = () => setAddrOpen(true);
   const handleNickOpen = () => setNickOpen(true);
@@ -72,6 +76,9 @@ const MyPage = () => {
     await getMyNfts(accounts[0]).then((info) => {
       console.log(info.data.nft);
       setNFTInfo(info.data.nft);
+      if (!info.data.user.active) {
+        navigate("/signup");
+      }
     });
   };
   // const setNFTCnt = async () => {
@@ -235,6 +242,24 @@ const MyPage = () => {
           }}
         >
           Minting
+        </Button>
+        <Button
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "90%",
+            background: "red",
+            color: "white",
+            margin: "auto",
+            "&:hover": { background: "#a3261f" },
+          }}
+          onClick={async () => {
+            await deleteUser(userInfo.walletAddress);
+            alert("회원탈퇴 되었습니다.");
+            navigate("/");
+          }}
+        >
+          회원 탈퇴
         </Button>
       </Box>
     </>

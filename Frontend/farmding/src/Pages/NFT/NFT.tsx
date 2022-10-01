@@ -42,9 +42,6 @@ const NFT = () => {
         {/* <SuccessModal /> */}
       </Modal>
       <Banner imgSrc={"/Assets/farmerNFTs.PNG"} isMain={false} />
-      <div className={styles.searchBar}>
-        <SearchBar placeHolder={"NFT를 검색 하세요."} />
-      </div>
       <div className={styles.NFTsBox}>
         <span className={styles.title}>NFT 목록</span>
         {nfts.map((item, index) => {
