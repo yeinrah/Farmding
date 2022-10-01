@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.farmding.api.request.InsertFundingReq;
+import com.farmding.api.request.LikeInsertReq;
 import com.farmding.api.request.UpdateAmountReq;
 import com.farmding.db.entity.Images;
 //import com.farmding.db.entity.Like;
@@ -120,13 +121,35 @@ public class FundingController {
 	}
 	
 	@PostMapping("/detail/insertFundingList")
-	@ApiOperation(value = "FundingList table을 생성한다.", notes = "FundingList table을 생성한다.")
+	@ApiOperation(value = "FundingList data를 생성한다.", notes = "FundingList data를 생성한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
 		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
 	public ResponseEntity<?> insertFundingList(@RequestBody InsertFundingReq insertFundingReq) throws Exception {
 		
 		fundingService.InsertFundingList(insertFundingReq.getUserId(), insertFundingReq.getProjectId()
 				, insertFundingReq.getRewardId(), insertFundingReq.getAmount());
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/detail/insertLike")
+	@ApiOperation(value = "Like data를 생성하고, 해당 프로젝트의 좋아요를 1 증가시킨다.", notes = "Like data를 생성한다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> insertLike(@RequestBody LikeInsertReq likeInsertReq) throws Exception {
+		
+		fundingService.InsertLike(likeInsertReq.getProjectId(), likeInsertReq.getUserId());
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/detail/deleteLike")
+	@ApiOperation(value = "Like data를 삭제하고, 해당 프로젝트의 좋아요를 1 감소시킨다.", notes = "Like data를 삭제한다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> deleteLike(@RequestBody LikeInsertReq likeInsertReq) throws Exception {
+		
+		fundingService.deleteLike(likeInsertReq.getProjectId(), likeInsertReq.getUserId());
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
