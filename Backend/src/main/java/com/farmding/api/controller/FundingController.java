@@ -75,16 +75,15 @@ public class FundingController {
 		return new ResponseEntity<HashMap<String, Object>>(result,HttpStatus.OK);
 	}
 	
-//	@GetMapping("/like/{user_id}")
-//	@ApiOperation(value = "좋아요한 프로젝트 모달", notes = "좋아요 모달에 필요한 데이터를 보내준다.")
-//	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
-//		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
-//	public ResponseEntity<?> detailFunding(@PathVariable int user_id) throws Exception {
-//		List<Like> likeData = fundingService.likeFunding(user_id);
-//		List<Project> list = fundingService.getUserLikeProject(likeData);
-//
-//		return new ResponseEntity<List<Project>>(list,HttpStatus.OK);
-//	}
+	@GetMapping("/like/{user_id}")
+	@ApiOperation(value = "좋아요한 프로젝트 모달", notes = "좋아요 모달에 필요한 데이터를 보내준다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> detailFunding(@PathVariable int user_id) throws Exception {
+		List<Project> list = fundingService.zzimProjectList(user_id);
+
+		return new ResponseEntity<List<Project>>(list,HttpStatus.OK);
+	}
 	
 	//펀딩모달 SSF얼마씩쓰는지 이거 api 만들기 
 	@GetMapping("/detail/{project_id}")

@@ -85,6 +85,19 @@ public class FundingService {
 	}
 	
 	@Transactional
+	public List<Project> zzimProjectList(int userId) throws Exception {
+		//기존 프로젝트의 좋아요 값 가져오기
+		List<Like> list = likeRepository.findAllByUserId(userId);
+		List<Project> zzimProjectList = new ArrayList<Project>();
+		for(int i=0; i<list.size();i++) {
+			int projectId = list.get(i).getProjectId();
+			Project project = projectRepository.findOneByProjectId(projectId);
+			zzimProjectList.add(project);
+		}
+		return  zzimProjectList;
+	}
+	
+	@Transactional
 	public List<Map> findAllByUserid(int userId) throws Exception {
 		List<FundingList> list = fundingListRepository.findAllByUserId(userId);
 		List<Map> mapList = new ArrayList<Map>();
