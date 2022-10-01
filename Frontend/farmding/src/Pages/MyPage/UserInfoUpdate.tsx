@@ -57,6 +57,7 @@ const UserInfoUpdate = ({ handleClose1, userInfo, changeAddress }: any) => {
                 },
               }}
               onClick={() => {
+                console.log(userInfo.address.split(" "));
                 setOpenPostcode(true);
                 setOpen(true);
               }}
@@ -84,6 +85,10 @@ const UserInfoUpdate = ({ handleClose1, userInfo, changeAddress }: any) => {
               },
             }}
             onClick={async () => {
+              if (address.length === 0) {
+                alert("주소를 입력해주세요");
+                return;
+              }
               const accounts = await ethereum.request({
                 method: "eth_requestAccounts",
               });

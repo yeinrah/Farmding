@@ -1,11 +1,15 @@
 import { Box, Button, TextareaAutosize, TextField } from "@mui/material";
 import { useState } from "react";
-import { changeMyNickNamePr } from "../../Common/API/userApi";
+import {
+  changeMyNickNamePr,
+  userNicknameExistCheck,
+} from "../../Common/API/userApi";
 import { modalStyle } from "../../Common/data/Style";
 
 const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
-  const [nowNickname, setNowNickname] = useState("");
-  const [nowPr, setNowPr] = useState("");
+  const [nowNickname, setNowNickname] = useState(userInfo.nickname);
+  const [nowPr, setNowPr] = useState(userInfo.userPr);
+  const [nameDuplicateCheck, setNameDuplicateCheck] = useState(false);
   const { ethereum } = window;
   return (
     <>
@@ -22,6 +26,7 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
         <Box sx={{ display: "flex", margin: "2rem 0" }}>
           <TextField
             label="닉네임"
+            value={nowNickname}
             onChange={(v) => {
               setNowNickname(v.target.value);
             }}
@@ -35,18 +40,29 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
                 backgroundColor: "#5DAE8B",
               },
             }}
+            onClick={async () => {
+              if (await (await userNicknameExistCheck(nowNickname)).data) {
+                alert("이미 존재하는 닉네임 입니다.");
+                setNameDuplicateCheck(false);
+              } else {
+                alert("사용 가능한 닉네임 입니다.");
+                setNameDuplicateCheck(true);
+              }
+            }}
           >
-            check
+            중복확인
           </Button>
         </Box>
         <Box sx={{ display: "flex", margin: "2rem 0" }}>
           <TextField
             label="자기소개"
+            value={nowPr}
             onChange={(v) => {
               setNowPr(v.target.value);
             }}
+            sx={{ width: "100%" }}
           ></TextField>
-          <Button
+          {/* <Button
             sx={{
               backgroundColor: "#5DAE8B",
               color: "#fff",
@@ -57,7 +73,7 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
             }}
           >
             check
-          </Button>
+          </Button> */}
         </Box>
         <Box
           sx={{
@@ -77,6 +93,14 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
               },
             }}
             onClick={async () => {
+              if (nowNickname.length === 0 || nowNickname.length >= 50) {
+                alert("닉네임은 1~50길이만 허용됩니다.");
+                return;
+              }
+              if (!nameDuplicateCheck && nowNickname !== userInfo.nickname) {
+                alert("닉네임 중복 체크를 해주세요");
+                return;
+              }
               const accounts = await ethereum.request({
                 method: "eth_requestAccounts",
               });
