@@ -11,10 +11,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.farmding.db.entity.FundingList;
 import com.farmding.db.entity.Images;
+import com.farmding.db.entity.Like;
 import com.farmding.db.entity.Project;
 import com.farmding.db.entity.Reward;
 import com.farmding.repository.FundingListRepository;
 import com.farmding.repository.ImagesRepository;
+import com.farmding.repository.LikeRepository;
 import com.farmding.repository.ProjectRepository;
 import com.farmding.repository.RewardRepository;
 
@@ -28,15 +30,19 @@ public class FundingService {
 	private ImagesRepository imagesRepository;
 	@Autowired
 	private RewardRepository rewardRepository;
+	@Autowired
+	private LikeRepository likeRepository;
+	
 	
 	
 	public FundingService(ProjectRepository projectRepository, FundingListRepository fundingListRepository,
-			ImagesRepository imagesRepository, RewardRepository rewardRepository) {
+			ImagesRepository imagesRepository, RewardRepository rewardRepository, LikeRepository likeRepository) {
 		super();
 		this.projectRepository = projectRepository;
 		this.fundingListRepository = fundingListRepository;
 		this.imagesRepository = imagesRepository;
 		this.rewardRepository = rewardRepository;
+		this.likeRepository = likeRepository;
 	}
 	@Transactional
 	public List<Project> ProjectList() throws Exception {
@@ -54,6 +60,28 @@ public class FundingService {
 		FundingList list = FundingList.builder().userId(userId).projectId(projectId).
 				rewardId(rewardId).amount(amount).build();
 		return fundingListRepository.save(list);
+	}
+	
+	@Transactional
+	public Like InsertLike(int projectId, int userId) throws Exception {
+		Like like = Like.builder().userId(userId).projectId(projectId).build(); //예약어처리 필요함(완료)
+		//기존 프로젝트의 좋아요 값 가져오기
+		Project project = projectRepository.findOneByProjectId(projectId);
+		int likeAmount = project.getLikeAmount();
+		//프로젝트에 좋아요 1 추가하기
+		projectRepository.plusOneLikeAmount(likeAmount+1, projectId);
+		return likeRepository.save(like);
+	}
+	
+	@Transactional
+	public void deleteLike(int projectId, int userId) throws Exception {
+		//기존 프로젝트의 좋아요 값 가져오기
+		Project project = projectRepository.findOneByProjectId(projectId);
+		int likeAmount = project.getLikeAmount();
+		//프로젝트에 좋아요 1 감소하기
+		List<Like> list = likeRepository.findAllByUserId(userId);
+		likeRepository.delete(list.get(0));
+		projectRepository.plusOneLikeAmount(likeAmount-1, projectId);
 	}
 	
 	@Transactional
