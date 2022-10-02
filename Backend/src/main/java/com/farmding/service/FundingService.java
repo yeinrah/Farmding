@@ -85,6 +85,17 @@ public class FundingService {
 	}
 	
 	@Transactional
+	public boolean likeClickOrNot(int projectId, int userId) throws Exception {
+		List<Like> list = likeRepository.likeClickOrNot(projectId, userId);
+		if(list.isEmpty())
+			return false;
+		else 
+			return true;
+
+		
+	}
+	
+	@Transactional
 	public List<Project> zzimProjectList(int userId) throws Exception {
 		//기존 프로젝트의 좋아요 값 가져오기
 		List<Like> list = likeRepository.findAllByUserId(userId);

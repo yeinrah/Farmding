@@ -152,4 +152,15 @@ public class FundingController {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
+	
+	@PostMapping("/detail/likeClickOrNot")
+	@ApiOperation(value = "like를 눌렀는지 판단하기", notes = "like를 눌렀는지 판단하기")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> likeClickOrNot(@RequestBody LikeInsertReq likeInsertReq) throws Exception {
+		
+		Boolean check = fundingService.likeClickOrNot(likeInsertReq.getProjectId(), likeInsertReq.getUserId());
+		
+		return new ResponseEntity<Boolean>(check, HttpStatus.OK);
+	}
 }
