@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import Web3 from "web3";
-
-import { useNavigate } from "react-router-dom";
 import EachRewardItem from "./EachRewardItem";
 
 // scss
@@ -11,8 +8,6 @@ import styles from "./ChooseReward.module.scss";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Card, CardContent, CardMedia, Grid } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 // data
 import { mainGreen, modalStyle } from "../../../Common/data/Style";
@@ -24,7 +19,8 @@ import { getBalance } from "../../../utils/Tokens";
 import { useRecoilState } from "recoil";
 import {
   isAccountChangedState,
-  userNameState,
+  currentUserNameState,
+  currentUserIdState,
 } from "../../../Recoil/atoms/account";
 import { fundingHandler } from "../../../utils/fundingProject";
 import {
@@ -45,14 +41,11 @@ export interface IChooseRewardProps {
 const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   const { ethereum } = window;
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
-  const [currentUserName, setCurrentUserName] =
-    useRecoilState<string>(userNameState);
+  const [currentUserId, setCurrentUserId] =
+    useRecoilState<number>(currentUserIdState);
   const [balance, setBalance] = useState("");
   const [isRewardClicked, setIsRewardClicked] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(0);
-  const [currentUserInfo, setCurrentUserInfo] = useState({
-    userId: 0,
-  });
   const [isFunded, setIsFunded] = useState(false);
   const [reward, setReward] = useState({
     rewardId: 0,
@@ -69,7 +62,6 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
     setIsLogin(false);
     // SetIsAccountChanged(true);
   });
-  const navigate = useNavigate();
   // const [account, setAccount] = useRecoilState<string>(AccountState);
   // const [chooseReward, setChooseReward] = useState([]);
   // 잔고랑 계좌, 계좌 변경 상태 전역 상태관리 하기! recoil로!!!!!!!
@@ -94,7 +86,7 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
 
     await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
     await addUserRewardQuantityInfo(
-      currentUserInfo.userId,
+      currentUserId,
       pjtId,
       rewardDetail.rewardId,
       selectedQuantity
@@ -116,10 +108,7 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
       setBalance(currentBalance);
       const rwrdDetail: any = await fetchRewardDetail(pjtId);
       setReward(rwrdDetail);
-      const userInfo = await getMyInfo(ethereum.selectedAddress);
-      console.log(userInfo.data.user, "유저 정보!!!!!!!!!!!!");
-      setCurrentUserInfo(userInfo.data.user);
-      setCurrentUserName(userInfo.data.user.nickname);
+
       SetIsAccountChanged(false);
     })();
   }, [isAccountChanged]);
@@ -143,11 +132,16 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
             component="h2"
             fontWeight="bold"
             color={mainGreen}
-            sx={{ mb: 3 }}
+            sx={{ mb: 4 }}
           >
             리워드 선택
           </Typography>
           <div className={styles.reward_item}>
+            {!isRewardClicked && (
+              <div className={styles.modal_content}>
+                아래 리워드를 클릭하여 수량을 선택해주세요.
+              </div>
+            )}
             <EachRewardItem
               title={cutLongTitle(title, 12)}
               price={rewardDetail.price}

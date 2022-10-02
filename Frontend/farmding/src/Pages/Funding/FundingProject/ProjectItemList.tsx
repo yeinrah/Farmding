@@ -7,6 +7,7 @@ import styles from "./ProjectItemList.module.scss";
 // mui
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Padding } from "@mui/icons-material";
 
 import { cutLongTitle } from "../../../Common/functions/CutLongTitle";

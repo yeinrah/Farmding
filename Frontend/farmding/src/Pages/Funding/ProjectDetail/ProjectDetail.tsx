@@ -93,7 +93,7 @@ const ProjectDetail = () => {
               projtId={pjtDetail.projectId}
               title={pjtDetail.projectTitle}
               farm={pjtDetail.farmerName}
-              likeCnt={pjtDetail.likeAmount}
+              // likeCnt={pjtDetail.likeAmount}
             />
           </div>
           <div className={styles.project_detail}>

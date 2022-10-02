@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // component
 import LikeFundings from "./LikeFundings";
 
@@ -23,6 +23,7 @@ import { styled } from "@mui/material/styles";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../../Recoil/atoms/auth";
+import { fetchLikeFundingLists } from "../../API/likeFundingAPI";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -71,6 +72,22 @@ const NavBar = () => {
     // return <Navigate to="/mypage" />
     navigate("/mypage");
   };
+
+  // useEffect(() => {
+  //   (async function () {
+  //     // const accounts = await ethereum.request({ method: "eth_accounts" });
+  //     // if (!accounts.length) {
+  //     //   console.log(accounts);
+  //     //   setIsLogin(false);
+  //     // }
+  //     // setCurrentAccount(accounts[0]);
+
+  //     const projtDetail: any = await fetchLikeFundingLists(Number(pjtId));
+  //     setPjtDetail(projtDetail);
+  //     SetIsAccountChanged(false);
+  //     SetIsLoading(false);
+  //   })();
+  // }, [isAccountChanged]);
 
   return (
     <>
