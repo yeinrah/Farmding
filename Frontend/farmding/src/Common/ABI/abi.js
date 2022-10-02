@@ -18,22 +18,14 @@ const NFTAbi = [
         name: "_initBaseURI",
         type: "string",
       },
+      {
+        internalType: "address",
+        name: "_currencyAddress",
+        type: "address",
+      },
     ],
     stateMutability: "nonpayable",
     type: "constructor",
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "aa",
-        type: "uint256",
-      },
-    ],
-    name: "Aaa",
-    type: "event",
   },
   {
     anonymous: false,
@@ -106,6 +98,19 @@ const NFTAbi = [
   {
     inputs: [
       {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "cancelSell",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "address",
         name: "_to",
         type: "address",
@@ -113,6 +118,11 @@ const NFTAbi = [
       {
         internalType: "uint256",
         name: "_mintAmount",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "nftId",
         type: "uint256",
       },
     ],
@@ -141,6 +151,37 @@ const NFTAbi = [
     type: "event",
   },
   {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+    ],
+    name: "purchase",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "operator",
+        type: "address",
+      },
+      {
+        internalType: "bool",
+        name: "approved",
+        type: "bool",
+      },
+    ],
+    name: "setApprovalForAll",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     anonymous: false,
     inputs: [
       {
@@ -164,6 +205,49 @@ const NFTAbi = [
     ],
     name: "Transfer",
     type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "address",
+        name: "sender",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "address",
+        name: "contractadd",
+        type: "address",
+      },
+      {
+        indexed: false,
+        internalType: "uint256",
+        name: "_amount",
+        type: "uint256",
+      },
+    ],
+    name: "checkAddress",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "tokenId",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
+      },
+    ],
+    name: "createSell",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     anonymous: false,
@@ -252,24 +336,6 @@ const NFTAbi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "operator",
-        type: "address",
-      },
-      {
-        internalType: "bool",
-        name: "approved",
-        type: "bool",
-      },
-    ],
-    name: "setApprovalForAll",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "string",
         name: "_newBaseExtension",
         type: "string",
@@ -322,19 +388,6 @@ const NFTAbi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "abc",
-        type: "uint256",
-      },
-    ],
-    name: "ss",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "address",
         name: "from",
         type: "address",
@@ -370,13 +423,6 @@ const NFTAbi = [
   },
   {
     inputs: [],
-    name: "useMint",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "withdraw",
     outputs: [],
     stateMutability: "payable",
@@ -391,6 +437,19 @@ const NFTAbi = [
       },
     ],
     name: "balanceOf",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "balanceOfSSF",
     outputs: [
       {
         internalType: "uint256",
@@ -442,7 +501,20 @@ const NFTAbi = [
   },
   {
     inputs: [],
-    name: "count",
+    name: "currencyAddress",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "currentBalance",
     outputs: [
       {
         internalType: "uint256",
@@ -575,6 +647,19 @@ const NFTAbi = [
         internalType: "bool",
         name: "",
         type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "SSFTokenContract",
+    outputs: [
+      {
+        internalType: "contract SSFToken",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -1102,8 +1187,12 @@ const ssafyTokenAbi = [
     type: "function",
   },
 ];
-export const NFTAddress = "0x28990bf906AdBBB845323cf4Bc84061a97a7B663";
+export const NFTAddress = "0xb2b0d8d32D4861dF47e308f2DDD970CDADb79eEa";
 export const SSFTokenAddress = "0x0c54E456CE9E4501D2c43C38796ce3F06846C966";
 
 export const web3 = new Web3(window.ethereum);
 export const nftContract = new web3.eth.Contract(NFTAbi, NFTAddress);
+export const ssafyTokenContract = new web3.eth.Contract(
+  ssafyTokenAbi,
+  SSFTokenAddress
+);

@@ -8,6 +8,11 @@ const { persistAtom } = recoilPersist();
 //   isCompleted: boolean;
 // }
 
+export const userNameState = atom<string>({
+  key: "userNameState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
 export const isAccountChangedState = atom<boolean>({
   key: "isAccountChangedState",
   default: false,

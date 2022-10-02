@@ -58,10 +58,30 @@ export const updateRewardResidual = async (
 ) => {
   const data = {
     amount: selectedAmount,
-    rewardId: rewardId,
+    rewardId,
   };
   await api
     .patch(`/funding/detail/updateAmount`, JSON.stringify(data))
+    .then(success)
+    .catch(fail);
+};
+
+export const addUserRewardQuantityInfo = async (
+  projectId: number,
+  userId: number,
+  rewardId: number,
+  selectedAmount: number,
+  success = defaultSuccess,
+  fail = defaultFail
+) => {
+  const data = {
+    amount: selectedAmount,
+    projectId,
+    userId,
+    rewardId,
+  };
+  await api
+    .post(`/funding/detail/insertFundingList`, JSON.stringify(data))
     .then(success)
     .catch(fail);
 };

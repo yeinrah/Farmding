@@ -1,5 +1,5 @@
 import { Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CustomSelect from "../../../Common/UI/Select/CustomSelect";
 import styles from "./EachRewardItem.module.scss";
 
@@ -11,6 +11,7 @@ export interface IEachRewardItemProps {
   shippingFee: number;
   expectedDate: string;
   getAmount: (selectAmount: number) => void;
+  onClickOrNot: (clickOrNot: boolean) => void;
 }
 
 const EachRewardItem = ({
@@ -21,11 +22,13 @@ const EachRewardItem = ({
   shippingFee,
   expectedDate,
   getAmount = () => {},
+  onClickOrNot = () => {},
 }: IEachRewardItemProps) => {
   const [selectedReward, setSelectedReward] = useState<null | number>(null);
   const [isClicked, setIsClicked] = useState(false);
 
   const chooseRewardHandler = () => {
+    onClickOrNot(!isClicked);
     setIsClicked(!isClicked);
     // if (!isClicked) {
     //   setIsClicked(true)
@@ -79,7 +82,11 @@ const EachRewardItem = ({
           <Typography variant="h6" gutterBottom fontWeight="800" sx={{ ml: 4 }}>
             {`${title} ${unit}`}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{ ml: 4 }}>
+          <Typography
+            variant="subtitle1"
+            gutterBottom
+            sx={{ ml: 4, my: "auto" }}
+          >
             (<span>{residual}</span> 개 남음)
           </Typography>
         </div>

@@ -22,12 +22,20 @@ import CustomBtn from "../../../Common/UI/CustomBtn/CustomBtn";
 
 import { getBalance } from "../../../utils/Tokens";
 import { useRecoilState } from "recoil";
-import { isAccountChangedState } from "../../../Recoil/atoms/account";
+import {
+  isAccountChangedState,
+  userNameState,
+} from "../../../Recoil/atoms/account";
 import { fundingHandler } from "../../../utils/fundingProject";
 import {
+  addUserRewardQuantityInfo,
   fetchRewardDetail,
   updateRewardResidual,
 } from "../../../Common/API/fundingAPI";
+import { loginState } from "../../../Recoil/atoms/auth";
+import { getMyInfo } from "../../../Common/API/userApi";
+import DisabledBtn from "../../../Common/UI/CustomBtn/DisabledBtn";
+import FundingComplete from "./FundingComplete";
 
 export interface IChooseRewardProps {
   pjtId: number;
@@ -36,7 +44,15 @@ export interface IChooseRewardProps {
 
 const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   const { ethereum } = window;
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const [currentUserName, setCurrentUserName] =
+    useRecoilState<string>(userNameState);
   const [balance, setBalance] = useState("");
+  const [isRewardClicked, setIsRewardClicked] = useState(false);
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
+  const [currentUserInfo, setCurrentUserInfo] = useState({
+    userId: 0,
+  });
   const [isFunded, setIsFunded] = useState(false);
   const [reward, setReward] = useState({
     rewardId: 0,
@@ -50,7 +66,8 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
     isAccountChangedState
   );
   ethereum.on("accountsChanged", (accounts: any) => {
-    SetIsAccountChanged(true);
+    setIsLogin(false);
+    // SetIsAccountChanged(true);
   });
   const navigate = useNavigate();
   // const [account, setAccount] = useRecoilState<string>(AccountState);
@@ -58,11 +75,13 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   // 잔고랑 계좌, 계좌 변경 상태 전역 상태관리 하기! recoil로!!!!!!!
 
   let fundingAmount: number;
-  let selectedQuantity: number;
 
   const getAmountHandler = (amount: number) => {
-    selectedQuantity = amount;
+    setSelectedQuantity(amount);
     fundingAmount = amount * reward.ssfPrice;
+  };
+  const getClickOrNotHandler = (clickOrNot: boolean) => {
+    setIsRewardClicked(clickOrNot);
   };
 
   const onFundingClick = async () => {
@@ -72,7 +91,14 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
       rewardDetail.shippingFee
     );
     setIsFunded(fundedOrNot);
+
     await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
+    await addUserRewardQuantityInfo(
+      currentUserInfo.userId,
+      pjtId,
+      rewardDetail.rewardId,
+      selectedQuantity
+    );
   };
 
   const rewardDetail = {
@@ -90,36 +116,38 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
       setBalance(currentBalance);
       const rwrdDetail: any = await fetchRewardDetail(pjtId);
       setReward(rwrdDetail);
+      const userInfo = await getMyInfo(ethereum.selectedAddress);
+      console.log(userInfo.data.user, "유저 정보!!!!!!!!!!!!");
+      setCurrentUserInfo(userInfo.data.user);
+      setCurrentUserName(userInfo.data.user.nickname);
       SetIsAccountChanged(false);
     })();
   }, [isAccountChanged]);
 
   return (
-    <Box sx={{ ...modalStyle, width: 500, height: 500 }}>
+    <Box sx={{ ...modalStyle, width: 500, height: 530 }}>
       {isFunded ? (
-        <Typography
-          id="modal-title"
-          variant="h5"
-          component="h2"
-          fontWeight="bold"
-          color={mainGreen}
-          sx={{ mb: 3 }}
-        >
-          펀딩이 완료되었습니다.
-        </Typography>
+        <FundingComplete
+          title={cutLongTitle(title, 12)}
+          price={rewardDetail.price}
+          unit={rewardDetail.unit}
+          shippingFee={rewardDetail.shippingFee}
+          expectedDate={rewardDetail.expectedDate}
+          selectedQuantity={selectedQuantity}
+        />
       ) : (
         <>
-          <div>
-            <Typography
-              id="modal-title"
-              variant="h5"
-              component="h2"
-              fontWeight="bold"
-              color={mainGreen}
-              sx={{ mb: 3 }}
-            >
-              리워드 선택
-            </Typography>
+          <Typography
+            id="modal-title"
+            variant="h5"
+            component="h2"
+            fontWeight="bold"
+            color={mainGreen}
+            sx={{ mb: 3 }}
+          >
+            리워드 선택
+          </Typography>
+          <div className={styles.reward_item}>
             <EachRewardItem
               title={cutLongTitle(title, 12)}
               price={rewardDetail.price}
@@ -128,20 +156,33 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
               shippingFee={rewardDetail.shippingFee}
               expectedDate={rewardDetail.expectedDate}
               getAmount={getAmountHandler}
+              onClickOrNot={getClickOrNotHandler}
             />
           </div>
           <div className={styles.btn}>
-            <CustomBtn
-              customSx={{
-                width: "200px",
-                height: "50px",
-                fontSize: "20px",
-                letterSpacing: 3,
-              }}
-              onclick={onFundingClick}
-              // btnWord={"다음 단계로"}
-              btnWord={"펀딩하기"}
-            />
+            {isRewardClicked ? (
+              <CustomBtn
+                customSx={{
+                  width: "200px",
+                  height: "50px",
+                  fontSize: "20px",
+                  letterSpacing: 3,
+                }}
+                onclick={onFundingClick}
+                // btnWord={"다음 단계로"}
+                btnWord={"펀딩하기"}
+              />
+            ) : (
+              <DisabledBtn
+                customSx={{
+                  width: "200px",
+                  height: "50px",
+                  fontSize: "20px",
+                  letterSpacing: 3,
+                }}
+                btnWord={"펀딩하기"}
+              />
+            )}
           </div>
         </>
       )}
