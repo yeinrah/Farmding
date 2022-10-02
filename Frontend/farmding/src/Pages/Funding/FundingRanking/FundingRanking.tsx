@@ -57,7 +57,10 @@ const FundingRanking = ({
               moveDetailHandler(item.projectId);
             }}
           >
-            <ListItem alignItems="flex-start" sx={{ margin: "10px 0px" }}>
+            <ListItem
+              alignItems="flex-start"
+              sx={{ margin: "10px 0px", cursor: "pointer" }}
+            >
               {index < 3 && <div className={styles.rank1}>{index + 1}</div>}
               {index >= 3 && <div className={styles.rank}>{index + 1}</div>}
               <ListItemAvatar>
