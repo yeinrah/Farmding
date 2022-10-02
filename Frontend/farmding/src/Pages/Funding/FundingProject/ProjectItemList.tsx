@@ -109,7 +109,10 @@ const ProjectItemList = () => {
           </Grid>
         ))}
       </Grid>
-      <FundingRanking />
+      <FundingRanking
+        allProjects={allProjects}
+        moveDetailHandler={moveDetailHandler}
+      />
     </div>
     // <Box sx={{ flexGrow: 1 }}>
     // </Box>
