@@ -37,11 +37,7 @@ export const fetchRewardDetail = async (pjtId: number) => {
   await api
     .get(`/funding/detail/${pjtId}`)
     .then((res) => {
-      // 중요!!!!!!!!!**********************************************
-      // res.data[0]으로 바꾸기!!!!!!!!!!!!!!!!!!!!!!!!
-      // result = res.data[0];
-      // 중요!!!!!!!!!**********************************************
-      result = res.data[3];
+      result = res.data[0];
       console.log("리워드 fetch", result);
     })
     .catch((err) => {

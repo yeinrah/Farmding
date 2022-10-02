@@ -3,8 +3,10 @@ import React, { useEffect, useState } from "react";
 // import MetaMaskOnboarding from "@metamask/onboarding";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import { getMyInfo } from "../../Common/API/userApi";
 import { userAddressExistCheck } from "../../Common/API/userApi";
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
+import { currentUserNameState } from "../../Recoil/atoms/account";
 import { loginState } from "../../Recoil/atoms/auth";
 import { SSFTokenAddress, web3 } from "../../Web3Config";
 import styles from "./Login.module.scss";
@@ -15,6 +17,8 @@ const Login = () => {
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [onboardButtonText, setOnboardButtonText] = useState<string>("");
   const [account, setAccount] = useState("");
+  const [currentUserName, setCurrentUserName] =
+    useRecoilState<string>(currentUserNameState);
 
   const btnName = isLogin ? "로그아웃" : "로그인";
   const navigate = useNavigate();
@@ -47,8 +51,6 @@ const Login = () => {
       setOnboardButtonText("메타마스크 연결");
     }
   };
-
-
 
   // 메타마스크 설치 여부에 따라 onClick함수 변경(설치 or 연결)
   const onClickButton = () => {
@@ -131,61 +133,73 @@ const Login = () => {
   //     },
   //   }
   // );
-  const onclickAlert = ()=>{
-    alert("저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는 구글 확장프로그램인 메타마스크를 이용하여 로그인 합니다.\n"
-     +"이미 지갑을 소유하셨다면 회원가입 절차 필요없이 서비스를 바로 이용할 수 있습니다.");
+  const onclickAlert = () => {
+    alert(
+      "저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는 구글 확장프로그램인 메타마스크를 이용하여 로그인 합니다.\n" +
+        "이미 지갑을 소유하셨다면 회원가입 절차 필요없이 서비스를 바로 이용할 수 있습니다."
+    );
   };
 
   return (
     <div className={styles.LoginMain}>
-    {/* <div style={{backgroundImage:`url("/Assets/login_background.png")`}}className={styles.back}> 
+      {/* <div style={{backgroundImage:`url("/Assets/login_background.png")`}}className={styles.back}> 
     </div>     */}
-    <img src={process.env.PUBLIC_URL+"/Assets/login_background.png"} className={styles.back}/>
-    <div className={styles.LoginMenu}>
-      {isMetaMaskInstalled() ? (
-        <h1 className={styles.p}>지갑에 연결하세요</h1>
-      ) : (
-        <h1 className={styles.p}>지갑이 없으신가요?</h1>
-      )}
-      <div className={styles.p}>
-      <img src={process.env.PUBLIC_URL+"/Assets/farmer_removebg.png"} className={styles.farmer}/>
-      </div>
-      {account && <p>연결된 지갑 주소 : {account}</p>}
-      {/* <p className={styles.p}></p>
+      <img
+        src={process.env.PUBLIC_URL + "/Assets/login_background.png"}
+        className={styles.back}
+      />
+      <div className={styles.LoginMenu}>
+        {isMetaMaskInstalled() ? (
+          <h1 className={styles.p}>지갑에 연결하세요</h1>
+        ) : (
+          <h1 className={styles.p}>지갑이 없으신가요?</h1>
+        )}
+        <div className={styles.p}>
+          <img
+            src={process.env.PUBLIC_URL + "/Assets/farmer_removebg.png"}
+            className={styles.farmer}
+          />
+        </div>
+        {account && <p>연결된 지갑 주소 : {account}</p>}
+        {/* <p className={styles.p}></p>
       <p className={styles.p}>
         <span></span>
       </p>
       <p className={styles.p}></p>
       <p className={styles.p}></p> */}
-      <br></br>
-      <br></br>
-      {/* <Button onClick={onClickButton}>
+        <br></br>
+        <br></br>
+        {/* <Button onClick={onClickButton}>
         <Logo src="/essets/images/metamask_logo.png" alt="Logo" />
         {onboardButtonText}
       </Button> */}
-      <div className={styles.p}>
-      <CustomBtn
-        customSx={{
-          width: "300px",
-          height: "100px",
-          fontSize: "20px",
-          letterSpacing: 3,
-        }}
-        onclick={onClickButton}
-        // btnWord={btnName}
-        btnWord={onboardButtonText}
-      />
-          <img src={process.env.PUBLIC_URL+"/Assets/helpButton.png"} className={styles.help} onClick={onclickAlert}/>
+        <div className={styles.p}>
+          <CustomBtn
+            customSx={{
+              width: "300px",
+              height: "100px",
+              fontSize: "20px",
+              letterSpacing: 3,
+            }}
+            onclick={onClickButton}
+            // btnWord={btnName}
+            btnWord={onboardButtonText}
+          />
+          <img
+            src={process.env.PUBLIC_URL + "/Assets/helpButton.png"}
+            className={styles.help}
+            onClick={onclickAlert}
+          />
+        </div>
+        <br></br>
+        <br></br>
+        {isLogin ? (
+          <div className="text-center">My Wallet: {account}</div>
+        ) : (
+          <div className={styles.p}>로그인해주세요!</div>
+        )}
       </div>
-      <br></br>
-      <br></br>
-      {isLogin ? (
-        <div className="text-center">My Wallet: {account}</div>
-      ) : (
-        <div  className={styles.p}>로그인해주세요!</div>
-      )}
-      </div>
-      </div>
+    </div>
   );
 };
 

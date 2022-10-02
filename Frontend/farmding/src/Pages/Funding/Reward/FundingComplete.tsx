@@ -1,40 +1,14 @@
-import { useEffect, useState } from "react";
-import Web3 from "web3";
-
-import { useNavigate } from "react-router-dom";
-import EachRewardItem from "./EachRewardItem";
-
 // scss
 import styles from "./FundingComplete.module.scss";
 
 //mui
 
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Card, CardContent, CardMedia, Grid } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
-// data
-import { mainGreen, modalStyle } from "../../../Common/data/Style";
-import { cutLongTitle } from "../../../Common/functions/CutLongTitle";
 
 import CustomBtn from "../../../Common/UI/CustomBtn/CustomBtn";
 
-import { getBalance } from "../../../utils/Tokens";
 import { useRecoilState } from "recoil";
-import {
-  isAccountChangedState,
-  userNameState,
-} from "../../../Recoil/atoms/account";
-import { fundingHandler } from "../../../utils/fundingProject";
-import {
-  addUserRewardQuantityInfo,
-  fetchRewardDetail,
-  updateRewardResidual,
-} from "../../../Common/API/fundingAPI";
-import { loginState } from "../../../Recoil/atoms/auth";
-import { getMyInfo } from "../../../Common/API/userApi";
-import DisabledBtn from "../../../Common/UI/CustomBtn/DisabledBtn";
+import { currentUserNameState } from "../../../Recoil/atoms/account";
 
 export interface IFundingCompleteProps {
   title: string;
@@ -55,7 +29,7 @@ const FundingComplete = ({
 }: IFundingCompleteProps) => {
   // const { ethereum } = window;
   const [currentUserName, setCurrentUserName] =
-    useRecoilState<string>(userNameState);
+    useRecoilState<string>(currentUserNameState);
 
   const fundingAmount = price * selectedQuantity + shippingFee;
 

@@ -89,7 +89,7 @@ const FundingProjectDetail = ({
         >
           {nowFundedAmount}
         </Typography>
-        <Typography variant="h2" gutterBottom fontWeight="bold" sx={{ ml: 2 }}>
+        <Typography variant="h2" gutterBottom fontWeight="200" sx={{ ml: 2 }}>
           SSF
         </Typography>
         <Typography
@@ -151,13 +151,6 @@ const FundingProjectDetail = ({
           onclick={chooseRewardModalHandler}
           btnWord={"펀딩하기"}
         />
-        {/* <CustomButton variant="contained"
-          onClick={chooseRewardModalHandler}
-          sx={{width:"400px", height:"70px", 
-          fontSize:"30px", fontWeight:"bold", color: "white",
-          borderRadius:"15px", letterSpacing: 3
-          }}  
-        >펀딩하기</CustomButton> */}
       </div>
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">
         <ChooseReward title={title} pjtId={projtId} />
