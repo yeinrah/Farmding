@@ -62,64 +62,35 @@ const FundingComplete = ({
   const getNFTHandler = () => {};
 
   return (
-    <div>
-      <Typography
-        id="modal-title"
-        variant="h4"
-        component="h2"
-        fontWeight="bold"
-        // sx={{ mb: 3 }}
-      >
-        펀딩이 완료되었습니다.
-      </Typography>
-      <Typography
-        variant="h6"
-        gutterBottom
-        fontWeight="700"
-        // sx={{ mb: 3 }}
-      >
-        {currentUserName}
-      </Typography>
-      <Typography
-        variant="subtitle1"
-        gutterBottom
-        color="text.secondary"
-        // sx={{ mb: 3 }}
-      >
-        님의 펀딩 내역은 다음과 같습니다.
-      </Typography>
+    <>
+      <div className={styles.modal_title}>펀딩이 완료되었습니다.</div>
+      <div className={styles.modal_content}>
+        <div>
+          <span>{currentUserName}</span>
+          님의 펀딩 내역은
+        </div>
+        <div>다음과 같습니다.</div>
+      </div>
 
       <div className={styles.reward_confirm_box}>
-        <div className={styles.funding_price}>
-          <Typography variant="h6" gutterBottom color="text.secondary">
-            총 펀딩금액:
+        <div className={styles.funding_amount_price}>
+          <Typography sx={{ fontSize: 18, color: "#868686" }}>
+            총 펀딩금액
           </Typography>
-          <Typography variant="h3" gutterBottom fontWeight="bold">
-            {fundingAmount}
-          </Typography>
-          <Typography
-            variant="h6"
-            gutterBottom
-            // fontWeight="bold"
-            sx={{ ml: 2, mt: 1 }}
-          >
-            SSF
-          </Typography>
-          <Typography variant="subtitle2" gutterBottom color="text.secondary">
-            (배송비 포함)
-          </Typography>
+          <div className={styles.funding_price}>
+            <div className={styles.price}>{fundingAmount}</div>
+            <Typography sx={{ ml: 2, fontSize: 20 }}>SSF</Typography>
+            <Typography sx={{ fontSize: 14, color: "#868686", my: "auto" }}>
+              (배송비 포함)
+            </Typography>
+          </div>
         </div>
         <div className={styles.title}>
           <Typography variant="h6" gutterBottom fontWeight="800" sx={{ ml: 4 }}>
             {`${title} ${unit}`}
           </Typography>
-          <Typography
-            variant="subtitle1"
-            gutterBottom
-            fontWeight="400"
-            sx={{ ml: 4 }}
-          >
-            수량: {selectedQuantity} 개
+          <Typography variant="subtitle1" sx={{ color: "#868686", my: "auto" }}>
+            수량: <span>{selectedQuantity}</span> 개
           </Typography>
         </div>
         <div className={styles.shipping}>
@@ -153,7 +124,7 @@ const FundingComplete = ({
           btnWord={"NFT 받기"}
         />
       </div>
-    </div>
+    </>
   );
 };
 export default FundingComplete;

@@ -1,34 +1,70 @@
-.reward_confirm_box {
-  width: 95%;
-  height: 200px;
-  // margin-bottom: 20px;
-  margin: 10px auto 20px auto;
-  background: rgba(221, 221, 221, 0.4);
-  border-radius: 20px;
-  cursor: pointer;
+.modal_title {
+  text-align: center;
+  margin: 30px 0 20px 0;
+  font-size: 27px;
+  font-weight: 700;
+}
+.modal_content {
+  text-align: center;
+  margin: 20px auto;
+  font-size: 18px;
+  color: #868686;
+  span {
+    margin-right: 5px;
+    color: black;
+    font-weight: 700;
+  }
 }
 
-.funding_price {
+.reward_confirm_box {
+  width: 95%;
+  height: 230px;
+  // margin-bottom: 20px;
+  margin: 45px auto 10px auto;
+  background: rgba(221, 221, 221, 0.4);
+  border-radius: 20px;
+  // cursor: pointer;
+}
+
+.funding_amount_price {
   display: flex;
-  padding-top: 20px;
+  justify-content: space-between;
+  padding-top: 30px;
   margin: 0px 20px 0px 30px;
+  .funding_price {
+    display: flex;
+    .price {
+      // padding-top: 0;
+      line-height: 20px;
+      font-size: 40px;
+      color: #5dae8b;
+
+      font-weight: bold;
+    }
+  }
 }
 
 .title {
   display: flex;
   justify-content: space-between;
-  margin: 0 20px 0 0px;
+  margin: 30px 20px 0 0px;
 
   span {
-    color: #ff5a73;
+    color: black;
+    font-weight: bold;
   }
 }
 
 .shipping {
-  margin: 10px 0px 0px 40px;
+  margin: 20px 0px 0px 35px;
 
   span {
-    font-weight: bold;
+    // font-weight: 600;
     color: black;
   }
+}
+.btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 55px;
 }

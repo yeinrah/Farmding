@@ -82,7 +82,11 @@ const EachRewardItem = ({
           <Typography variant="h6" gutterBottom fontWeight="800" sx={{ ml: 4 }}>
             {`${title} ${unit}`}
           </Typography>
-          <Typography variant="subtitle1" gutterBottom sx={{ ml: 4 }}>
+          <Typography
+            variant="subtitle1"
+            gutterBottom
+            sx={{ ml: 4, my: "auto" }}
+          >
             (<span>{residual}</span> 개 남음)
           </Typography>
         </div>

@@ -125,7 +125,7 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   }, [isAccountChanged]);
 
   return (
-    <Box sx={{ ...modalStyle, width: 500, height: 500 }}>
+    <Box sx={{ ...modalStyle, width: 500, height: 530 }}>
       {isFunded ? (
         <FundingComplete
           title={cutLongTitle(title, 12)}
@@ -137,17 +137,17 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
         />
       ) : (
         <>
-          <div>
-            <Typography
-              id="modal-title"
-              variant="h5"
-              component="h2"
-              fontWeight="bold"
-              color={mainGreen}
-              sx={{ mb: 3 }}
-            >
-              리워드 선택
-            </Typography>
+          <Typography
+            id="modal-title"
+            variant="h5"
+            component="h2"
+            fontWeight="bold"
+            color={mainGreen}
+            sx={{ mb: 3 }}
+          >
+            리워드 선택
+          </Typography>
+          <div className={styles.reward_item}>
             <EachRewardItem
               title={cutLongTitle(title, 12)}
               price={rewardDetail.price}
