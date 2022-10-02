@@ -14,6 +14,7 @@ import { isAccountChangedState } from "../../../Recoil/atoms/account";
 
 interface FundingProjectDetailProps {
   projtId: number;
+  farmer: string;
   fundingAmount: number;
   targetAmount: number;
   funders: number;
@@ -23,6 +24,7 @@ interface FundingProjectDetailProps {
 
 const FundingProjectDetail = ({
   projtId,
+  farmer,
   fundingAmount,
   targetAmount,
   funders,
@@ -153,7 +155,7 @@ const FundingProjectDetail = ({
         />
       </div>
       <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">
-        <ChooseReward title={title} pjtId={projtId} />
+        <ChooseReward title={title} pjtId={projtId} farmer={farmer} />
       </Modal>
     </>
   );

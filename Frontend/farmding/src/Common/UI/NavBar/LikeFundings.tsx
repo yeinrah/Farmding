@@ -89,7 +89,7 @@ const LikeFundingsModal = ({
       // setLikeCnt(projtDetail.likeAmount);
       setIsLikeChange(false);
     })();
-  }, [isLikeChange]);
+  }, [isLikeChange, currentUserId]);
 
   return (
     <Box sx={{ ...modalStyle, width: 680, height: 520 }}>

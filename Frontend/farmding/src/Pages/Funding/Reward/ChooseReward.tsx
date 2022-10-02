@@ -36,13 +36,19 @@ import FundingComplete from "./FundingComplete";
 export interface IChooseRewardProps {
   pjtId: number;
   title: string;
+  farmer: string;
 }
 
-const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
+const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
   const { ethereum } = window;
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [currentUserId, setCurrentUserId] =
     useRecoilState<number>(currentUserIdState);
+  const [isAccountChanged, SetIsAccountChanged] = useRecoilState<boolean>(
+    isAccountChangedState
+  );
+  const [currentUserName, setCurrentUserName] =
+    useRecoilState<string>(currentUserNameState);
   const [balance, setBalance] = useState("");
   const [isRewardClicked, setIsRewardClicked] = useState(false);
   const [selectedQuantity, setSelectedQuantity] = useState(0);
@@ -55,9 +61,6 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
     deliveryFee: 0,
     deliveryDate: "",
   });
-  const [isAccountChanged, SetIsAccountChanged] = useRecoilState<boolean>(
-    isAccountChangedState
-  );
   ethereum.on("accountsChanged", (accounts: any) => {
     setIsLogin(false);
     // SetIsAccountChanged(true);
@@ -75,6 +78,7 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
   const getClickOrNotHandler = (clickOrNot: boolean) => {
     setIsRewardClicked(clickOrNot);
   };
+  const getNFTHandler = () => {};
 
   const onFundingClick = async () => {
     const fundedOrNot: boolean = await fundingHandler(
@@ -85,6 +89,7 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
     setIsFunded(fundedOrNot);
 
     await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
+    console.log(currentUserId, "지긍유저아이디");
     await addUserRewardQuantityInfo(
       currentUserId,
       pjtId,
@@ -115,15 +120,40 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
 
   return (
     <Box sx={{ ...modalStyle, width: 500, height: 530 }}>
-      {isFunded ? (
-        <FundingComplete
-          title={cutLongTitle(title, 12)}
-          price={rewardDetail.price}
-          unit={rewardDetail.unit}
-          shippingFee={rewardDetail.shippingFee}
-          expectedDate={rewardDetail.expectedDate}
-          selectedQuantity={selectedQuantity}
-        />
+      {!isFunded ? (
+        <>
+          <div className={styles.complete_modal_title}>
+            펀딩이 완료되었습니다.
+          </div>
+          <div className={styles.complete_modal_content}>
+            <div>
+              <span>{currentUserName}</span>
+              님의 펀딩 내역은
+            </div>
+            <div>다음과 같습니다.</div>
+          </div>
+          <FundingComplete
+            title={cutLongTitle(title, 12)}
+            farmer={farmer}
+            price={rewardDetail.price}
+            unit={rewardDetail.unit}
+            shippingFee={rewardDetail.shippingFee}
+            expectedDate={rewardDetail.expectedDate}
+            selectedQuantity={selectedQuantity}
+          />
+          <div className={styles.get_nft_btn}>
+            <CustomBtn
+              customSx={{
+                width: "200px",
+                height: "50px",
+                fontSize: "20px",
+                letterSpacing: 3,
+              }}
+              onclick={getNFTHandler}
+              btnWord={"NFT 받기"}
+            />
+          </div>
+        </>
       ) : (
         <>
           <Typography

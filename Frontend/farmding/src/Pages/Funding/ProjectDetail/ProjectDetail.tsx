@@ -137,6 +137,7 @@ const ProjectDetail = () => {
               )}
               <FundingProjectDetail
                 projtId={pjtDetail.projectId}
+                farmer={pjtDetail.farmerName}
                 fundingAmount={pjtDetail.currentAmount}
                 targetAmount={pjtDetail.targetAmount}
                 funders={pjtDetail.funderCount}

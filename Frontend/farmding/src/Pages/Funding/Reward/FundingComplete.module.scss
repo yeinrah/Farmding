@@ -18,9 +18,9 @@
 
 .reward_confirm_box {
   width: 95%;
-  height: 230px;
+  height: 240px;
   // margin-bottom: 20px;
-  margin: 45px auto 10px auto;
+  margin: 0px auto 10px auto;
   background: rgba(221, 221, 221, 0.4);
   border-radius: 20px;
   // cursor: pointer;
@@ -30,7 +30,7 @@
   display: flex;
   justify-content: space-between;
   padding-top: 30px;
-  margin: 0px 20px 0px 30px;
+  margin: 0px 20px 30px 30px;
   .funding_price {
     display: flex;
     .price {
@@ -47,7 +47,7 @@
 .title {
   display: flex;
   justify-content: space-between;
-  margin: 30px 20px 0 0px;
+  margin: 20px 20px 0px 0px;
 
   span {
     color: black;
@@ -55,16 +55,14 @@
   }
 }
 
-.shipping {
-  margin: 20px 0px 0px 35px;
-
-  span {
-    // font-weight: 600;
-    color: black;
-  }
-}
-.btn {
+.bottom {
+  margin: 40px 20px 0px 35px;
   display: flex;
-  justify-content: center;
-  margin-top: 55px;
+  justify-content: space-between;
+  .shipping {
+    span {
+      font-weight: 700;
+      color: black;
+    }
+  }
 }

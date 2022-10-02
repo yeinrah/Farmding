@@ -12,6 +12,7 @@ import { currentUserNameState } from "../../../Recoil/atoms/account";
 
 export interface IFundingCompleteProps {
   title: string;
+  farmer: string;
   price: number;
   unit: string;
   shippingFee: number;
@@ -21,6 +22,7 @@ export interface IFundingCompleteProps {
 
 const FundingComplete = ({
   title,
+  farmer,
   price,
   unit,
   shippingFee,
@@ -33,19 +35,8 @@ const FundingComplete = ({
 
   const fundingAmount = price * selectedQuantity + shippingFee;
 
-  const getNFTHandler = () => {};
-
   return (
     <>
-      <div className={styles.modal_title}>펀딩이 완료되었습니다.</div>
-      <div className={styles.modal_content}>
-        <div>
-          <span>{currentUserName}</span>
-          님의 펀딩 내역은
-        </div>
-        <div>다음과 같습니다.</div>
-      </div>
-
       <div className={styles.reward_confirm_box}>
         <div className={styles.funding_amount_price}>
           <Typography sx={{ fontSize: 18, color: "#868686" }}>
@@ -60,43 +51,34 @@ const FundingComplete = ({
           </div>
         </div>
         <div className={styles.title}>
-          <Typography variant="h6" gutterBottom fontWeight="800" sx={{ ml: 4 }}>
+          <Typography variant="h5" gutterBottom fontWeight="800" sx={{ ml: 4 }}>
             {`${title} ${unit}`}
           </Typography>
           <Typography variant="subtitle1" sx={{ color: "#868686", my: "auto" }}>
             수량: <span>{selectedQuantity}</span> 개
           </Typography>
         </div>
-        <div className={styles.shipping}>
-          <Typography
-            variant="subtitle1"
-            gutterBottom
-            fontWeight="400"
-            sx={{ color: "#868686", mb: 0 }}
-          >
-            배송비 : <span>{shippingFee}</span> SSF
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            gutterBottom
-            fontWeight="400"
-            sx={{ color: "#868686" }}
-          >
-            배송예정일: <span>{expectedDate}</span> 예정
-          </Typography>
+        <div className={styles.bottom}>
+          <Typography sx={{ my: "auto", fontSize: 20 }}>{farmer}</Typography>
+          <div className={styles.shipping}>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              fontWeight="400"
+              sx={{ color: "#868686", mb: 0 }}
+            >
+              배송비 : <span>{shippingFee}</span> SSF
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              gutterBottom
+              fontWeight="400"
+              sx={{ color: "#868686" }}
+            >
+              배송예정일: <span>{expectedDate}</span> 예정
+            </Typography>
+          </div>
         </div>
-      </div>
-      <div className={styles.btn}>
-        <CustomBtn
-          customSx={{
-            width: "200px",
-            height: "50px",
-            fontSize: "20px",
-            letterSpacing: 3,
-          }}
-          onclick={getNFTHandler}
-          btnWord={"NFT 받기"}
-        />
       </div>
     </>
   );

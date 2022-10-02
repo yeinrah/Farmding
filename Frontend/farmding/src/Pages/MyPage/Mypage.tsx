@@ -19,6 +19,7 @@ import { nftContract } from "../../Common/ABI/abi";
 import { countNFT, getMyNfts, registerNFT } from "../../Common/API/NFTApi";
 import { getMyInfo } from "../../Common/API/userApi";
 import profileImages from "../../Assets/profile/profileImages";
+import MyProjectList from "./MyProjectList";
 // interface UserInfo {
 //   userId: number;
 //   nickname: string;
@@ -197,8 +198,8 @@ const MyPage = () => {
         </Box>
         {value === "one" && (
           <>
-            <MyProject />
-            <MyProject />
+            <MyProjectList />
+            {/* <MyProject /> */}
           </>
         )}
         {value === "two" && (
