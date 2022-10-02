@@ -62,7 +62,6 @@ const ProjectDetail = () => {
 
   const images = ["1_2", "1_3", "1_4", "1_5", "1_6"];
   const remainingDays = getRemainingDays(pjtDetail.projectEndDate);
-  console.log(remainingDays, "디데이!!!!!!!!!!!!!!!!!!!");
 
   useEffect(() => {
     (async function () {
@@ -82,7 +81,7 @@ const ProjectDetail = () => {
       SetIsAccountChanged(false);
       SetIsLoading(false);
     })();
-  }, [isAccountChanged]);
+  }, [isAccountChanged, pjtId]);
 
   return (
     <>

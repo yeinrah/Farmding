@@ -11,6 +11,7 @@ import {
   like,
 } from "../../../Common/API/likeFundingAPI";
 import { fetchProjectDetail } from "../../../Common/API/fundingAPI";
+import { likeButtonChangeState } from "../../../Recoil/atoms/funding";
 
 interface TitleProjectDetailProps {
   // imgArray: string[];
@@ -29,16 +30,21 @@ const TitleProjectDetail = ({
 TitleProjectDetailProps) => {
   const [currentUserId, setCurrentUserId] =
     useRecoilState<number>(currentUserIdState);
-
+  const [likeBtnClickOrNot, setLikeBtnClickOrNot] = useRecoilState<boolean>(
+    likeButtonChangeState
+  );
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(0);
+  const [isLikeChange, setIsLikeChange] = useState(false);
   const dislikeHandler = async () => {
     await dislike(projtId, currentUserId);
-    setIsLiked(false);
+    setLikeBtnClickOrNot(!likeBtnClickOrNot);
+    setIsLikeChange(true);
   };
   const likeHandler = async () => {
     await like(projtId, currentUserId);
-    setIsLiked(true);
+    setLikeBtnClickOrNot(!likeBtnClickOrNot);
+    setIsLikeChange(true);
   };
 
   useEffect(() => {
@@ -48,14 +54,14 @@ TitleProjectDetailProps) => {
       likeOrNot ? setIsLiked(true) : setIsLiked(false);
       const projtDetail: any = await fetchProjectDetail(projtId);
       setLikeCnt(projtDetail.likeAmount);
-
+      setIsLikeChange(false);
       // for (const iterator of likeUsers) {
       //   if (iterator.id === currentUserId) {
       //     setIsLiked(true);
       //   }
       // }
     })();
-  }, [isLiked]);
+  }, [isLikeChange]);
 
   return (
     <>
