@@ -178,7 +178,8 @@ const NavBar = () => {
               <IconButton onClick={showLikeHandler} sx={{ p: 1, mr: 3 }}>
                 <StyledBadge
                   // badgeContent={4}
-                  badgeContent={likeFundings.length}
+                  badgeContent={likeCount}
+                  // badgeContent={likeFundings.length}
                 >
                   <FavoriteIcon
                     sx={{ color: mainGreen, width: "40px", height: "40px" }}
