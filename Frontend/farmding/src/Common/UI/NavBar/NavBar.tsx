@@ -57,7 +57,7 @@ const NavBar = () => {
   const [open, setOpen] = useState(false);
   const [profileImg, setProfileImg] = useState("");
   // likeCount default 0으로 바꾸기.
-  const [likeCount, setlikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(0);
   const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
@@ -90,6 +90,7 @@ const NavBar = () => {
     (async function () {
       const likeFundingsList: any = await fetchLikeFundingLists(currentUserId);
       setLikeFundings(likeFundingsList);
+      setLikeCount(likeFundingsList.length);
     })();
   }, [isNavLikeChange, currentUserId]);
 

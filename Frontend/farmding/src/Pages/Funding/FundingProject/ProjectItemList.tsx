@@ -13,6 +13,7 @@ import {
 import SearchBar from "../../../Common/UI/SearchBar/SearchBar";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
 import { useNavigate } from "react-router-dom";
+import { cutLongTitle } from "../../../Common/functions/CutLongTitle";
 
 export interface IPjtListItem {
   projectId: number;
@@ -72,7 +73,7 @@ const ProjectItemList = () => {
           <Grid item xs={6} sm={8} md={3} key={idx}>
             <ProjectItem
               pjtId={pjt.projectId}
-              pjtTitle={pjt.projectTitle}
+              pjtTitle={cutLongTitle(pjt.projectTitle, 12)}
               farmerName={pjt.farmerName}
               cardHeight={270}
               imgHeight={170}

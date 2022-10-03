@@ -70,13 +70,26 @@ const ProjectItem = ({
     setIsLikeChange(true);
     setIsNavLikeChange(!isNavLikeChange);
   };
+  // console.log(isLiked, pjtId, "좋아요여부!!!!!!!!!!!!!!");
   useEffect(() => {
     (async function () {
       const likeUsersList = await fetchLikeUsers(pjtId);
-      const likeOrNot = getLikeOrNot(currentUserId, likeUsersList);
-      likeOrNot ? setIsLiked(true) : setIsLiked(false);
+      console.log(likeUsersList, pjtId, "현재유저");
+      if (likeUsersList.length === 0) {
+        setIsLiked(false);
+      } else {
+        for (const eachId of likeUsersList) {
+          if (eachId === currentUserId) {
+            setIsLiked(true);
+          } else {
+            setIsLiked(false);
+          }
+        }
+      }
+
       const projtDetail: any = await fetchProjectDetail(pjtId);
       setLikeCnt(projtDetail.likeAmount);
+      // console.log(isLikeChange, pjtId, "likechange");
       setIsLikeChange(false);
     })();
   }, [isNavLikeChange, currentUserId, isLikeChange]);
@@ -101,7 +114,7 @@ const ProjectItem = ({
             component="div"
             sx={{ fontWeight: 800 }}
           >
-            {cutLongTitle(pjtTitle, 12)}
+            {pjtTitle}
           </Typography>
           <div className={styles.heartArea}>
             <Typography variant="body2" color="text.secondary">

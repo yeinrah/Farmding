@@ -1,9 +1,7 @@
-export const getLikeOrNot = (userId: number, likeUsers: any) => {
+export const getLikeOrNot = async (userId: number, likeUsers: any) => {
   for (const eachId of likeUsers) {
     if (eachId === userId) {
-      return true;
-    } else {
-      return false;
+      return 1;
     }
   }
 };

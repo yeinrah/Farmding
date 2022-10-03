@@ -11,10 +11,14 @@ import {
 } from "../Recoil/atoms/account";
 import { loginState } from "../Recoil/atoms/auth";
 import { getMyInfo } from "../Common/API/userApi";
+import { navLikeButtonChangeState } from "../Recoil/atoms/funding";
 const Main = () => {
   const { ethereum } = window;
   const [isAccountChanged, SetIsAccountChanged] = useRecoilState<boolean>(
     isAccountChangedState
+  );
+  const [isNavLikeChange, setIsNavLikeChange] = useRecoilState<boolean>(
+    navLikeButtonChangeState
   );
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [currentUserName, setCurrentUserName] =
@@ -40,6 +44,10 @@ const Main = () => {
       SetIsAccountChanged(false);
     })();
   }, [isAccountChanged, currentUserId]);
+
+  // useEffect(() => {
+  //   setIsNavLikeChange(false);
+  // }, [currentUserId]);
 
   return (
     <>

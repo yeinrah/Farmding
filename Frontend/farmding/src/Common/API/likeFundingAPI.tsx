@@ -19,7 +19,7 @@ export const fetchLikeFundingLists = async (userId: number) => {
 };
 
 export const fetchLikeUsers = async (pjtId: number) => {
-  let result;
+  let result: number[] = [];
   await api
     .get(`/funding/detail/UserLikeOfProject/${pjtId}`)
     .then((res) => {

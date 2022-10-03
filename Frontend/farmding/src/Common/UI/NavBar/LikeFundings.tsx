@@ -73,7 +73,7 @@ const LikeFundingsModal = ({
           <Grid item xs={4} key={idx}>
             <ProjectItem
               pjtId={pjt.projectId}
-              pjtTitle={pjt.projectTitle}
+              pjtTitle={cutLongTitle(pjt.projectTitle, 10)}
               farmerName={pjt.farmerName}
               cardHeight={230}
               imgHeight={130}
