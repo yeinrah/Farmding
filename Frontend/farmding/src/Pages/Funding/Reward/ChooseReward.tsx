@@ -91,8 +91,8 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
     await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
     console.log(currentUserId, "지긍유저아이디");
     await addUserRewardQuantityInfo(
-      currentUserId,
       pjtId,
+      currentUserId,
       rewardDetail.rewardId,
       selectedQuantity
     );
