@@ -12,8 +12,11 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import BuyingNFT from "./BuyingNFT";
-import { sellingNFTList } from "../../Common/API/NFTApi";
+import { getMyNfts, sellingNFTList } from "../../Common/API/NFTApi";
 import { getMyInfo } from "../../Common/API/userApi";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { loginState } from "../../Recoil/atoms/auth";
 interface NftInfo {
   nftId: number;
   currentPrice: number;
@@ -23,6 +26,9 @@ const NFT = () => {
   const [nowItem, setNowItem] = useState(0);
   const [nfts, setNfts] = useState([]);
   const [itemFilter, setItemFilter] = useState("");
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const { ethereum } = window;
+  const navigate = useNavigate();
   const handleChange = (event: any) => {
     setItemFilter(event.target.value);
   };
@@ -36,10 +42,25 @@ const NFT = () => {
     loadSellingNFTList();
     // loadUserImage();
   }, []);
+  const isRegisteredUser = async () => {
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+
+    await getMyNfts(accounts[0]).then((info) => {
+      if (!info.data.user.active) {
+        navigate("/signup");
+      }
+    });
+  };
   const showModal = (selectedNumber: number) => {
     handleOpen();
     setNowItem(selectedNumber);
   };
+  ethereum.on("accountsChanged", (accounts: any) => {
+    // SetIsAccountChanged(true);
+    setIsLogin(false);
+  });
   useEffect(() => {
     console.log(nfts);
     let sortingArr = nfts;
@@ -105,7 +126,8 @@ const NFT = () => {
         {nfts.map((item, index) => {
           return (
             <div
-              onClick={() => {
+              onClick={async () => {
+                isRegisteredUser();
                 showModal(index);
               }}
             >
