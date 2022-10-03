@@ -80,7 +80,7 @@ const NFT = () => {
         />
         {/* <SuccessModal /> */}
       </Modal>
-      <Banner imgSrc={"/Assets/farmerNFTs.PNG"} isMain={false} />
+      <Banner imgSrc={"/Assets/farmerNFTs.png"} isMain={false} />
       <div className={styles.NFTsBox}>
         <div className={styles.topBar}>
           <span className={styles.title}>NFT 목록</span>
