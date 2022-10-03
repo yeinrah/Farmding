@@ -62,7 +62,6 @@ const ProjectDetail = () => {
 
   const images = ["1_2", "1_3", "1_4", "1_5", "1_6"];
   const remainingDays = getRemainingDays(pjtDetail.projectEndDate);
-  console.log(remainingDays, "디데이!!!!!!!!!!!!!!!!!!!");
 
   useEffect(() => {
     (async function () {
@@ -82,7 +81,7 @@ const ProjectDetail = () => {
       SetIsAccountChanged(false);
       SetIsLoading(false);
     })();
-  }, [isAccountChanged]);
+  }, [isAccountChanged, pjtId]);
 
   return (
     <>
@@ -93,7 +92,7 @@ const ProjectDetail = () => {
               projtId={pjtDetail.projectId}
               title={pjtDetail.projectTitle}
               farm={pjtDetail.farmerName}
-              likeCnt={pjtDetail.likeAmount}
+              // likeCnt={pjtDetail.likeAmount}
             />
           </div>
           <div className={styles.project_detail}>
@@ -115,6 +114,7 @@ const ProjectDetail = () => {
                       fontSize: "20px",
                       letterSpacing: 3,
                     }}
+                    bgColor={"mainGreen"}
                     onclick={() =>
                       launchingHandler(
                         pjtDetail.targetAmount,
@@ -130,6 +130,7 @@ const ProjectDetail = () => {
                       fontSize: "20px",
                       letterSpacing: 3,
                     }}
+                    bgColor={"mainGreen"}
                     onclick={() => claimHandler(pjtDetail.projectId)}
                     // btnWord={"다음 단계로"}
                     btnWord={"claim"}
@@ -138,6 +139,7 @@ const ProjectDetail = () => {
               )}
               <FundingProjectDetail
                 projtId={pjtDetail.projectId}
+                farmer={pjtDetail.farmerName}
                 fundingAmount={pjtDetail.currentAmount}
                 targetAmount={pjtDetail.targetAmount}
                 funders={pjtDetail.funderCount}

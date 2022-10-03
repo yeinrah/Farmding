@@ -37,11 +37,7 @@ export const fetchRewardDetail = async (pjtId: number) => {
   await api
     .get(`/funding/detail/${pjtId}`)
     .then((res) => {
-      // 중요!!!!!!!!!**********************************************
-      // res.data[0]으로 바꾸기!!!!!!!!!!!!!!!!!!!!!!!!
-      // result = res.data[0];
-      // 중요!!!!!!!!!**********************************************
-      result = res.data[3];
+      result = res.data[0];
       console.log("리워드 fetch", result);
     })
     .catch((err) => {
@@ -85,6 +81,18 @@ export const addUserRewardQuantityInfo = async (
     .then(success)
     .catch(fail);
 };
+
+export const fetchMyFundings = async (userId: number) => {
+  let result = null;
+  await api
+    .get(`/funding/detail/MyPageFundingList/${userId}`)
+    .then((res) => {
+      result = res.data;
+      console.log("내가 펀딩한 프로젝트 fetch", result);
+    })
+    .catch((err) => {
+      console.log(err);
+      console.log("내가 펀딩한 프로젝트 fetch 에러");
 
 export const fetchAllProjects = async () => {
   let result = null;

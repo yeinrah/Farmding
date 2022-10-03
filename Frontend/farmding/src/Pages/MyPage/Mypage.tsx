@@ -19,11 +19,14 @@ import { nftContract } from "../../Common/ABI/abi";
 import { countNFT, getMyNfts, registerNFT } from "../../Common/API/NFTApi";
 import { deleteUser, getMyInfo } from "../../Common/API/userApi";
 import profileImages from "../../Assets/profile/profileImages";
+import MyProjectList from "./MyProjectList";
+import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
 import { useNavigate } from "react-router-dom";
 import { isAccountChangedState } from "../../Recoil/atoms/account";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../Recoil/atoms/auth";
 import Spinner from "../../Common/UI/Spinner/Spinner";
+
 // interface UserInfo {
 //   userId: number;
 //   nickname: string;
@@ -87,6 +90,14 @@ const MyPage = () => {
       }
     });
   };
+  const modifyAddrHandler = () => {
+    handleOpen();
+    handleAddrOpen();
+  };
+  // const setNFTCnt = async () => {
+  //   const cntNFT = await countNFT();
+  //   setNftCount(cntNFT.data);
+  //   return cntNFT.data;
   ethereum.on("accountsChanged", (accounts: any) => {
     setIsLogin(false);
   });
@@ -99,6 +110,7 @@ const MyPage = () => {
   //   }
   //   setAccount(accounts[0]);
   //   SetIsAccountChanged(!isAccountChanged);
+
   // };
   useEffect(() => {
     getInfoUser();
@@ -181,16 +193,17 @@ const MyPage = () => {
               <Typography
                 sx={{ color: "#5DAE8B", fontWeight: "bold", margin: "auto 0" }}
               >{`배송지주소 : ${userInfo.address}`}</Typography>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => {
-                  handleOpen();
-                  handleAddrOpen();
+              <CustomBtn
+                customSx={{
+                  width: "130px",
+                  height: "40px",
+                  fontSize: "15px",
+                  letterSpacing: 2,
                 }}
-              >
-                배송지 수정
-              </Button>
+                bgColor={"mainPink"}
+                onclick={modifyAddrHandler}
+                btnWord={"배송지 수정"}
+              />
             </Box>
           </Box>
         </Box>
@@ -219,8 +232,8 @@ const MyPage = () => {
         </Box>
         {value === "one" && (
           <>
-            <MyProject />
-            <MyProject />
+            <MyProjectList />
+            {/* <MyProject /> */}
           </>
         )}
         {value === "two" && (
