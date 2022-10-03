@@ -81,3 +81,18 @@ export const addUserRewardQuantityInfo = async (
     .then(success)
     .catch(fail);
 };
+
+export const fetchMyFundings = async (userId: number) => {
+  let result = null;
+  await api
+    .get(`/funding/detail/MyPageFundingList/${userId}`)
+    .then((res) => {
+      result = res.data;
+      console.log("내가 펀딩한 프로젝트 fetch", result);
+    })
+    .catch((err) => {
+      console.log(err);
+      console.log("내가 펀딩한 프로젝트 fetch 에러");
+    });
+  return result;
+};
