@@ -62,6 +62,7 @@ function Balance() {
               fontSize: "20px",
               letterSpacing: 3,
             }}
+            bgColor={"mainPink"}
             onclick={onClickButton}
             // btnWord={btnName}
             btnWord="지갑 연결하기"

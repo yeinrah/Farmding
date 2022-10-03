@@ -130,16 +130,6 @@ REFERENCES `reward` (
 	`reward_id`
 );
 
-
-REFERENCES `user` (
-	`user_id`
-);
-
-
-REFERENCES `project` (
-	`project_id`
-);
-
 ALTER TABLE `reward` ADD CONSTRAINT `FK_project_TO_reward_1` FOREIGN KEY (
 	`project_id`
 )

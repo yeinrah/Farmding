@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import Web3 from "web3";
-
-import { useNavigate } from "react-router-dom";
 import EachRewardItem from "./EachRewardItem";
 
 // scss
@@ -11,8 +8,6 @@ import styles from "./ChooseReward.module.scss";
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Card, CardContent, CardMedia, Grid } from "@mui/material";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 // data
 import { mainGreen, modalStyle } from "../../../Common/data/Style";
@@ -22,7 +17,11 @@ import CustomBtn from "../../../Common/UI/CustomBtn/CustomBtn";
 
 import { getBalance } from "../../../utils/Tokens";
 import { useRecoilState } from "recoil";
-import { isAccountChangedState } from "../../../Recoil/atoms/account";
+import {
+  isAccountChangedState,
+  currentUserNameState,
+  currentUserIdState,
+} from "../../../Recoil/atoms/account";
 import { fundingHandler } from "../../../utils/fundingProject";
 import {
   addUserRewardQuantityInfo,
@@ -32,20 +31,27 @@ import {
 import { loginState } from "../../../Recoil/atoms/auth";
 import { getMyInfo } from "../../../Common/API/userApi";
 import DisabledBtn from "../../../Common/UI/CustomBtn/DisabledBtn";
+import FundingComplete from "./FundingComplete";
 
 export interface IChooseRewardProps {
   pjtId: number;
   title: string;
+  farmer: string;
 }
 
-const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
+const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
   const { ethereum } = window;
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const [currentUserId, setCurrentUserId] =
+    useRecoilState<number>(currentUserIdState);
+  const [isAccountChanged, SetIsAccountChanged] = useRecoilState<boolean>(
+    isAccountChangedState
+  );
+  const [currentUserName, setCurrentUserName] =
+    useRecoilState<string>(currentUserNameState);
   const [balance, setBalance] = useState("");
   const [isRewardClicked, setIsRewardClicked] = useState(false);
-  const [currentUserInfo, setCurrentUserInfo] = useState({
-    userId: 0,
-  });
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [isFunded, setIsFunded] = useState(false);
   const [reward, setReward] = useState({
     rewardId: 0,
@@ -55,28 +61,24 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
     deliveryFee: 0,
     deliveryDate: "",
   });
-  const [isAccountChanged, SetIsAccountChanged] = useRecoilState<boolean>(
-    isAccountChangedState
-  );
   ethereum.on("accountsChanged", (accounts: any) => {
     setIsLogin(false);
     // SetIsAccountChanged(true);
   });
-  const navigate = useNavigate();
   // const [account, setAccount] = useRecoilState<string>(AccountState);
   // const [chooseReward, setChooseReward] = useState([]);
   // 잔고랑 계좌, 계좌 변경 상태 전역 상태관리 하기! recoil로!!!!!!!
 
   let fundingAmount: number;
-  let selectedQuantity: number;
 
   const getAmountHandler = (amount: number) => {
-    selectedQuantity = amount;
+    setSelectedQuantity(amount);
     fundingAmount = amount * reward.ssfPrice;
   };
   const getClickOrNotHandler = (clickOrNot: boolean) => {
     setIsRewardClicked(clickOrNot);
   };
+  const getNFTHandler = () => {};
 
   const onFundingClick = async () => {
     const fundedOrNot: boolean = await fundingHandler(
@@ -85,16 +87,15 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
       rewardDetail.shippingFee
     );
     setIsFunded(fundedOrNot);
-    console.log("ddddddddddddddddddddddddddddddddd");
-    if (selectedQuantity >= 1) {
-      await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
-      await addUserRewardQuantityInfo(
-        currentUserInfo.userId,
-        pjtId,
-        rewardDetail.rewardId,
-        selectedQuantity
-      );
-    }
+
+    await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
+    console.log(currentUserId, "지긍유저아이디");
+    await addUserRewardQuantityInfo(
+      pjtId,
+      currentUserId,
+      rewardDetail.rewardId,
+      selectedQuantity
+    );
   };
 
   const rewardDetail = {
@@ -112,39 +113,66 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
       setBalance(currentBalance);
       const rwrdDetail: any = await fetchRewardDetail(pjtId);
       setReward(rwrdDetail);
-      const userInfo = await getMyInfo(ethereum.selectedAddress);
-      console.log(userInfo.data.user, "유저 정보!!!!!!!!!!!!");
-      setCurrentUserInfo(userInfo.data.user);
+
       SetIsAccountChanged(false);
     })();
   }, [isAccountChanged]);
 
   return (
-    <Box sx={{ ...modalStyle, width: 500, height: 500 }}>
+    <Box sx={{ ...modalStyle, width: 500, height: 530 }}>
       {isFunded ? (
-        <Typography
-          id="modal-title"
-          variant="h5"
-          component="h2"
-          fontWeight="bold"
-          color={mainGreen}
-          sx={{ mb: 3 }}
-        >
-          펀딩이 완료되었습니다.
-        </Typography>
+        <>
+          <div className={styles.complete_modal_title}>
+            펀딩이 완료되었습니다.
+          </div>
+          <div className={styles.complete_modal_content}>
+            <div>
+              <span>{currentUserName}</span>
+              님의 펀딩 내역은
+            </div>
+            <div>다음과 같습니다.</div>
+          </div>
+          <FundingComplete
+            title={cutLongTitle(title, 12)}
+            farmer={farmer}
+            price={rewardDetail.price}
+            unit={rewardDetail.unit}
+            shippingFee={rewardDetail.shippingFee}
+            expectedDate={rewardDetail.expectedDate}
+            selectedQuantity={selectedQuantity}
+          />
+          <div className={styles.get_nft_btn}>
+            <CustomBtn
+              customSx={{
+                width: "200px",
+                height: "50px",
+                fontSize: "20px",
+                letterSpacing: 3,
+              }}
+              bgColor={"mainGreen"}
+              onclick={getNFTHandler}
+              btnWord={"NFT 받기"}
+            />
+          </div>
+        </>
       ) : (
         <>
-          <div>
-            <Typography
-              id="modal-title"
-              variant="h5"
-              component="h2"
-              fontWeight="bold"
-              color={mainGreen}
-              sx={{ mb: 3 }}
-            >
-              리워드 선택
-            </Typography>
+          <Typography
+            id="modal-title"
+            variant="h5"
+            component="h2"
+            fontWeight="bold"
+            color={mainGreen}
+            sx={{ mb: 4 }}
+          >
+            리워드 선택
+          </Typography>
+          <div className={styles.reward_item}>
+            {!isRewardClicked && (
+              <div className={styles.modal_content}>
+                아래 리워드를 클릭하여 수량을 선택해주세요.
+              </div>
+            )}
             <EachRewardItem
               title={cutLongTitle(title, 12)}
               price={rewardDetail.price}
@@ -165,6 +193,7 @@ const ChooseReward = ({ title, pjtId }: IChooseRewardProps) => {
                   fontSize: "20px",
                   letterSpacing: 3,
                 }}
+                bgColor={"mainGreen"}
                 onclick={onFundingClick}
                 // btnWord={"다음 단계로"}
                 btnWord={"펀딩하기"}

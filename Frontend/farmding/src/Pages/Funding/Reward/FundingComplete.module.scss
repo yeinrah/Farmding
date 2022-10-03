@@ -1,0 +1,68 @@
+.modal_title {
+  text-align: center;
+  margin: 30px 0 20px 0;
+  font-size: 27px;
+  font-weight: 700;
+}
+.modal_content {
+  text-align: center;
+  margin: 20px auto;
+  font-size: 18px;
+  color: #868686;
+  span {
+    margin-right: 5px;
+    color: black;
+    font-weight: 700;
+  }
+}
+
+.reward_confirm_box {
+  width: 95%;
+  height: 240px;
+  // margin-bottom: 20px;
+  margin: 0px auto 10px auto;
+  background: rgba(221, 221, 221, 0.4);
+  border-radius: 20px;
+  // cursor: pointer;
+}
+
+.funding_amount_price {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+  margin: 0px 20px 30px 30px;
+  .funding_price {
+    display: flex;
+    .price {
+      // padding-top: 0;
+      line-height: 20px;
+      font-size: 40px;
+      color: #5dae8b;
+
+      font-weight: bold;
+    }
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 20px 0px 0px;
+
+  span {
+    color: black;
+    font-weight: bold;
+  }
+}
+
+.bottom {
+  margin: 40px 20px 0px 35px;
+  display: flex;
+  justify-content: space-between;
+  .shipping {
+    span {
+      font-weight: 700;
+      color: black;
+    }
+  }
+}

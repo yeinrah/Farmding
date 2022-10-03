@@ -21,6 +21,9 @@ public interface LikeRepository extends JpaRepository<Like, String> {
 	@Query(value = "select * from `like` where project_id = ?1 and user_id = ?2", nativeQuery = true)
 	List<Like> likeClickOrNot(int projectId, int userId);
 	
+	@Query(value = "select * from `like` where project_id = ?1", nativeQuery = true)
+	List<Like> likeUserOfProject(int projectId);
+	
 //	@Query(value = "insert into `like` (project_id, user_id) values (?1,?2)", nativeQuery = true)
 //	List<Like> InsertIntoLike(int projectId, int userId);
 }

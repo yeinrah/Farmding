@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { nftContract } from "../../Common/ABI/abi";
 import { changeOnSale } from "../../Common/API/NFTApi";
 import { Sell } from "@mui/icons-material";
+import Spinner from "../../Common/UI/Spinner/Spinner";
 interface MyNFTInfo {
   nftId: string;
   currentPrice: number;
@@ -22,32 +23,45 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
   const [open, setOpen] = useState(false);
   const [sellOn, setSellOn] = useState(MyNFTInfo.onSale);
   const [price, setPrice] = useState(MyNFTInfo.currentPrice);
+  const [isLoading, setIsLoading] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { ethereum } = window;
   const changeSell = async () => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
-    await nftContract.methods
-      .approve("0xb2b0d8d32D4861dF47e308f2DDD970CDADb79eEa", MyNFTInfo.nftId)
-      .send({ from: accounts[0] });
-    await nftContract.methods
-      .createSell(MyNFTInfo.nftId, MyNFTInfo.currentPrice)
-      .send({ from: accounts[0] });
+    try {
+      await nftContract.methods
+        .approve("0x048287A7E3eDACFAd817Ea77844E9ECF5802404b", MyNFTInfo.nftId)
+        .send({ from: accounts[0] });
+      await nftContract.methods
+        .createSell(MyNFTInfo.nftId, MyNFTInfo.currentPrice)
+        .send({ from: accounts[0] });
+      return true;
+    } catch {
+      console.log("Ha");
+      return false;
+    }
   };
   const cancleSell = async () => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
-    let a = await nftContract.methods
-      .cancelSell(MyNFTInfo.nftId)
-      .send({ from: accounts[0] });
+    try {
+      await nftContract.methods
+        .cancelSell(MyNFTInfo.nftId)
+        .send({ from: accounts[0] });
+      return true;
+    } catch {
+      return false;
+    }
   };
   const changePrice = (price: number) => {
     setPrice(price);
   };
   useEffect(() => {
     getInfoNFT();
-  }, [price]);
+  }, [price, sellOn]);
   return (
     <>
+      {isLoading && <Spinner />}
       <Modal
         open={open}
         onClose={handleClose}
@@ -89,14 +103,25 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
           labelPlacement="top"
           checked={sellOn}
           onClick={async () => {
-            await changeOnSale(MyNFTInfo.nftId);
-            getInfoNFT();
-            if (!sellOn) {
-              setSellOn(!sellOn);
-              changeSell();
-            } else {
-              setSellOn(!sellOn);
-              cancleSell();
+            setIsLoading(true);
+            try {
+              getInfoNFT();
+              if (!sellOn) {
+                if (await changeSell()) {
+                  await changeOnSale(MyNFTInfo.nftId);
+                  setSellOn(!sellOn);
+                }
+                setIsLoading(false);
+              } else {
+                if (await cancleSell()) {
+                  await changeOnSale(MyNFTInfo.nftId);
+                  setSellOn(!sellOn);
+                }
+                setIsLoading(false);
+              }
+              // setIsLoading(false);
+            } catch {
+              setIsLoading(false);
             }
           }}
         />

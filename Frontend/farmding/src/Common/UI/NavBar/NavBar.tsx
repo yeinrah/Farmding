@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // component
 import LikeFundings from "./LikeFundings";
 
@@ -23,6 +23,13 @@ import { styled } from "@mui/material/styles";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../../Recoil/atoms/auth";
+import { fetchLikeFundingLists } from "../../API/likeFundingAPI";
+import { currentUserIdState } from "../../../Recoil/atoms/account";
+import {
+  IFundingTypes,
+  likeButtonChangeState,
+  likeFundingsListState,
+} from "../../../Recoil/atoms/funding";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -37,12 +44,20 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 
 const NavBar = () => {
   const { ethereum } = window;
+  const [currentUserId, setCurrentUserId] =
+    useRecoilState<number>(currentUserIdState);
+  const [likeFundings, setLikeFundings] = useRecoilState<IFundingTypes[]>(
+    likeFundingsListState
+  );
+  const [likeBtnClickOrNot, setLikeBtnClickOrNot] = useRecoilState<boolean>(
+    likeButtonChangeState
+  );
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const [profileImg, setProfileImg] = useState("");
   // likeCount default 0으로 바꾸기.
-  const [likeCount, setlikeCount] = useState(10);
+  const [likeCount, setlikeCount] = useState(0);
   const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
@@ -62,7 +77,7 @@ const NavBar = () => {
     handleCloseUserMenu();
     // ethereum.on('disconnect',handler: (error: ProviderRpcError) => void);
     setIsLogin(false);
-    // navigate('/login')
+    navigate("/login");
   };
 
   const goMyPageHandler = () => {
@@ -71,6 +86,12 @@ const NavBar = () => {
     // return <Navigate to="/mypage" />
     navigate("/mypage");
   };
+  useEffect(() => {
+    (async function () {
+      const likeFundingsList: any = await fetchLikeFundingLists(currentUserId);
+      setLikeFundings(likeFundingsList);
+    })();
+  }, [likeBtnClickOrNot]);
 
   return (
     <>
@@ -93,12 +114,12 @@ const NavBar = () => {
                   className={styles.navbar__logo}
                 />
               </Link>
-              <Link to="/test-metamask">
+              {/* <Link to="/test-metamask">
                 <h5>잔액조회</h5>
               </Link>
               <Link to="/nft">
                 <h5> NFT</h5>
-              </Link>
+              </Link> */}
               {/* <Link to="/landing">
                 <h5>시작페이지</h5>
               </Link> */}
@@ -122,6 +143,27 @@ const NavBar = () => {
               >
                 FARMDING
               </Typography>
+              <Typography
+                // variant="h5"
+                // noWrap
+                component="a"
+                href="/nft"
+                sx={{
+                  // ml: 1,
+                  // display: { xs: "flex", md: "none" },
+                  flexGrow: 1,
+                  // fontFamily: "monospace",
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  letterSpacing: ".2rem",
+                  color: mainGreen,
+                  textDecoration: "none",
+                  ml: "30px",
+                  my: "auto",
+                }}
+              >
+                NFT
+              </Typography>
             </div>
             <div>
               <Modal
@@ -130,13 +172,13 @@ const NavBar = () => {
                 aria-labelledby="modal-title"
                 // aria-describedby="modal-modal-description"
               >
-                <LikeFundings />
+                <LikeFundings modalCloseHandler={handleClose} />
               </Modal>
 
               <IconButton onClick={showLikeHandler} sx={{ p: 1, mr: 3 }}>
                 <StyledBadge
                   // badgeContent={4}
-                  badgeContent={likeCount}
+                  badgeContent={likeFundings.length}
                 >
                   <FavoriteIcon
                     sx={{ color: mainGreen, width: "40px", height: "40px" }}

@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 // scss
@@ -14,9 +13,19 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 // data
 import { mainGreen, modalStyle } from "../../data/Style";
 import { cutLongTitle } from "../../functions/CutLongTitle";
+import { fetchLikeFundingLists } from "../../API/likeFundingAPI";
+import { currentUserIdState } from "../../../Recoil/atoms/account";
+import { useRecoilState } from "recoil";
+import ProjectItem from "../../../Pages/Funding/FundingProject/ProjectItem";
 
-export interface ILikeFundingsProps {
-
+export interface ILikeFundings {
+  projectId: number;
+  projectTitle: string;
+  farmerName: string;
+  // likeAmount: number;
+}
+export interface ILikeFundingsModal {
+  modalCloseHandler: () => void;
 }
 
 const dummyLikeProjects = [
@@ -58,60 +67,56 @@ const dummyLikeProjects = [
   },
 ];
 
-const LikeFundingsModal = (props: ILikeFundingsProps) => {
+const LikeFundingsModal = ({
+  modalCloseHandler = () => {},
+}: ILikeFundingsModal) => {
+  const [currentUserId, setCurrentUserId] =
+    useRecoilState<number>(currentUserIdState);
   const [likeFundings, setLikeFundings] = useState([]);
-  const navigate = useNavigate();
-  const moveDetailHandler = () => {
-    navigate('/project')
-    // 모달 close 하는 함수 호출
-  }
+  const [isLikeChange, setIsLikeChange] = useState(false);
+  const disLikeHandler = () => {
+    setIsLikeChange(true);
+  };
+
+  useEffect(() => {
+    // setIsLoading(true);
+    (async () => {
+      const likeFundingList: any = await fetchLikeFundingLists(currentUserId);
+      setLikeFundings(likeFundingList);
+      // const likeOrNot = await getLikeOrNot(projtId, currentUserId);
+      // likeOrNot ? setIsLiked(true) : setIsLiked(false);
+      // const projtDetail: any = await fetchProjectDetail(projtId);
+      // setLikeCnt(projtDetail.likeAmount);
+      setIsLikeChange(false);
+    })();
+  }, [isLikeChange, currentUserId]);
 
   return (
-    <Box sx={{...modalStyle, width: 530, height: 500}}>
-      <Typography id="modal-title" 
-        variant="h5" component="h2"
-        fontWeight= 'bold'
-        color = {mainGreen}
-        sx={{ mb: 3}}
+    <Box sx={{ ...modalStyle, width: 680, height: 520 }}>
+      <Typography
+        id="modal-title"
+        variant="h5"
+        component="h2"
+        fontWeight="bold"
+        color={mainGreen}
+        sx={{ mb: 3 }}
       >
         좋아하는 프로젝트
       </Typography>
 
       <Grid container spacing={{ xs: 2, md: 3 }} className={styles.container}>
-        {dummyLikeProjects.map((pjt, idx) => (
+        {likeFundings.map((pjt: ILikeFundings, idx) => (
           // <ProjectItem key={idx} title={pjt.title} />
           <Grid item xs={4} key={idx}>
-            <Card sx={{ height: 160 }}
-              className={styles.card}
-              onClick={moveDetailHandler}
-            >
-              <CardMedia
-                component="img"
-                alt=""
-                height="90"
-                image={`/Assets/${pjt.mainImg}`}
-              />
-              <CardContent>
-                <Typography gutterBottom variant="subtitle2" component="div"
-                  sx={{fontWeight: 800}}
-                >
-                  {cutLongTitle(pjt.title, 8)}
-                </Typography>
-                <div className={styles.heartArea}>
-                  <Typography color="text.secondary"
-                    sx={{fontSize: 13}}
-                  >
-                    {pjt.farm}
-                  </Typography>
-                  <div>
-                    <FavoriteBorderIcon sx={{ color: mainGreen }} 
-                      fontSize="small"
-                    />
-                    <span className={styles.like}>{pjt.likeCnt}</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <ProjectItem
+              pjtId={pjt.projectId}
+              pjtTitle={pjt.projectTitle}
+              farmerName={pjt.farmerName}
+              cardHeight={230}
+              imgHeight={130}
+              onClickDislike={disLikeHandler}
+              onModalClose={modalCloseHandler}
+            />
           </Grid>
         ))}
       </Grid>
@@ -120,5 +125,5 @@ const LikeFundingsModal = (props: ILikeFundingsProps) => {
       </Typography> */}
     </Box>
   );
-}
+};
 export default LikeFundingsModal;
