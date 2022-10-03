@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { isAccountChangedState } from "../../Recoil/atoms/account";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../Recoil/atoms/auth";
+import Spinner from "../../Common/UI/Spinner/Spinner";
 // interface UserInfo {
 //   userId: number;
 //   nickname: string;
@@ -38,6 +39,7 @@ const MyPage = () => {
   const [profileOpen, setProfileOpen] = useState<Boolean>(false);
   const [account, setAccount] = useState("");
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({
     nickname: "",
     address: "",
@@ -79,7 +81,7 @@ const MyPage = () => {
     setAccount(accounts[0]);
     await getMyNfts(accounts[0]).then((info) => {
       setNFTInfo(info.data.nft);
-      console.log(info.data.user);
+      console.log(info.data.nft);
       if (!info.data.user.active) {
         navigate("/signup");
       }
@@ -107,6 +109,7 @@ const MyPage = () => {
   // }, [isAccountChanged]);
   return (
     <>
+      {isLoading && <Spinner />}
       <Modal
         open={open}
         onClose={handleClose}
@@ -227,30 +230,30 @@ const MyPage = () => {
         )}
         <Button
           onClick={async () => {
-            const accounts = await ethereum.request({
-              method: "eth_requestAccounts",
-            });
-            setAccount(accounts[0]);
-            alert(accounts[0]);
-            //0번부터 시작해서 +1
-            let cnt = (await (await countNFT()).data) + 1;
-            const a = await nftContract.methods
-              .mint(accounts[0], 1, cnt)
-              .send({ from: accounts[0] });
-            console.log(a);
-            console.log(a.events.getNFTData.returnValues[0]);
-            const nowNickName = await (
-              await getMyInfo(accounts[0])
-            ).data.user.nickname;
-            await registerNFT(
-              1,
-              a.events.getNFTData.returnValues[0],
-              nowNickName,
-              accounts[0]
-            );
-            // await getMyNfts(accounts[0]).then((b) => {
-            //   console.log(b.data);
-            // });
+            setIsLoading(true);
+            try {
+              const accounts = await ethereum.request({
+                method: "eth_requestAccounts",
+              });
+              setAccount(accounts[0]);
+              //0번부터 시작해서 +1
+              let cnt = (await (await countNFT()).data) + 1;
+              const a = await nftContract.methods
+                .mint(accounts[0], 1, cnt)
+                .send({ from: accounts[0] });
+              const nowNickName = await (
+                await getMyInfo(accounts[0])
+              ).data.user.nickname;
+              await registerNFT(
+                1,
+                a.events.getNFTData.returnValues[0],
+                nowNickName,
+                accounts[0]
+              );
+              setIsLoading(false);
+            } catch {
+              setIsLoading(false);
+            }
           }}
         >
           Minting
