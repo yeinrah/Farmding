@@ -67,7 +67,7 @@ TitleProjectDetailProps) => {
     <>
       <div className={styles.wrap}>
         <div className={styles.project_detail_banner}>
-          <img src={`/Assets/funding/${projtId}.jpg`} alt="" />
+          <img src={`/Assets/funding/${projtId}_header.jpg`} alt="" />
         </div>
 
         <div className={styles.project_detail_banner_txt}>
