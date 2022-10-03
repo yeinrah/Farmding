@@ -181,6 +181,7 @@ const Login = () => {
               fontSize: "20px",
               letterSpacing: 3,
             }}
+            bgColor={"mainPink"}
             onclick={onClickButton}
             // btnWord={btnName}
             btnWord={onboardButtonText}

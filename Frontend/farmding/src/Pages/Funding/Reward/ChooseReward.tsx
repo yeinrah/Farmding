@@ -120,7 +120,7 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
 
   return (
     <Box sx={{ ...modalStyle, width: 500, height: 530 }}>
-      {!isFunded ? (
+      {isFunded ? (
         <>
           <div className={styles.complete_modal_title}>
             펀딩이 완료되었습니다.
@@ -149,6 +149,7 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
                 fontSize: "20px",
                 letterSpacing: 3,
               }}
+              bgColor={"mainGreen"}
               onclick={getNFTHandler}
               btnWord={"NFT 받기"}
             />
@@ -192,6 +193,7 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
                   fontSize: "20px",
                   letterSpacing: 3,
                 }}
+                bgColor={"mainGreen"}
                 onclick={onFundingClick}
                 // btnWord={"다음 단계로"}
                 btnWord={"펀딩하기"}

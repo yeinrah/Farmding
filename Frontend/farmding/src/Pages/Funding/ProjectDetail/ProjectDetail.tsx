@@ -114,6 +114,7 @@ const ProjectDetail = () => {
                       fontSize: "20px",
                       letterSpacing: 3,
                     }}
+                    bgColor={"mainGreen"}
                     onclick={() =>
                       launchingHandler(
                         pjtDetail.targetAmount,
@@ -129,6 +130,7 @@ const ProjectDetail = () => {
                       fontSize: "20px",
                       letterSpacing: 3,
                     }}
+                    bgColor={"mainGreen"}
                     onclick={() => claimHandler(pjtDetail.projectId)}
                     // btnWord={"다음 단계로"}
                     btnWord={"claim"}

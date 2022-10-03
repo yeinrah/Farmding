@@ -20,6 +20,7 @@ import { countNFT, getMyNfts, registerNFT } from "../../Common/API/NFTApi";
 import { getMyInfo } from "../../Common/API/userApi";
 import profileImages from "../../Assets/profile/profileImages";
 import MyProjectList from "./MyProjectList";
+import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
 // interface UserInfo {
 //   userId: number;
 //   nickname: string;
@@ -74,6 +75,10 @@ const MyPage = () => {
       console.log(info.data.nft);
       setNFTInfo(info.data.nft);
     });
+  };
+  const modifyAddrHandler = () => {
+    handleOpen();
+    handleAddrOpen();
   };
   // const setNFTCnt = async () => {
   //   const cntNFT = await countNFT();
@@ -160,16 +165,17 @@ const MyPage = () => {
               <Typography
                 sx={{ color: "#5DAE8B", fontWeight: "bold", margin: "auto 0" }}
               >{`배송지주소 : ${userInfo.address}`}</Typography>
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => {
-                  handleOpen();
-                  handleAddrOpen();
+              <CustomBtn
+                customSx={{
+                  width: "130px",
+                  height: "40px",
+                  fontSize: "15px",
+                  letterSpacing: 2,
                 }}
-              >
-                배송지 수정
-              </Button>
+                bgColor={"mainPink"}
+                onclick={modifyAddrHandler}
+                btnWord={"배송지 수정"}
+              />
             </Box>
           </Box>
         </Box>

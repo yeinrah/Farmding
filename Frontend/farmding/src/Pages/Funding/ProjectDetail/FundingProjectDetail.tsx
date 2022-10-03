@@ -150,6 +150,7 @@ const FundingProjectDetail = ({
             fontSize: "30px",
             letterSpacing: 3,
           }}
+          bgColor={"mainGreen"}
           onclick={chooseRewardModalHandler}
           btnWord={"펀딩하기"}
         />
