@@ -32,7 +32,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
     try {
       await nftContract.methods
-        .approve("0x71a4ac4D16d5956CB7961E602B02F135c20979eb", MyNFTInfo.count)
+        .approve("0xcB035ef26a2Ec7A8862744904a97a63103f3f988", MyNFTInfo.count)
         .send({ from: accounts[0] });
       await nftContract.methods
         .createSell(MyNFTInfo.count, MyNFTInfo.currentPrice)

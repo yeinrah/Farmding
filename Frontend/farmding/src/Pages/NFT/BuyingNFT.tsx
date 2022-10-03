@@ -71,7 +71,7 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
                 });
                 const a = await ssafyTokenContract.methods
                   .approve(
-                    "0x71a4ac4D16d5956CB7961E602B02F135c20979eb",
+                    "0xcB035ef26a2Ec7A8862744904a97a63103f3f988",
                     NFTInfo.currentPrice
                   )
                   .send({ from: accounts[0] });
