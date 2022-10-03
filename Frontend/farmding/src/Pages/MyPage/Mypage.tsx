@@ -20,6 +20,9 @@ import { countNFT, getMyNfts, registerNFT } from "../../Common/API/NFTApi";
 import { deleteUser, getMyInfo } from "../../Common/API/userApi";
 import profileImages from "../../Assets/profile/profileImages";
 import { useNavigate } from "react-router-dom";
+import { isAccountChangedState } from "../../Recoil/atoms/account";
+import { useRecoilState } from "recoil";
+import { loginState } from "../../Recoil/atoms/auth";
 // interface UserInfo {
 //   userId: number;
 //   nickname: string;
@@ -34,6 +37,7 @@ const MyPage = () => {
   const [nickOpen, setNickOpen] = useState<Boolean>(false);
   const [profileOpen, setProfileOpen] = useState<Boolean>(false);
   const [account, setAccount] = useState("");
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [userInfo, setUserInfo] = useState({
     nickname: "",
     address: "",
@@ -74,25 +78,33 @@ const MyPage = () => {
     });
     setAccount(accounts[0]);
     await getMyNfts(accounts[0]).then((info) => {
-      console.log(info.data.nft);
       setNFTInfo(info.data.nft);
+      console.log(info.data.user);
       if (!info.data.user.active) {
         navigate("/signup");
       }
     });
   };
-  // const setNFTCnt = async () => {
-  //   const cntNFT = await countNFT();
-  //   setNftCount(cntNFT.data);
-  //   return cntNFT.data;
+  ethereum.on("accountsChanged", (accounts: any) => {
+    setIsLogin(false);
+  });
+  // const changeAccount = async () => {
+  //   const accounts = await ethereum.request({ method: "eth_accounts" });
+  //   if (!accounts.length) {
+  //     setIsLogin(false);
+  //     // navigate("/login");
+  //     // return;
+  //   }
+  //   setAccount(accounts[0]);
+  //   SetIsAccountChanged(!isAccountChanged);
   // };
   useEffect(() => {
     getInfoUser();
     getInfoNFT();
   }, []);
   // useEffect(() => {
-  //   setNFTCnt();
-  // }, [nftCount]);
+  //   changeAccount();
+  // }, [isAccountChanged]);
   return (
     <>
       <Modal
