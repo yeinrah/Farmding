@@ -255,12 +255,12 @@ const MyPage = () => {
               const a = await nftContract.methods
                 .mint(accounts[0], 1)
                 .send({ from: accounts[0] });
-              const cnt = await nftContract.methods.getCount().call();
               console.log(a);
+              const cnt = await nftContract.methods.getCount().call();
+              console.log(cnt);
               const nowNickName = await (
                 await getMyInfo(accounts[0])
               ).data.user.nickname;
-              console.log(cnt);
               const b = await registerNFT(
                 1,
                 a.events.getNFTData.returnValues[0],
