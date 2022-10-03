@@ -6,23 +6,14 @@ import styles from "./ProjectItemList.module.scss";
 // mui
 import { Grid } from "@mui/material";
 
-
-import { fetchPopularProjects } from "../../../Common/API/fundingAPI";
-import {
-  dislike,
-  getLikeOrNot,
-  like,
-} from "../../../Common/API/likeFundingAPI";
-import { currentUserIdState } from "../../../Recoil/atoms/account";
-import { useRecoilState } from "recoil";
-import { cutLongTitle } from "../../../Common/functions/CutLongTitle";
-import { mainGreen } from "../../../Common/data/Style";
 import {
   fetchAllProjects,
   fetchPopularProjects,
 } from "../../../Common/API/fundingAPI";
 import SearchBar from "../../../Common/UI/SearchBar/SearchBar";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
+import { useNavigate } from "react-router-dom";
+import { cutLongTitle } from "../../../Common/functions/CutLongTitle";
 
 export interface IPjtListItem {
   projectId: number;
@@ -31,8 +22,6 @@ export interface IPjtListItem {
   // likeAmount: number;
 }
 const ProjectItemList = () => {
-
-
   const [nowProjects, setNowProjects] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
   const [nowSearch, setNowSearch] = useState("");
@@ -79,12 +68,12 @@ const ProjectItemList = () => {
         >
           <SearchBar placeHolder={"어떤 과일을 드시고 싶으세요?"} />
         </div>
-        {nowProjects.map((pjt: IPjt, idx) => (
+        {nowProjects.map((pjt: IPjtListItem, idx) => (
           // <ProjectItem key={idx} title={pjt.title} />
           <Grid item xs={6} sm={8} md={3} key={idx}>
             <ProjectItem
               pjtId={pjt.projectId}
-              pjtTitle={pjt.projectTitle}
+              pjtTitle={cutLongTitle(pjt.projectTitle, 12)}
               farmerName={pjt.farmerName}
               cardHeight={270}
               imgHeight={170}

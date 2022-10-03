@@ -11,6 +11,7 @@ interface NFTInfo {
   currentPrice: number;
   ownerNickname: string;
   onSale: boolean;
+  count: number;
 }
 interface NFTitemProps {
   NFTInfo: NFTInfo;
@@ -42,7 +43,7 @@ const NFTItem = ({ NFTInfo, getMyInfo }: NFTitemProps) => {
         src={`https://${NFTInfo.nftAddress}`}
       />
       <div className={styles.nftInfo}>
-        <span className={styles.nftName}>{`farmer# ${NFTInfo.nftId}`}</span>
+        <span className={styles.nftName}>{`farmer# ${NFTInfo.count}`}</span>
         <div className={styles.priceBlock}>
           <LocalAtmIcon />
           <span className={styles.nftPrice}>{NFTInfo.currentPrice}</span>

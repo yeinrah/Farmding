@@ -13,6 +13,7 @@ import Main from "./Pages/Main";
 import MyPage from "./Pages/MyPage/Mypage";
 import NFT from "./Pages/NFT/NFT";
 import SignUp from "./Pages/User/SignUp";
+import Tutorial from "./Pages/Tutorial/Tutorial";
 import { loginState } from "./Recoil/atoms/auth";
 
 function App() {
@@ -84,6 +85,14 @@ function App() {
           element={
             <PrivateRoute>
               <Balance />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/tutorial"
+          element={
+            <PrivateRoute>
+              <Tutorial />
             </PrivateRoute>
           }
         />

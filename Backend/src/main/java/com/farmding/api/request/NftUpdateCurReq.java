@@ -18,9 +18,9 @@ public class NftUpdateCurReq {
 	@NotNull(message = "현재NFT가격을 입력하세요.")
 	private double currentPrice;
 	
-	@ApiModelProperty(name = "NFT ID", example = "1")
-	@NotNull(message = "nft 아이디를 입력하세요")
-	private int NftId;
+	@ApiModelProperty(name = "count", example = "1")
+	@NotNull(message = "count를 입력하세요")
+	private int count;
 
 
 }

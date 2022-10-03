@@ -24,7 +24,7 @@ export const fetchProjectDetail = async (pjtId: number) => {
     .get(`/funding/${pjtId}`)
     .then((res) => {
       result = res.data.project;
-      console.log("개별 프로젝트 fetch", result);
+      // console.log("개별 프로젝트 fetch", result);
     })
     .catch((err) => {
       console.log("개별 프로젝트 fetch 에러");
@@ -93,7 +93,8 @@ export const fetchMyFundings = async (userId: number) => {
     .catch((err) => {
       console.log(err);
       console.log("내가 펀딩한 프로젝트 fetch 에러");
-
+    });
+};
 export const fetchAllProjects = async () => {
   let result = null;
   await api

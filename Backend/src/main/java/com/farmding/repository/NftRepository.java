@@ -22,14 +22,14 @@ public interface NftRepository extends JpaRepository<Nft, String> {
 	
 	Nft findOneByNftId(int nftId);
 	@Modifying
-	@Query(value = "update nft set current_price =?1 where nft_id = ?2", nativeQuery = true)
-	void updateCurrentPrice(double currentPrice, int nftId);
+	@Query(value = "update nft set current_price =?1 where count = ?2", nativeQuery = true)
+	void updateCurrentPrice(double currentPrice, int count);
 
 	@Modifying
-	@Query(value = "update nft set is_on_sale =?1 where nft_id = ?2", nativeQuery = true)
-	void updateIsOnSale(int isOnSale, int nftId);
+	@Query(value = "update nft set is_on_sale =?1 where count = ?2", nativeQuery = true)
+	void updateIsOnSale(int isOnSale, int count);
 	
 	@Modifying
-	@Query(value = "update nft set owner_nickname = ?1, owner_wallet_address = ?2 where nft_id = ?3", nativeQuery = true)
-	void updateOwnerOfNft(String ownerNickname, String ownerWalletAddress, int nftId);
+	@Query(value = "update nft set owner_nickname = ?1, owner_wallet_address = ?2 where count = ?3", nativeQuery = true)
+	void updateOwnerOfNft(String ownerNickname, String ownerWalletAddress, int count);
 }

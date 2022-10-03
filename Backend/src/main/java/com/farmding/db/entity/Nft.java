@@ -43,4 +43,7 @@ public class Nft {
 	
 	@Column(name = "owner_nickname")
 	private String ownerNickname;
+	
+	@Column(name = "count")
+	private int count;
 }

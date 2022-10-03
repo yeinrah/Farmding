@@ -20,6 +20,7 @@ import { loginState } from "../../Recoil/atoms/auth";
 interface NftInfo {
   nftId: number;
   currentPrice: number;
+  count: number;
 }
 const NFT = () => {
   const [open, setOpen] = useState(false);
@@ -65,13 +66,13 @@ const NFT = () => {
     console.log(nfts);
     let sortingArr = nfts;
     if (itemFilter === "") {
-      sortingArr.sort((a: NftInfo, b: NftInfo) => b.nftId - a.nftId);
+      sortingArr.sort((a: NftInfo, b: NftInfo) => b.count - a.count);
       setNfts([...sortingArr]);
     } else if (itemFilter === "nameUp") {
-      sortingArr.sort((a: NftInfo, b: NftInfo) => a.nftId - b.nftId);
+      sortingArr.sort((a: NftInfo, b: NftInfo) => a.count - b.count);
       setNfts([...sortingArr]);
     } else if (itemFilter === "nameDown") {
-      sortingArr.sort((a: NftInfo, b: NftInfo) => b.nftId - a.nftId);
+      sortingArr.sort((a: NftInfo, b: NftInfo) => b.count - a.count);
       setNfts([...sortingArr]);
     } else if (itemFilter === "priceUp") {
       sortingArr.sort(

@@ -54,18 +54,19 @@ const MyProjectList = () => {
   }, []);
   return (
     <>
-      {myProjects.map((pjt: IMyPjtList, idx) => (
-        <MyProject
-          key={idx}
-          projectId={pjt.projectId}
-          projectTitle={cutLongTitle(pjt.projectTitle, 12)}
-          fundingAmount={pjt.allOfFundingFee}
-          quantity={pjt.amount}
-          unit={pjt.rewardName}
-          shippingFee={pjt.deliveryFee}
-          expectedDate={pjt.deliveryDate.substr(0, 10)}
-        />
-      ))}
+      {myProjects &&
+        myProjects.map((pjt: IMyPjtList, idx) => (
+          <MyProject
+            key={idx}
+            projectId={pjt.projectId}
+            projectTitle={cutLongTitle(pjt.projectTitle, 12)}
+            fundingAmount={pjt.allOfFundingFee}
+            quantity={pjt.amount}
+            unit={pjt.rewardName}
+            shippingFee={pjt.deliveryFee}
+            expectedDate={pjt.deliveryDate.substr(0, 10)}
+          />
+        ))}
     </>
   );
 };

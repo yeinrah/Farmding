@@ -12,13 +12,14 @@ import { mainGreen } from "../../../Common/data/Style";
 import { fetchProjectDetail } from "../../../Common/API/fundingAPI";
 import {
   dislike,
-  getLikeOrNot,
+  fetchLikeUsers,
   like,
 } from "../../../Common/API/likeFundingAPI";
 import { currentUserIdState } from "../../../Recoil/atoms/account";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-import { likeButtonChangeState } from "../../../Recoil/atoms/funding";
+import { navLikeButtonChangeState } from "../../../Recoil/atoms/funding";
+import { getLikeOrNot } from "../../../Common/functions/GetLikeOrNot";
 
 export interface IPjt {
   pjtId: number;
@@ -41,8 +42,11 @@ const ProjectItem = ({
 }: IPjt) => {
   const [currentUserId, setCurrentUserId] =
     useRecoilState<number>(currentUserIdState);
-  const [likeBtnClickOrNot, setLikeBtnClickOrNot] = useRecoilState<boolean>(
-    likeButtonChangeState
+  // const [likeBtnClickOrNot, setLikeBtnClickOrNot] = useRecoilState<boolean>(
+  //   likeButtonChangeState
+  // );
+  const [isNavLikeChange, setIsNavLikeChange] = useRecoilState<boolean>(
+    navLikeButtonChangeState
   );
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
@@ -55,24 +59,40 @@ const ProjectItem = ({
 
   const dislikeHandler = async (projtId: number) => {
     await dislike(projtId, currentUserId);
-    setLikeBtnClickOrNot(!likeBtnClickOrNot);
+    setIsLiked(false);
     setIsLikeChange(true);
+    setIsNavLikeChange(!isNavLikeChange);
     onClickDislike();
   };
   const likeHandler = async (projtId: number) => {
     await like(projtId, currentUserId);
-    setLikeBtnClickOrNot(!likeBtnClickOrNot);
+    setIsLiked(true);
     setIsLikeChange(true);
+    setIsNavLikeChange(!isNavLikeChange);
   };
+  // console.log(isLiked, pjtId, "좋아요여부!!!!!!!!!!!!!!");
   useEffect(() => {
     (async function () {
-      const likeOrNot = await getLikeOrNot(pjtId, currentUserId);
-      likeOrNot ? setIsLiked(true) : setIsLiked(false);
+      const likeUsersList = await fetchLikeUsers(pjtId);
+      console.log(likeUsersList, pjtId, "현재유저");
+      if (likeUsersList.length === 0) {
+        setIsLiked(false);
+      } else {
+        for (const eachId of likeUsersList) {
+          if (eachId === currentUserId) {
+            setIsLiked(true);
+          } else {
+            setIsLiked(false);
+          }
+        }
+      }
+
       const projtDetail: any = await fetchProjectDetail(pjtId);
       setLikeCnt(projtDetail.likeAmount);
+      // console.log(isLikeChange, pjtId, "likechange");
       setIsLikeChange(false);
     })();
-  }, [isLikeChange]);
+  }, [isNavLikeChange, currentUserId, isLikeChange]);
 
   return (
     <>
@@ -94,7 +114,7 @@ const ProjectItem = ({
             component="div"
             sx={{ fontWeight: 800 }}
           >
-            {cutLongTitle(pjtTitle, 12)}
+            {pjtTitle}
           </Typography>
           <div className={styles.heartArea}>
             <Typography variant="body2" color="text.secondary">

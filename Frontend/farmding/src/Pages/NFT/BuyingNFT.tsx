@@ -21,6 +21,7 @@ interface NFTInfo {
   currentPrice: number;
   ownerNickname: string;
   onSale: boolean;
+  count: number;
 }
 const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
   const { ethereum } = window;
@@ -70,7 +71,7 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
                 });
                 const a = await ssafyTokenContract.methods
                   .approve(
-                    "0xd9145CCE52D386f254917e481eB44e9943F39138",
+                    "0xF069658c74069e250f964688657E734aF36b9221",
                     NFTInfo.currentPrice
                   )
                   .send({ from: accounts[0] });
@@ -79,15 +80,15 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
                 const myInfo = await getMyInfo(accounts[0]);
                 console.log(myInfo.data.user.nickname);
                 const b = await nftContract.methods
-                  .purchase(NFTInfo.nftId)
+                  .purchase(NFTInfo.count)
                   .send({ from: accounts[0] });
                 console.log(b);
                 await updateNFTOwner(
-                  NFTInfo.nftId,
+                  NFTInfo.count,
                   myInfo.data.user.nickname,
                   accounts[0]
                 );
-                await changeOnSale(NFTInfo.nftId);
+                await changeOnSale(NFTInfo.count);
                 onClose();
                 alert("구매완료");
                 loadSellingNFTList();

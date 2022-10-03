@@ -44,7 +44,7 @@ const UpdateNFTPrice = (props: any) => {
                 alert("판매 중에는 가격을 변경할 수 없습니다.");
                 return;
               }
-              changePrice(inputPrice, props.nftId);
+              changePrice(inputPrice, props.count);
               props.changePrice(inputPrice);
               props.onClose();
             }}

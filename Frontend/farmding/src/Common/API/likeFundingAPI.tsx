@@ -18,23 +18,38 @@ export const fetchLikeFundingLists = async (userId: number) => {
   return result;
 };
 
-export const getLikeOrNot = async (pjtId: number, userId: number) => {
-  let result = null;
-  const data = {
-    projectId: pjtId,
-    userId,
-  };
+export const fetchLikeUsers = async (pjtId: number) => {
+  let result: number[] = [];
   await api
-    .post(`/funding/detail/likeClickOrNot`, JSON.stringify(data))
+    .get(`/funding/detail/UserLikeOfProject/${pjtId}`)
     .then((res) => {
       result = res.data;
-      console.log("좋아요 누른지 아닌지", result);
+      console.log("좋아요 누른 유저들 fetch", result);
     })
     .catch((err) => {
-      console.log("좋아요 누른지 아닌지 에러ㅠㅠㅠ");
+      result = err;
+      console.log("좋아요 누른 유저들 fetch 에러");
     });
   return result;
 };
+
+// export const getLikeOrNot = async (pjtId: number, userId: number) => {
+//   let result = null;
+//   const data = {
+//     projectId: pjtId,
+//     userId,
+//   };
+//   await api
+//     .post(`/funding/detail/likeClickOrNot`, JSON.stringify(data))
+//     .then((res) => {
+//       result = res.data;
+//       console.log("좋아요 누른지 아닌지", result);
+//     })
+//     .catch((err) => {
+//       console.log("좋아요 누른지 아닌지 에러ㅠㅠㅠ");
+//     });
+//   return result;
+// };
 
 export const like = async (
   pjtId: number,

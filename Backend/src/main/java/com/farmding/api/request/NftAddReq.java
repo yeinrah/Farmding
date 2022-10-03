@@ -39,5 +39,9 @@ public class NftAddReq {
 	@Pattern(regexp = "^[0-9a-zA-Z가-힣]*$", message = "닉네임은 숫자, 영어, 한글만 가능하며 1자 ~ 50자의 닉네임이 가능합니다.")
 	@Size(min = 1, max = 50)
 	private String ownerNickname;
+	
+	@ApiModelProperty(name = "count를 입력하세요", example = "1")
+	@NotNull(message = "count를 입력하세요.")
+	private int count;
 
 }

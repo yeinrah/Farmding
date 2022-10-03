@@ -14,6 +14,7 @@ interface MyNFTInfo {
   onSale: boolean;
   ownerNickname: string;
   ownerWalletAddress: string;
+  count: number;
 }
 interface MyNFTitemProps {
   MyNFTInfo: MyNFTInfo;
@@ -31,10 +32,10 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
     try {
       await nftContract.methods
-        .approve("0xb2b0d8d32D4861dF47e308f2DDD970CDADb79eEa", MyNFTInfo.nftId)
+        .approve("0xF069658c74069e250f964688657E734aF36b9221", MyNFTInfo.count)
         .send({ from: accounts[0] });
       await nftContract.methods
-        .createSell(MyNFTInfo.nftId, MyNFTInfo.currentPrice)
+        .createSell(MyNFTInfo.count, MyNFTInfo.currentPrice)
         .send({ from: accounts[0] });
       return true;
     } catch {
@@ -46,7 +47,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
     try {
       await nftContract.methods
-        .cancelSell(MyNFTInfo.nftId)
+        .cancelSell(MyNFTInfo.count)
         .send({ from: accounts[0] });
       return true;
     } catch {
@@ -58,7 +59,6 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
   };
   useEffect(() => {
     getInfoNFT();
-    console.log("hi");
   }, [price, sellOn]);
   return (
     <>
@@ -70,7 +70,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
         // aria-describedby="modal-modal-description"
       >
         <UpdateNFTPrice
-          nftId={MyNFTInfo.nftId}
+          count={MyNFTInfo.count}
           nftPrice={MyNFTInfo.currentPrice}
           onClose={handleClose}
           changePrice={changePrice}
@@ -85,7 +85,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
           src={`https://${MyNFTInfo.nftAddress}`}
         />
         <div className={styles.nftInfo}>
-          <span className={styles.nftName}>{"farmer#" + MyNFTInfo.nftId}</span>
+          <span className={styles.nftName}>{"farmer#" + MyNFTInfo.count}</span>
           <div
             className={styles.priceBlock}
             onClick={() => {
@@ -109,13 +109,13 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
               getInfoNFT();
               if (!sellOn) {
                 if (await changeSell()) {
-                  await changeOnSale(MyNFTInfo.nftId);
+                  await changeOnSale(MyNFTInfo.count);
                   setSellOn(!sellOn);
                 }
                 setIsLoading(false);
               } else {
                 if (await cancleSell()) {
-                  await changeOnSale(MyNFTInfo.nftId);
+                  await changeOnSale(MyNFTInfo.count);
                   setSellOn(!sellOn);
                 }
                 setIsLoading(false);

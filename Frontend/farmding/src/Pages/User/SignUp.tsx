@@ -53,6 +53,8 @@ const SignUp = () => {
     }
   };
   return (
+    <Box sx={{display: "flex"}}>
+      <img src={process.env.PUBLIC_URL+"/Assets/login_background1.png"}/>
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Modal
         open={open}
@@ -180,6 +182,7 @@ const SignUp = () => {
         </Box>
       </Box>
     </Box>
+</Box>
   );
 };
 export default SignUp;

@@ -17,6 +17,7 @@ import { fetchLikeFundingLists } from "../../API/likeFundingAPI";
 import { currentUserIdState } from "../../../Recoil/atoms/account";
 import { useRecoilState } from "recoil";
 import ProjectItem from "../../../Pages/Funding/FundingProject/ProjectItem";
+import { navLikeButtonChangeState } from "../../../Recoil/atoms/funding";
 
 export interface ILikeFundings {
   projectId: number;
@@ -28,68 +29,30 @@ export interface ILikeFundingsModal {
   modalCloseHandler: () => void;
 }
 
-const dummyLikeProjects = [
-  {
-    title: "올해의 마지막 제주감귤",
-    mainImg: "grape.png",
-    farm: "정서농장",
-    likeCnt: 5,
-  },
-  {
-    title: "올해의 마지막 제주포도",
-    mainImg: "grape.png",
-    farm: "상훈농장",
-    likeCnt: 4,
-  },
-  {
-    title: "올해의 마지막 제주오렌지",
-    mainImg: "grape.png",
-    farm: "예인농장",
-    likeCnt: 3,
-  },
-  {
-    title: "올해의 마지막 제주아보카도",
-    mainImg: "grape.png",
-    farm: "은민농장",
-    likeCnt: 2,
-  },
-  {
-    title: "올해의 마지막 제주복숭아",
-    mainImg: "grape.png",
-    farm: "영진농장",
-    likeCnt: 1,
-  },
-  {
-    title: "올해의 마지막 제주복숭아",
-    mainImg: "grape.png",
-    farm: "영진농장",
-    likeCnt: 1,
-  },
-];
-
 const LikeFundingsModal = ({
   modalCloseHandler = () => {},
 }: ILikeFundingsModal) => {
   const [currentUserId, setCurrentUserId] =
     useRecoilState<number>(currentUserIdState);
+  const [isNavLikeChange, setIsNavLikeChange] = useRecoilState<boolean>(
+    navLikeButtonChangeState
+  );
   const [likeFundings, setLikeFundings] = useState([]);
   const [isLikeChange, setIsLikeChange] = useState(false);
   const disLikeHandler = () => {
     setIsLikeChange(true);
+    // setIsNavLikeChange(!isNavLikeChange);
   };
 
   useEffect(() => {
     // setIsLoading(true);
     (async () => {
+      console.log("시작!!!");
       const likeFundingList: any = await fetchLikeFundingLists(currentUserId);
       setLikeFundings(likeFundingList);
-      // const likeOrNot = await getLikeOrNot(projtId, currentUserId);
-      // likeOrNot ? setIsLiked(true) : setIsLiked(false);
-      // const projtDetail: any = await fetchProjectDetail(projtId);
-      // setLikeCnt(projtDetail.likeAmount);
       setIsLikeChange(false);
     })();
-  }, [isLikeChange, currentUserId]);
+  }, [isNavLikeChange, currentUserId, isLikeChange]);
 
   return (
     <Box sx={{ ...modalStyle, width: 680, height: 520 }}>
@@ -110,7 +73,7 @@ const LikeFundingsModal = ({
           <Grid item xs={4} key={idx}>
             <ProjectItem
               pjtId={pjt.projectId}
-              pjtTitle={pjt.projectTitle}
+              pjtTitle={cutLongTitle(pjt.projectTitle, 10)}
               farmerName={pjt.farmerName}
               cardHeight={230}
               imgHeight={130}
