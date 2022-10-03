@@ -39,7 +39,7 @@ const Main = () => {
       }
       SetIsAccountChanged(false);
     })();
-  }, [isAccountChanged]);
+  }, [isAccountChanged, currentUserId]);
 
   return (
     <>

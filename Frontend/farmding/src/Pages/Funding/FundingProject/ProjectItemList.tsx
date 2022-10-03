@@ -7,13 +7,6 @@ import styles from "./ProjectItemList.module.scss";
 import { Grid } from "@mui/material";
 
 import { fetchPopularProjects } from "../../../Common/API/fundingAPI";
-import {
-  dislike,
-  getLikeOrNot,
-  like,
-} from "../../../Common/API/likeFundingAPI";
-import { currentUserIdState } from "../../../Recoil/atoms/account";
-import { useRecoilState } from "recoil";
 
 export interface IPjtListItem {
   projectId: number;
@@ -37,10 +30,6 @@ const ProjectItemList = () => {
     (async function () {
       const popularPjts: any = await fetchPopularProjects();
       setPopularProjects(popularPjts);
-      // const likeOrNot = await getLikeOrNot(projtId, currentUserId);
-      // likeOrNot ? setIsLiked(true) : setIsLiked(false);
-      // const projtDetail: any = await fetchProjectDetail(projtId);
-      // setLikeCnt(projtDetail.likeAmount);
     })();
   }, []);
 

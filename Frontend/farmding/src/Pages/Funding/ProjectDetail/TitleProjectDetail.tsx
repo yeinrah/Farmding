@@ -7,11 +7,12 @@ import { useRecoilState } from "recoil";
 import { currentUserIdState } from "../../../Recoil/atoms/account";
 import {
   dislike,
-  getLikeOrNot,
+  fetchLikeUsers,
   like,
 } from "../../../Common/API/likeFundingAPI";
 import { fetchProjectDetail } from "../../../Common/API/fundingAPI";
-import { likeButtonChangeState } from "../../../Recoil/atoms/funding";
+import { navLikeButtonChangeState } from "../../../Recoil/atoms/funding";
+import { getLikeOrNot } from "../../../Common/functions/GetLikeOrNot";
 
 interface TitleProjectDetailProps {
   // imgArray: string[];
@@ -30,38 +31,36 @@ const TitleProjectDetail = ({
 TitleProjectDetailProps) => {
   const [currentUserId, setCurrentUserId] =
     useRecoilState<number>(currentUserIdState);
-  const [likeBtnClickOrNot, setLikeBtnClickOrNot] = useRecoilState<boolean>(
-    likeButtonChangeState
+  const [isNavLikeChange, setIsNavLikeChange] = useRecoilState<boolean>(
+    navLikeButtonChangeState
   );
   const [isLiked, setIsLiked] = useState(false);
   const [likeCnt, setLikeCnt] = useState(0);
   const [isLikeChange, setIsLikeChange] = useState(false);
   const dislikeHandler = async () => {
     await dislike(projtId, currentUserId);
-    setLikeBtnClickOrNot(!likeBtnClickOrNot);
-    setIsLikeChange(true);
+    // setLikeBtnClickOrNot(!likeBtnClickOrNot);
+    setIsLikeChange(false);
+    setIsNavLikeChange(!isNavLikeChange);
   };
   const likeHandler = async () => {
     await like(projtId, currentUserId);
-    setLikeBtnClickOrNot(!likeBtnClickOrNot);
+    // setLikeBtnClickOrNot(!likeBtnClickOrNot);
     setIsLikeChange(true);
+    setIsNavLikeChange(!isNavLikeChange);
   };
 
   useEffect(() => {
     // setIsLoading(true);
     (async () => {
-      const likeOrNot = await getLikeOrNot(projtId, currentUserId);
+      const likeUsersList = await fetchLikeUsers(projtId);
+      const likeOrNot = getLikeOrNot(currentUserId, likeUsersList);
       likeOrNot ? setIsLiked(true) : setIsLiked(false);
       const projtDetail: any = await fetchProjectDetail(projtId);
       setLikeCnt(projtDetail.likeAmount);
-      setIsLikeChange(false);
-      // for (const iterator of likeUsers) {
-      //   if (iterator.id === currentUserId) {
-      //     setIsLiked(true);
-      //   }
-      // }
+      // setIsLikeChange(false);
     })();
-  }, [isLikeChange]);
+  }, [isNavLikeChange, currentUserId]);
 
   return (
     <>

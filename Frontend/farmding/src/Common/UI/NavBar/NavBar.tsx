@@ -27,7 +27,7 @@ import { fetchLikeFundingLists } from "../../API/likeFundingAPI";
 import { currentUserIdState } from "../../../Recoil/atoms/account";
 import {
   IFundingTypes,
-  likeButtonChangeState,
+  navLikeButtonChangeState,
   likeFundingsListState,
 } from "../../../Recoil/atoms/funding";
 
@@ -49,8 +49,8 @@ const NavBar = () => {
   const [likeFundings, setLikeFundings] = useRecoilState<IFundingTypes[]>(
     likeFundingsListState
   );
-  const [likeBtnClickOrNot, setLikeBtnClickOrNot] = useRecoilState<boolean>(
-    likeButtonChangeState
+  const [isNavLikeChange, setIsNavLikeChange] = useRecoilState<boolean>(
+    navLikeButtonChangeState
   );
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -91,7 +91,7 @@ const NavBar = () => {
       const likeFundingsList: any = await fetchLikeFundingLists(currentUserId);
       setLikeFundings(likeFundingsList);
     })();
-  }, [likeBtnClickOrNot]);
+  }, [isNavLikeChange, currentUserId]);
 
   return (
     <>
