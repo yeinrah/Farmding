@@ -88,6 +88,13 @@ CREATE TABLE `images` (
 	`is_main` boolean NULL
 );
 
+CREATE TABLE `like` (
+	`like_id`	int auto_increment	NOT NULL,
+	`project_id`	int	NOT NULL,
+	`user_id`	int	NOT NULL,
+    PRIMARY KEY(`like_id`)
+);
+
 ALTER TABLE `nft` ADD CONSTRAINT `FK_funding_TO_nft_1` FOREIGN KEY (
 	`funding_id`
 )
@@ -121,16 +128,6 @@ ALTER TABLE `funding` ADD CONSTRAINT `FK_reward_TO_funding_1` FOREIGN KEY (
 )
 REFERENCES `reward` (
 	`reward_id`
-);
-
-
-REFERENCES `user` (
-	`user_id`
-);
-
-
-REFERENCES `project` (
-	`project_id`
 );
 
 ALTER TABLE `reward` ADD CONSTRAINT `FK_project_TO_reward_1` FOREIGN KEY (
