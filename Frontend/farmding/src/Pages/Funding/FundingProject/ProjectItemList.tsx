@@ -14,6 +14,8 @@ import SearchBar from "../../../Common/UI/SearchBar/SearchBar";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
 import { useNavigate } from "react-router-dom";
 import { cutLongTitle } from "../../../Common/functions/CutLongTitle";
+import { navLikeButtonChangeState } from "../../../Recoil/atoms/funding";
+import { useRecoilState } from "recoil";
 
 export interface IPjtListItem {
   projectId: number;
@@ -22,6 +24,9 @@ export interface IPjtListItem {
   // likeAmount: number;
 }
 const ProjectItemList = () => {
+  const [isNavLikeChange, setIsNavLikeChange] = useRecoilState<boolean>(
+    navLikeButtonChangeState
+  );
   const [nowProjects, setNowProjects] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
   const [nowSearch, setNowSearch] = useState("");
@@ -34,8 +39,8 @@ const ProjectItemList = () => {
     setNowProjects(popularPjts);
   };
   const fetchAnyProjects = async () => {
-    const popularPjts: any = await fetchAllProjects();
-    setAllProjects(popularPjts);
+    const allPjts: any = await fetchAllProjects();
+    setAllProjects(allPjts);
   };
   const search = async () => {
     if (nowSearch.length !== 0) {
@@ -49,7 +54,7 @@ const ProjectItemList = () => {
   useEffect(() => {
     fetchProjects();
     fetchAnyProjects();
-  }, []);
+  }, [isNavLikeChange]);
 
   useEffect(() => {
     search();
