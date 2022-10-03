@@ -57,16 +57,16 @@ public class NftController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400 Error"),
 			@ApiResponse(code = 409, message = "409 Error"), @ApiResponse(code = 500, message = "500 Error") })
 	public ResponseEntity<?> updateCurrentPrice(@RequestBody NftUpdateCurReq nftUpdateCurReq) throws Exception {
-		nftService.updateCurrentPrice(nftUpdateCurReq.getCurrentPrice(), nftUpdateCurReq.getNftId());
+		nftService.updateCurrentPrice(nftUpdateCurReq.getCurrentPrice(), nftUpdateCurReq.getCount());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	@PatchMapping("/updateIsOnSale/{nft_id}")
+	@PatchMapping("/updateIsOnSale/{count}")
 	@ApiOperation(value = "isonsale업데이트", notes = "isonsale업데이트")
 	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400 Error"),
 		@ApiResponse(code = 409, message = "409 Error"), @ApiResponse(code = 500, message = "500 Error") })
-	public ResponseEntity<?> updateIsOnSale(@PathVariable int nft_id) throws Exception {
-		nftService.updateIsOnSale(nft_id);
+	public ResponseEntity<?> updateIsOnSale(@PathVariable int count) throws Exception {
+		nftService.updateIsOnSale(count);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
@@ -93,7 +93,7 @@ public class NftController {
 	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400 Error"),
 		@ApiResponse(code = 409, message = "409 Error"), @ApiResponse(code = 500, message = "500 Error") })
 	public ResponseEntity<?> updateOwnerOfNft(@RequestBody UpdateOwnerOfNftReq updateOwnerOfNft) throws Exception {
-		nftService.updateOwnerOfNft(updateOwnerOfNft.getOwnerNickname(), updateOwnerOfNft.getOwnerWalletAddress(), updateOwnerOfNft.getNftId());
+		nftService.updateOwnerOfNft(updateOwnerOfNft.getOwnerNickname(), updateOwnerOfNft.getOwnerWalletAddress(), updateOwnerOfNft.getCount());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

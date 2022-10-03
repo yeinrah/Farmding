@@ -36,7 +36,15 @@ const UpdateNFTPrice = (props: any) => {
               },
             }}
             onClick={() => {
-              changePrice(inputPrice, props.nftId);
+              if (inputPrice < 0) {
+                alert("가격은 0이상이어야 합니다.");
+                return;
+              }
+              if (props.isSelling) {
+                alert("판매 중에는 가격을 변경할 수 없습니다.");
+                return;
+              }
+              changePrice(inputPrice, props.count);
               props.changePrice(inputPrice);
               props.onClose();
             }}

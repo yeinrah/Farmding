@@ -9,6 +9,7 @@ const SignUp = () => {
   const [open, setOpen] = useState(false);
   const [nickname, setNickname] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [nameDuplicateCheck, setNameDuplicateCheck] = useState(false);
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("상세주소");
   const handleClose = () => {
@@ -17,6 +18,18 @@ const SignUp = () => {
   const { ethereum } = window;
   const navigate = useNavigate();
   const signup = async () => {
+    if (!nameDuplicateCheck) {
+      alert("닉네임 중복체크를 해주세요");
+      return;
+    }
+    if (phoneNumber.length !== 11) {
+      alert("전화번호는 11자리 입니다.");
+      return;
+    }
+    if (address.length === 0) {
+      alert("주소를 입력해주세요");
+      return;
+    }
     const accounts = await ethereum.request({ method: "eth_accounts" });
     userSignUp(address, nickname, phoneNumber, accounts[0])
       .then(() => {
@@ -31,12 +44,17 @@ const SignUp = () => {
   const nicknameCheck = async () => {
     const result = await userNicknameExistCheck(nickname);
     console.log(result);
-    const res = !result.data
-      ? "사용 가능한 닉네임 입니다"
-      : "사용 불가능한 닉네임 입니다.";
-    alert(res);
+    if (!result.data) {
+      alert("사용 가능한 닉네임 입니다.");
+      setNameDuplicateCheck(true);
+    } else {
+      alert("사용 불가능한 닉네임 입니다.");
+      setNameDuplicateCheck(false);
+    }
   };
   return (
+    <Box sx={{display: "flex"}}>
+      <img src={process.env.PUBLIC_URL+"/Assets/login_background1.png"}/>
     <Box sx={{ display: "flex", justifyContent: "center" }}>
       <Modal
         open={open}
@@ -102,6 +120,7 @@ const SignUp = () => {
             <TextField
               sx={{ width: "60%" }}
               label="전화번호"
+              placeholder="01012345678"
               onChange={(v) => {
                 setPhoneNumber(v.target.value);
               }}
@@ -163,6 +182,7 @@ const SignUp = () => {
         </Box>
       </Box>
     </Box>
+</Box>
   );
 };
 export default SignUp;

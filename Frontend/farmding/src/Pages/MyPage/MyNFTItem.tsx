@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { nftContract } from "../../Common/ABI/abi";
 import { changeOnSale } from "../../Common/API/NFTApi";
 import { Sell } from "@mui/icons-material";
+import Spinner from "../../Common/UI/Spinner/Spinner";
 interface MyNFTInfo {
   nftId: string;
   currentPrice: number;
@@ -13,6 +14,7 @@ interface MyNFTInfo {
   onSale: boolean;
   ownerNickname: string;
   ownerWalletAddress: string;
+  count: number;
 }
 interface MyNFTitemProps {
   MyNFTInfo: MyNFTInfo;
@@ -22,32 +24,45 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
   const [open, setOpen] = useState(false);
   const [sellOn, setSellOn] = useState(MyNFTInfo.onSale);
   const [price, setPrice] = useState(MyNFTInfo.currentPrice);
+  const [isLoading, setIsLoading] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { ethereum } = window;
   const changeSell = async () => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
-    await nftContract.methods
-      .approve("0xb2b0d8d32D4861dF47e308f2DDD970CDADb79eEa", MyNFTInfo.nftId)
-      .send({ from: accounts[0] });
-    await nftContract.methods
-      .createSell(MyNFTInfo.nftId, MyNFTInfo.currentPrice)
-      .send({ from: accounts[0] });
+    try {
+      await nftContract.methods
+        .approve("0xF069658c74069e250f964688657E734aF36b9221", MyNFTInfo.count)
+        .send({ from: accounts[0] });
+      await nftContract.methods
+        .createSell(MyNFTInfo.count, MyNFTInfo.currentPrice)
+        .send({ from: accounts[0] });
+      return true;
+    } catch {
+      console.log("Ha");
+      return false;
+    }
   };
   const cancleSell = async () => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
-    let a = await nftContract.methods
-      .cancelSell(MyNFTInfo.nftId)
-      .send({ from: accounts[0] });
+    try {
+      await nftContract.methods
+        .cancelSell(MyNFTInfo.count)
+        .send({ from: accounts[0] });
+      return true;
+    } catch {
+      return false;
+    }
   };
   const changePrice = (price: number) => {
     setPrice(price);
   };
   useEffect(() => {
     getInfoNFT();
-  }, [price]);
+  }, [price, sellOn]);
   return (
     <>
+      {isLoading && <Spinner />}
       <Modal
         open={open}
         onClose={handleClose}
@@ -55,10 +70,11 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
         // aria-describedby="modal-modal-description"
       >
         <UpdateNFTPrice
-          nftId={MyNFTInfo.nftId}
+          count={MyNFTInfo.count}
           nftPrice={MyNFTInfo.currentPrice}
           onClose={handleClose}
           changePrice={changePrice}
+          isSelling={MyNFTInfo.onSale}
         />
         {/* <SuccessModal /> */}
       </Modal>
@@ -69,7 +85,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
           src={`https://${MyNFTInfo.nftAddress}`}
         />
         <div className={styles.nftInfo}>
-          <span className={styles.nftName}>{"farmer#" + MyNFTInfo.nftId}</span>
+          <span className={styles.nftName}>{"farmer#" + MyNFTInfo.count}</span>
           <div
             className={styles.priceBlock}
             onClick={() => {
@@ -88,14 +104,25 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
           labelPlacement="top"
           checked={sellOn}
           onClick={async () => {
-            await changeOnSale(MyNFTInfo.nftId);
-            getInfoNFT();
-            if (!sellOn) {
-              setSellOn(!sellOn);
-              changeSell();
-            } else {
-              setSellOn(!sellOn);
-              cancleSell();
+            setIsLoading(true);
+            try {
+              getInfoNFT();
+              if (!sellOn) {
+                if (await changeSell()) {
+                  await changeOnSale(MyNFTInfo.count);
+                  setSellOn(!sellOn);
+                }
+                setIsLoading(false);
+              } else {
+                if (await cancleSell()) {
+                  await changeOnSale(MyNFTInfo.count);
+                  setSellOn(!sellOn);
+                }
+                setIsLoading(false);
+              }
+              // setIsLoading(false);
+            } catch {
+              setIsLoading(false);
             }
           }}
         />

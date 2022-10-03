@@ -45,6 +45,9 @@ const getMyInfo = async (walletAddress: string) => {
   let userInfo = await api.get(`/user/mypage/mynft/${walletAddress}`);
   return userInfo;
 };
+const deleteUser = async (walletAddress: string) => {
+  await api.patch(`/user/delete/${walletAddress}`);
+};
 const userSignUp = async (
   address: string,
   nickname: string,
@@ -65,5 +68,6 @@ export {
   changeMyProfile,
   changeMyAddress,
   getMyInfo,
+  deleteUser,
   userSignUp,
 };

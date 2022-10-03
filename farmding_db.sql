@@ -10,7 +10,8 @@ CREATE TABLE `nft` (
     `owner_wallet_address` varchar(200) NOT NULL,
     `is_on_sale` boolean NOT NULL DEFAULT false,
     `current_price` double NOT NULL DEFAULT 0,
-    `owner_nickname` varchar(50) NOT NULL
+    `owner_nickname` varchar(50) NOT NULL,
+    `count` int NOT NULL
 );
 
 CREATE TABLE `deals` (
@@ -88,6 +89,13 @@ CREATE TABLE `images` (
 	`is_main` boolean NULL
 );
 
+CREATE TABLE `like` (
+	`like_id`	int auto_increment	NOT NULL,
+	`project_id`	int	NOT NULL,
+	`user_id`	int	NOT NULL,
+    PRIMARY KEY(`like_id`)
+);
+
 ALTER TABLE `nft` ADD CONSTRAINT `FK_funding_TO_nft_1` FOREIGN KEY (
 	`funding_id`
 )
@@ -121,16 +129,6 @@ ALTER TABLE `funding` ADD CONSTRAINT `FK_reward_TO_funding_1` FOREIGN KEY (
 )
 REFERENCES `reward` (
 	`reward_id`
-);
-
-
-REFERENCES `user` (
-	`user_id`
-);
-
-
-REFERENCES `project` (
-	`project_id`
 );
 
 ALTER TABLE `reward` ADD CONSTRAINT `FK_project_TO_reward_1` FOREIGN KEY (
@@ -275,5 +273,6 @@ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, de
  (9,"9번프로젝트리워드",99, 100, 1, "2022-08-08");
  insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
  (10,"10번프로젝트리워드",110, 100, 1, "2022-08-08");
- SELECT * FROM farmding.reward;
+ 
+ SELECT * FROM user;
 

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.farmding.api.request.InsertFundingReq;
+import com.farmding.api.request.LikeInsertReq;
 import com.farmding.api.request.UpdateAmountReq;
 import com.farmding.db.entity.Images;
 //import com.farmding.db.entity.Like;
@@ -74,16 +75,15 @@ public class FundingController {
 		return new ResponseEntity<HashMap<String, Object>>(result,HttpStatus.OK);
 	}
 	
-//	@GetMapping("/like/{user_id}")
-//	@ApiOperation(value = "좋아요한 프로젝트 모달", notes = "좋아요 모달에 필요한 데이터를 보내준다.")
-//	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
-//		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
-//	public ResponseEntity<?> detailFunding(@PathVariable int user_id) throws Exception {
-//		List<Like> likeData = fundingService.likeFunding(user_id);
-//		List<Project> list = fundingService.getUserLikeProject(likeData);
-//
-//		return new ResponseEntity<List<Project>>(list,HttpStatus.OK);
-//	}
+	@GetMapping("/like/{user_id}")
+	@ApiOperation(value = "좋아요한 프로젝트 모달", notes = "좋아요 모달에 필요한 데이터를 보내준다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> detailFunding(@PathVariable int user_id) throws Exception {
+		List<Project> list = fundingService.zzimProjectList(user_id);
+
+		return new ResponseEntity<List<Project>>(list,HttpStatus.OK);
+	}
 	
 	//펀딩모달 SSF얼마씩쓰는지 이거 api 만들기 
 	@GetMapping("/detail/{project_id}")
@@ -120,7 +120,7 @@ public class FundingController {
 	}
 	
 	@PostMapping("/detail/insertFundingList")
-	@ApiOperation(value = "FundingList table을 생성한다.", notes = "FundingList table을 생성한다.")
+	@ApiOperation(value = "FundingList data를 생성한다.", notes = "FundingList data를 생성한다.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
 		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
 	public ResponseEntity<?> insertFundingList(@RequestBody InsertFundingReq insertFundingReq) throws Exception {
@@ -129,5 +129,49 @@ public class FundingController {
 				, insertFundingReq.getRewardId(), insertFundingReq.getAmount());
 		
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/detail/insertLike")
+	@ApiOperation(value = "Like data를 생성하고, 해당 프로젝트의 좋아요를 1 증가시킨다.", notes = "Like data를 생성한다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> insertLike(@RequestBody LikeInsertReq likeInsertReq) throws Exception {
+		
+		fundingService.InsertLike(likeInsertReq.getProjectId(), likeInsertReq.getUserId());
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/detail/deleteLike")
+	@ApiOperation(value = "Like data를 삭제하고, 해당 프로젝트의 좋아요를 1 감소시킨다.", notes = "Like data를 삭제한다.")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> deleteLike(@RequestBody LikeInsertReq likeInsertReq) throws Exception {
+		
+		fundingService.deleteLike(likeInsertReq.getProjectId(), likeInsertReq.getUserId());
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	@PostMapping("/detail/likeClickOrNot")
+	@ApiOperation(value = "like를 눌렀는지 판단하기", notes = "like를 눌렀는지 판단하기")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> likeClickOrNot(@RequestBody LikeInsertReq likeInsertReq) throws Exception {
+		
+		Boolean check = fundingService.likeClickOrNot(likeInsertReq.getProjectId(), likeInsertReq.getUserId());
+		
+		return new ResponseEntity<Boolean>(check, HttpStatus.OK);
+	}
+	
+	@GetMapping("/detail/UserLikeOfProject/{projectId}")
+	@ApiOperation(value = "project에 대한 userId를 검색한다", notes = "project에 대한 userId를 검색한다")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> UserLikeOfProjet(@PathVariable int projectId) throws Exception {
+		
+		List<Integer> list = fundingService.likeListOfProject(projectId);
+		
+		return new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
 	}
 }

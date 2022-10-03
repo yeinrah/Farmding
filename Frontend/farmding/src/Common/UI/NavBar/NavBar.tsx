@@ -77,7 +77,7 @@ const NavBar = () => {
     handleCloseUserMenu();
     // ethereum.on('disconnect',handler: (error: ProviderRpcError) => void);
     setIsLogin(false);
-    // navigate('/login')
+    navigate("/login");
   };
 
   const goMyPageHandler = () => {
@@ -114,12 +114,12 @@ const NavBar = () => {
                   className={styles.navbar__logo}
                 />
               </Link>
-              <Link to="/test-metamask">
+              {/* <Link to="/test-metamask">
                 <h5>잔액조회</h5>
               </Link>
               <Link to="/nft">
                 <h5> NFT</h5>
-              </Link>
+              </Link> */}
               {/* <Link to="/landing">
                 <h5>시작페이지</h5>
               </Link> */}
@@ -143,6 +143,27 @@ const NavBar = () => {
               >
                 FARMDING
               </Typography>
+              <Typography
+                // variant="h5"
+                // noWrap
+                component="a"
+                href="/nft"
+                sx={{
+                  // ml: 1,
+                  // display: { xs: "flex", md: "none" },
+                  flexGrow: 1,
+                  // fontFamily: "monospace",
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  letterSpacing: ".2rem",
+                  color: mainGreen,
+                  textDecoration: "none",
+                  ml: "30px",
+                  my: "auto",
+                }}
+              >
+                NFT
+              </Typography>
             </div>
             <div>
               <Modal
@@ -157,7 +178,8 @@ const NavBar = () => {
               <IconButton onClick={showLikeHandler} sx={{ p: 1, mr: 3 }}>
                 <StyledBadge
                   // badgeContent={4}
-                  badgeContent={likeFundings.length}
+                  badgeContent={likeCount}
+                  // badgeContent={likeFundings.length}
                 >
                   <FavoriteIcon
                     sx={{ color: mainGreen, width: "40px", height: "40px" }}

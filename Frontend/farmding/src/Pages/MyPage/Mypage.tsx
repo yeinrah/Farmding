@@ -17,10 +17,16 @@ import UpdateNickName from "./UpdateNickName";
 import UpdateProfileImg from "./UpdateProfileImg";
 import { nftContract } from "../../Common/ABI/abi";
 import { countNFT, getMyNfts, registerNFT } from "../../Common/API/NFTApi";
-import { getMyInfo } from "../../Common/API/userApi";
+import { deleteUser, getMyInfo } from "../../Common/API/userApi";
 import profileImages from "../../Assets/profile/profileImages";
 import MyProjectList from "./MyProjectList";
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
+import { useNavigate } from "react-router-dom";
+import { isAccountChangedState } from "../../Recoil/atoms/account";
+import { useRecoilState } from "recoil";
+import { loginState } from "../../Recoil/atoms/auth";
+import Spinner from "../../Common/UI/Spinner/Spinner";
+
 // interface UserInfo {
 //   userId: number;
 //   nickname: string;
@@ -35,14 +41,19 @@ const MyPage = () => {
   const [nickOpen, setNickOpen] = useState<Boolean>(false);
   const [profileOpen, setProfileOpen] = useState<Boolean>(false);
   const [account, setAccount] = useState("");
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const [isLoading, setIsLoading] = useState(false);
   const [userInfo, setUserInfo] = useState({
     nickname: "",
     address: "",
     profileImage: 0,
     userPr: "",
+    walletAddress: "",
+    active: false,
   });
   const [NFTInfo, setNFTInfo] = useState("");
   const { ethereum } = window;
+  const navigate = useNavigate();
   const handleOpen = () => setOpen(true);
   const handleAddrOpen = () => setAddrOpen(true);
   const handleNickOpen = () => setNickOpen(true);
@@ -72,8 +83,11 @@ const MyPage = () => {
     });
     setAccount(accounts[0]);
     await getMyNfts(accounts[0]).then((info) => {
-      console.log(info.data.nft);
       setNFTInfo(info.data.nft);
+      console.log(info.data.nft);
+      if (!info.data.user.active) {
+        navigate("/signup");
+      }
     });
   };
   const modifyAddrHandler = () => {
@@ -84,16 +98,30 @@ const MyPage = () => {
   //   const cntNFT = await countNFT();
   //   setNftCount(cntNFT.data);
   //   return cntNFT.data;
+  ethereum.on("accountsChanged", (accounts: any) => {
+    setIsLogin(false);
+  });
+  // const changeAccount = async () => {
+  //   const accounts = await ethereum.request({ method: "eth_accounts" });
+  //   if (!accounts.length) {
+  //     setIsLogin(false);
+  //     // navigate("/login");
+  //     // return;
+  //   }
+  //   setAccount(accounts[0]);
+  //   SetIsAccountChanged(!isAccountChanged);
+
   // };
   useEffect(() => {
     getInfoUser();
     getInfoNFT();
   }, []);
   // useEffect(() => {
-  //   setNFTCnt();
-  // }, [nftCount]);
+  //   changeAccount();
+  // }, [isAccountChanged]);
   return (
     <>
+      {isLoading && <Spinner />}
       <Modal
         open={open}
         onClose={handleClose}
@@ -215,33 +243,57 @@ const MyPage = () => {
         )}
         <Button
           onClick={async () => {
-            const accounts = await ethereum.request({
-              method: "eth_requestAccounts",
-            });
-            setAccount(accounts[0]);
-            alert(accounts[0]);
-            //0번부터 시작해서 +1
-            let cnt = (await (await countNFT()).data) + 1;
-            const a = await nftContract.methods
-              .mint(accounts[0], 1, cnt)
-              .send({ from: accounts[0] });
-            console.log(a);
-            console.log(a.events.getNFTData.returnValues[0]);
-            const nowNickName = await (
-              await getMyInfo(accounts[0])
-            ).data.user.nickname;
-            await registerNFT(
-              1,
-              a.events.getNFTData.returnValues[0],
-              nowNickName,
-              accounts[0]
-            );
-            // await getMyNfts(accounts[0]).then((b) => {
-            //   console.log(b.data);
-            // });
+            setIsLoading(true);
+            try {
+              const accounts = await ethereum.request({
+                method: "eth_requestAccounts",
+              });
+              setAccount(accounts[0]);
+              console.log(accounts[0]);
+              //0번부터 시작해서 +1
+              // let cnt = (await (await countNFT()).data) + 1;
+              const a = await nftContract.methods
+                .mint(accounts[0], 1)
+                .send({ from: accounts[0] });
+              console.log(a);
+              const nowNickName = await (
+                await getMyInfo(accounts[0])
+              ).data.user.nickname;
+              const cnt = await nftContract.methods.getCount().call();
+              console.log(cnt);
+              const b = await registerNFT(
+                1,
+                a.events.getNFTData.returnValues[0],
+                nowNickName,
+                accounts[0],
+                Number(cnt)
+              );
+              console.log(b);
+              setIsLoading(false);
+            } catch {
+              setIsLoading(false);
+            }
           }}
         >
           Minting
+        </Button>
+        <Button
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            width: "90%",
+            background: "red",
+            color: "white",
+            margin: "auto",
+            "&:hover": { background: "#a3261f" },
+          }}
+          onClick={async () => {
+            await deleteUser(userInfo.walletAddress);
+            alert("회원탈퇴 되었습니다.");
+            navigate("/");
+          }}
+        >
+          회원 탈퇴
         </Button>
       </Box>
     </>
