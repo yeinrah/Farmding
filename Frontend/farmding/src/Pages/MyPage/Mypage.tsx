@@ -249,20 +249,23 @@ const MyPage = () => {
                 method: "eth_requestAccounts",
               });
               setAccount(accounts[0]);
+              console.log(accounts[0]);
               //0번부터 시작해서 +1
               let cnt = (await (await countNFT()).data) + 1;
               const a = await nftContract.methods
                 .mint(accounts[0], 1, cnt)
                 .send({ from: accounts[0] });
+              console.log(a);
               const nowNickName = await (
                 await getMyInfo(accounts[0])
               ).data.user.nickname;
-              await registerNFT(
+              const b = await registerNFT(
                 1,
                 a.events.getNFTData.returnValues[0],
                 nowNickName,
                 accounts[0]
               );
+              console.log(b);
               setIsLoading(false);
             } catch {
               setIsLoading(false);
