@@ -80,8 +80,10 @@ public class FundingService {
 		int likeAmount = project.getLikeAmount();
 		//프로젝트에 좋아요 1 감소하기
 		List<Like> list = likeRepository.likeClickOrNot(projectId, userId);
+		if(list.size() != 0) {
 		likeRepository.delete(list.get(0));
 		projectRepository.plusOneLikeAmount(likeAmount-1, projectId);
+		}
 	}
 	
 	@Transactional
@@ -91,8 +93,16 @@ public class FundingService {
 			return false;
 		else 
 			return true;
-
-		
+	}
+	
+	@Transactional
+	public List<Integer> likeListOfProject(int projectId) throws Exception {
+		List<Like> list = likeRepository.likeUserOfProject(projectId);
+		List<Integer> UserIdList = new ArrayList<>();
+		for(int i=0; i<list.size();i++) {
+			UserIdList.add(list.get(i).getUserId());
+		}
+		return UserIdList;
 	}
 	
 	@Transactional

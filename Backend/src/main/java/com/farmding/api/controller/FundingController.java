@@ -163,4 +163,15 @@ public class FundingController {
 		
 		return new ResponseEntity<Boolean>(check, HttpStatus.OK);
 	}
+	
+	@GetMapping("/detail/UserLikeOfProject/{projectId}")
+	@ApiOperation(value = "project에 대한 userId를 검색한다", notes = "project에 대한 userId를 검색한다")
+	@ApiResponses({ @ApiResponse(code = 200, message = "가져오기 성공"), @ApiResponse(code = 400, message = "400에러"),
+		@ApiResponse(code = 409, message = "409에러"), @ApiResponse(code = 500, message = "500에러") })
+	public ResponseEntity<?> UserLikeOfProjet(@PathVariable int projectId) throws Exception {
+		
+		List<Integer> list = fundingService.likeListOfProject(projectId);
+		
+		return new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
+	}
 }
