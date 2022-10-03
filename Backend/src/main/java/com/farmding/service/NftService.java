@@ -31,7 +31,7 @@ public class NftService {
 	public Nft addNft(NftAddReq nftAddReq) throws Exception {
 		Nft nft = Nft.builder().fundingId(nftAddReq.getFundingId()).
 				nftAddress(nftAddReq.getNftAddress()).ownerWalletAddress(nftAddReq.getOwnerWalletAddress()).
-				isOnSale(false).currentPrice(nftAddReq.getCurrentPrice()).ownerNickname(nftAddReq.getOwnerNickname()).build();
+				isOnSale(false).currentPrice(nftAddReq.getCurrentPrice()).ownerNickname(nftAddReq.getOwnerNickname()).count(nftAddReq.getCount()).build();
 		return nftRepository.save(nft);
 
 	}
@@ -54,20 +54,20 @@ public class NftService {
 	}
 	
 	@Transactional
-	public void updateIsOnSale(int nftId) throws Exception {
-		Nft id = nftRepository.findOneByNftId(nftId);
+	public void updateIsOnSale(int count) throws Exception {
+		Nft id = nftRepository.findOneByNftId(count);
 //		System.out.println("가격이 제대로 들어왔나요 ? = "+id.getCurrentPrice());
 //		System.out.println("불린값이 제대로 들어왔나요 ? = "+id.isOnSale());
 		if(id.isOnSale()) {
-			nftRepository.updateIsOnSale(0, nftId);
+			nftRepository.updateIsOnSale(0, count);
 		}else {
-			nftRepository.updateIsOnSale(1, nftId);
+			nftRepository.updateIsOnSale(1, count);
 		}
 		
 	}
 	
 	@Transactional
-	public void updateOwnerOfNft(String ownerNickname, String ownerWalletAddress, int nftId) throws Exception {
-		nftRepository.updateOwnerOfNft(ownerNickname, ownerWalletAddress, nftId);
+	public void updateOwnerOfNft(String ownerNickname, String ownerWalletAddress, int count) throws Exception {
+		nftRepository.updateOwnerOfNft(ownerNickname, ownerWalletAddress, count);
 	}
 }

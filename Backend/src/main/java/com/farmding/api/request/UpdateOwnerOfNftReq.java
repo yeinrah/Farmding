@@ -22,9 +22,9 @@ public class UpdateOwnerOfNftReq {
 	@NotNull(message = "ownerWalletAddress 를 입력하세요")
 	private String ownerWalletAddress;
 
-	@ApiModelProperty(name = "NFT ID", example = "1")
-	@NotNull(message = "nft 아이디를 입력하세요")
-	private int nftId;
+	@ApiModelProperty(name = "count", example = "1")
+	@NotNull(message = "count를 입력하세요")
+	private int count;
 
 
 }
