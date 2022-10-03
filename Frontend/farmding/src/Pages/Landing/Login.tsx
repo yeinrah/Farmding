@@ -26,7 +26,7 @@ const Login = () => {
   // 지갑 변경시 잔고 조회 다시 하기!
 
   // const currentUrl = new URL(window.location.href);
-  // const forwarderOrigin ="https://j6e106.p.ssafy.io/";
+  // const forwarderOrigin ="https://j7a608.p.ssafy.io/";
   // const navigate = useNavigate();
   // const onboarding = new MetaMaskOnboarding({ forwarderOrigin });
 
@@ -75,7 +75,7 @@ const Login = () => {
         return;
       }
       setAccount(accounts[0]);
-      // NCT토큰 자동불러오기 (이미 등록되어있어도 뜸.. 이건 해결방법은 없음(못찾는게아니라 애초에 방법이없음))
+      // 토큰 자동불러오기 (이미 등록되어있어도 뜸.. 이건 해결방법은 없음(못찾는게아니라 애초에 방법이없음))
       // https://coder-solution.com/solution-blog/288728 참고
 
       const chainId = 31221;
