@@ -27,7 +27,7 @@ import { fetchLikeFundingLists } from "../../API/likeFundingAPI";
 import { currentUserIdState } from "../../../Recoil/atoms/account";
 import {
   IFundingTypes,
-  likeButtonChangeState,
+  navLikeButtonChangeState,
   likeFundingsListState,
 } from "../../../Recoil/atoms/funding";
 
@@ -49,15 +49,15 @@ const NavBar = () => {
   const [likeFundings, setLikeFundings] = useRecoilState<IFundingTypes[]>(
     likeFundingsListState
   );
-  const [likeBtnClickOrNot, setLikeBtnClickOrNot] = useRecoilState<boolean>(
-    likeButtonChangeState
+  const [isNavLikeChange, setIsNavLikeChange] = useRecoilState<boolean>(
+    navLikeButtonChangeState
   );
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
   const [profileImg, setProfileImg] = useState("");
   // likeCount default 0으로 바꾸기.
-  const [likeCount, setlikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(0);
   const navigate = useNavigate();
 
   const handleOpen = () => setOpen(true);
@@ -90,8 +90,9 @@ const NavBar = () => {
     (async function () {
       const likeFundingsList: any = await fetchLikeFundingLists(currentUserId);
       setLikeFundings(likeFundingsList);
+      setLikeCount(likeFundingsList.length);
     })();
-  }, [likeBtnClickOrNot]);
+  }, [isNavLikeChange, currentUserId]);
 
   return (
     <>

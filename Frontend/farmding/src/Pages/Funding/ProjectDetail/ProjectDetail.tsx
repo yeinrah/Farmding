@@ -12,7 +12,10 @@ import CustomBtn from "../../../Common/UI/CustomBtn/CustomBtn";
 import { claimHandler, launchingHandler } from "../../../utils/fundingProject";
 import { adminAddress } from "../../../Common/data/adminAddress";
 import { useRecoilState } from "recoil";
-import { isAccountChangedState } from "../../../Recoil/atoms/account";
+import {
+  currentUserIdState,
+  isAccountChangedState,
+} from "../../../Recoil/atoms/account";
 import { loginState } from "../../../Recoil/atoms/auth";
 import {
   dateToUnixConverter,
@@ -81,7 +84,7 @@ const ProjectDetail = () => {
       SetIsAccountChanged(false);
       SetIsLoading(false);
     })();
-  }, [isAccountChanged, pjtId]);
+  }, [isAccountChanged, pjtId, currentUserIdState]);
 
   return (
     <>

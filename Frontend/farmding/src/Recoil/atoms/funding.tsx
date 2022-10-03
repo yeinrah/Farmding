@@ -14,8 +14,8 @@ export const likeFundingsListState = atom<IFundingTypes[]>({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const likeButtonChangeState = atom<boolean>({
-  key: "likeButtonChangeState",
+export const navLikeButtonChangeState = atom<boolean>({
+  key: "navLikeButtonChangeState",
   default: false,
   effects_UNSTABLE: [persistAtom],
 });
