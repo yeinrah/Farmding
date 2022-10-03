@@ -79,7 +79,7 @@ public class FundingService {
 		Project project = projectRepository.findOneByProjectId(projectId);
 		int likeAmount = project.getLikeAmount();
 		//프로젝트에 좋아요 1 감소하기
-		List<Like> list = likeRepository.findAllByUserId(userId);
+		List<Like> list = likeRepository.likeClickOrNot(projectId, userId);
 		likeRepository.delete(list.get(0));
 		projectRepository.plusOneLikeAmount(likeAmount-1, projectId);
 	}
