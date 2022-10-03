@@ -6,8 +6,6 @@ import styles from "./ProjectItemList.module.scss";
 // mui
 import { Grid } from "@mui/material";
 
-
-import { fetchPopularProjects } from "../../../Common/API/fundingAPI";
 import {
   dislike,
   getLikeOrNot,
@@ -23,6 +21,7 @@ import {
 } from "../../../Common/API/fundingAPI";
 import SearchBar from "../../../Common/UI/SearchBar/SearchBar";
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
+import { useNavigate } from "react-router-dom";
 
 export interface IPjtListItem {
   projectId: number;
@@ -31,8 +30,6 @@ export interface IPjtListItem {
   // likeAmount: number;
 }
 const ProjectItemList = () => {
-
-
   const [nowProjects, setNowProjects] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
   const [nowSearch, setNowSearch] = useState("");
@@ -79,7 +76,7 @@ const ProjectItemList = () => {
         >
           <SearchBar placeHolder={"어떤 과일을 드시고 싶으세요?"} />
         </div>
-        {nowProjects.map((pjt: IPjt, idx) => (
+        {nowProjects.map((pjt: IPjtListItem, idx) => (
           // <ProjectItem key={idx} title={pjt.title} />
           <Grid item xs={6} sm={8} md={3} key={idx}>
             <ProjectItem

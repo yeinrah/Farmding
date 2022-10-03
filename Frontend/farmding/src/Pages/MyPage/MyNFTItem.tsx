@@ -31,7 +31,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
     try {
       await nftContract.methods
-        .approve("0xb2b0d8d32D4861dF47e308f2DDD970CDADb79eEa", MyNFTInfo.nftId)
+        .approve("0xd9145CCE52D386f254917e481eB44e9943F39138", MyNFTInfo.nftId)
         .send({ from: accounts[0] });
       await nftContract.methods
         .createSell(MyNFTInfo.nftId, MyNFTInfo.currentPrice)
@@ -58,7 +58,6 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
   };
   useEffect(() => {
     getInfoNFT();
-    console.log("hi");
   }, [price, sellOn]);
   return (
     <>
