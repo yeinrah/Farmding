@@ -6,6 +6,11 @@
   //   background-color: red;
   margin: auto;
 }
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 .searchBar {
   display: flex;
   justify-content: center;
@@ -14,7 +19,6 @@
 
 .title {
   justify-content: center;
-  width: 100%;
   padding-left: 1.5rem;
   font-size: 2rem;
   font-weight: bold;

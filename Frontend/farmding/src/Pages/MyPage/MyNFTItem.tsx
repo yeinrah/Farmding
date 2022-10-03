@@ -59,6 +59,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
           nftPrice={MyNFTInfo.currentPrice}
           onClose={handleClose}
           changePrice={changePrice}
+          isSelling={MyNFTInfo.onSale}
         />
         {/* <SuccessModal /> */}
       </Modal>

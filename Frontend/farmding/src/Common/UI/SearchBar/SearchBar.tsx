@@ -17,7 +17,7 @@ const SearchBar = ({ placeHolder }: SearchBarProps) => {
     height: "70px",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
-      width: "700px",
+      width: "100%",
     },
   }));
 
@@ -34,7 +34,6 @@ const SearchBar = ({ placeHolder }: SearchBarProps) => {
   const StyledInputBase = styled(InputBase)(({ theme }) => ({
     color: "inherit",
     display: "flex",
-    justifyContent: "center",
     fontSize: "22px",
     width: "100%",
     paddingTop: "12px",
