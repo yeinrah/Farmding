@@ -22,7 +22,7 @@ const Banner = ({ imgSrc, isMain}: BannerProps) => {
           <div className={styles.banner_txt}>
             <h1>Farmding</h1>
             <h4>농가와 소비자가 상생하는 곳</h4>
-            <a href="#">더 알아보기</a>
+            <a href="/tutorial">더 알아보기</a>
           </div>
         )}
       </div>
