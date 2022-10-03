@@ -5,7 +5,8 @@ const registerNFT = async (
   fundingId: number,
   nftAddress: string,
   ownerNickname: string,
-  ownerWalletAddress: string
+  ownerWalletAddress: string,
+  count: number
 ) => {
   await api.post("/addNFT", {
     currentPrice: 0,
@@ -14,15 +15,16 @@ const registerNFT = async (
     onSale: false,
     ownerNickname: ownerNickname,
     ownerWalletAddress: ownerWalletAddress,
+    count: count,
   });
 };
-const changeOnSale = async (nftId: string) => {
-  await api.patch(`/updateIsOnSale/${nftId}`);
+const changeOnSale = async (count: number) => {
+  await api.patch(`/updateIsOnSale/${count}`);
 };
-const changePrice = async (currentPrice: number, nftId: number) => {
+const changePrice = async (currentPrice: number, count: number) => {
   await api.patch(`/updateCurrentPrice`, {
     currentPrice: currentPrice,
-    nftId: nftId,
+    count: count,
   });
 };
 const getMyNfts = async (walletAddress: string) => {
@@ -34,12 +36,12 @@ const sellingNFTList = async () => {
   return result;
 };
 const updateNFTOwner = async (
-  nftId: string,
+  count: number,
   ownerNickname: string,
   ownerWalletAddress: string
 ) => {
   await api.patch(`/updateOwnerOfNft`, {
-    nftId: nftId,
+    count: count,
     ownerNickname: ownerNickname,
     ownerWalletAddress: ownerWalletAddress,
   });

@@ -251,19 +251,22 @@ const MyPage = () => {
               setAccount(accounts[0]);
               console.log(accounts[0]);
               //0번부터 시작해서 +1
-              let cnt = (await (await countNFT()).data) + 1;
+              // let cnt = (await (await countNFT()).data) + 1;
               const a = await nftContract.methods
-                .mint(accounts[0], 1, cnt)
+                .mint(accounts[0], 1)
                 .send({ from: accounts[0] });
               console.log(a);
               const nowNickName = await (
                 await getMyInfo(accounts[0])
               ).data.user.nickname;
+              const cnt = await nftContract.methods.getCount().call();
+              console.log(cnt);
               const b = await registerNFT(
                 1,
                 a.events.getNFTData.returnValues[0],
                 nowNickName,
-                accounts[0]
+                accounts[0],
+                Number(cnt)
               );
               console.log(b);
               setIsLoading(false);
