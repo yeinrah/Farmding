@@ -1195,7 +1195,7 @@ const ssafyTokenAbi = [
     type: "function",
   },
 ];
-export const NFTAddress = "0x1C0b492C9306F5A0D0421ADe32A116c3F1016F1b";
+export const NFTAddress = "0x8d34B654394d6CF1344e9840433F8a3E9b42D7b3";
 export const SSFTokenAddress = "0x0c54E456CE9E4501D2c43C38796ce3F06846C966";
 
 export const web3 = new Web3(window.ethereum);
