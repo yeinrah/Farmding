@@ -7,10 +7,13 @@ import {
   ListItemText,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./FundingRanking.module.scss";
 import { mainGreen } from "../../../Common/data/Style";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useRecoilState } from "recoil";
+import { navLikeButtonChangeState } from "../../../Recoil/atoms/funding";
+import FundingRankingItem from "./FundingRankingItem";
 interface IFundingRankingProps {
   allProjects: fundingProject[];
   moveDetailHandler: (ptjId: number) => void;
@@ -35,10 +38,7 @@ const FundingRanking = ({
   allProjects,
   moveDetailHandler,
 }: IFundingRankingProps) => {
-  useEffect(() => {
-    console.log(allProjects);
-  });
-  const sortedItem = allProjects
+  const sortedItem: any = allProjects
     .filter((item: any) => item.fundingStatus === "open")
     .sort((a: any, b: any) => b.likeAmount - a.likeAmount);
 
@@ -46,6 +46,7 @@ const FundingRanking = ({
     if (title.length > 12) return title.slice(0, 12) + "..";
     return title;
   };
+
   return (
     <div className={styles.rankingBox}>
       <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
@@ -57,7 +58,15 @@ const FundingRanking = ({
               moveDetailHandler(item.projectId);
             }}
           >
-            <ListItem
+            <FundingRankingItem
+              index={index}
+              avatar={item.avatar}
+              pjtId={item.projectId}
+              pjtTitle={item.projectTitle}
+              farmer={item.farmerName}
+              likeCnt={item.likeAmount}
+            />
+            {/* <ListItem
               alignItems="flex-start"
               sx={{ margin: "10px 0px", cursor: "pointer" }}
             >
@@ -89,7 +98,7 @@ const FundingRanking = ({
                   </div>
                 }
               />
-            </ListItem>
+            </ListItem> */}
             <Divider variant="inset" component="li" />
           </div>
         ))}
