@@ -40,7 +40,8 @@ const MyProjectList = () => {
       // const myPjts: any = await fetchMyFundings(currentUserId);
 
       const myPjts: any = await fetchMyFundings(currentUserId);
-      if (myPjts.length !== 0) setMyProjects(myPjts.reverse());
+      // if (myPjts.length !== 0) setMyProjects(myPjts.reverse());
+      setMyProjects(myPjts.reverse());
     })();
   }, []);
   return (
