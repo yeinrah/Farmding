@@ -220,63 +220,27 @@ const MyPage = () => {
           >
             <Tab
               value="one"
-              label="내가 후원한 프로젝트"
+              label="나의 NFT"
               sx={{ color: "#5DAE8B", width: "50%" }}
             ></Tab>
             <Tab
               value="two"
-              label="나의 NFT"
+              label="내가 후원한 프로젝트"
               sx={{ color: "#5DAE8B", width: "50%" }}
             />
           </Tabs>
         </Box>
         {value === "one" && (
           <>
-            <MyProjectList />
-            {/* <MyProject /> */}
+            <MyNFT nfts={NFTInfo} getInfoNFT={getInfoNFT} />
           </>
         )}
         {value === "two" && (
           <>
-            <MyNFT nfts={NFTInfo} getInfoNFT={getInfoNFT} />
+            <MyProjectList />
+            {/* <MyProject /> */}
           </>
         )}
-        <Button
-          onClick={async () => {
-            setIsLoading(true);
-            try {
-              const accounts = await ethereum.request({
-                method: "eth_requestAccounts",
-              });
-              setAccount(accounts[0]);
-              console.log(accounts[0]);
-              //0번부터 시작해서 +1
-              // let cnt = (await (await countNFT()).data) + 1;
-              const a = await nftContract.methods
-                .mint(accounts[0], 1)
-                .send({ from: accounts[0] });
-              console.log(a);
-              const cnt = await nftContract.methods.getCount().call();
-              console.log(cnt);
-              const nowNickName = await (
-                await getMyInfo(accounts[0])
-              ).data.user.nickname;
-              const b = await registerNFT(
-                1,
-                a.events.getNFTData.returnValues[0],
-                nowNickName,
-                accounts[0],
-                Number(cnt)
-              );
-              console.log(b);
-              setIsLoading(false);
-            } catch {
-              setIsLoading(false);
-            }
-          }}
-        >
-          Minting
-        </Button>
         <Button
           sx={{
             display: "flex",
