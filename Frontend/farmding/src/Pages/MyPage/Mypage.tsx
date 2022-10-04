@@ -275,13 +275,13 @@ const MyPage = () => {
             {/* <MyProject /> */}
           </>
         )}
-        <Button
+        {/* <Button
           sx={{
             display: "flex",
-            justifyContent: "center",
-            width: "90%",
-            background: "red",
-            color: "white",
+            justifyContent: "flex-end",
+            width: "20%",
+            background: "#white",
+            color: "red",
             margin: "auto",
             "&:hover": { background: "#a3261f" },
           }}
@@ -292,7 +292,7 @@ const MyPage = () => {
           }}
         >
           회원 탈퇴
-        </Button>
+        </Button> */}
       </Box>
     </>
   );

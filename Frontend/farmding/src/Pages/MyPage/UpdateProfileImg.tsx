@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { modalStyle } from "../../Common/data/Style";
 import profileImages from "../../Assets/profile/profileImages";
 import { changeMyProfile } from "../../Common/API/userApi";
@@ -28,6 +28,7 @@ const UpdateProfileImg = ({
           backgroundColor: "#F6F49D",
         }}
       >
+        <Typography>프로필 수정</Typography>
         <Box
           sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
         >
@@ -53,6 +54,7 @@ const UpdateProfileImg = ({
                     height: "80px",
                     cursor: "pointer",
                     borderRadius: "25px",
+                    margin: "10px",
                   }}
                   onClick={async () => {
                     const accounts = await ethereum.request({
