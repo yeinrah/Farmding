@@ -5,7 +5,7 @@ import { changePrice } from "../../Common/API/NFTApi";
 import { modalStyle } from "../../Common/data/Style";
 
 const UpdateNFTPrice = (props: any) => {
-  const [inputPrice, setInputPrice] = useState(props.currentPrice);
+  const [inputPrice, setInputPrice] = useState<number>(props.currentPrice);
   return (
     <>
       <Box
@@ -23,7 +23,7 @@ const UpdateNFTPrice = (props: any) => {
         >
           <TextField
             onChange={(v) => {
-              setInputPrice(v.target.value);
+              setInputPrice(Number(v.target.value));
             }}
           ></TextField>
           <Button
@@ -36,6 +36,10 @@ const UpdateNFTPrice = (props: any) => {
               },
             }}
             onClick={() => {
+              if (!inputPrice) {
+                alert("숫자만 입력 가능합니다.");
+                return;
+              }
               if (inputPrice < 0) {
                 alert("가격은 0이상이어야 합니다.");
                 return;

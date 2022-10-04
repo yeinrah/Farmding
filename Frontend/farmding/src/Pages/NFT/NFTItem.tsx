@@ -24,7 +24,7 @@ const NFTItem = ({ NFTInfo, getMyInfo }: NFTitemProps) => {
     const account = NFTInfo.ownerWalletAddress;
     const result: any = await getMyInfo(account);
     setImage(result.data.user.profileImage);
-    let temp: any[] = [];
+    let temp: any[] = [{}];
     for (let nftImage of result.data.nft) {
       temp.push(nftImage.nftAddress);
     }
@@ -39,7 +39,11 @@ const NFTItem = ({ NFTInfo, getMyInfo }: NFTitemProps) => {
         <Avatar
           alt={NFTInfo.ownerNickname}
           sx={{ width: 24, height: 24 }}
-          src={`https://${myProfile[image]}`}
+          src={
+            image === 0
+              ? process.env.PUBLIC_URL + "/Assets/defaultProfile.png"
+              : `https://${myProfile[image]}`
+          }
         />
         <span className={styles.userTitle}>{NFTInfo.ownerNickname}</span>
       </div>
