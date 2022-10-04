@@ -13,22 +13,26 @@ const UpdateNFTPrice = (props: any) => {
         sx={{
           ...modalStyle,
           width: 400,
-          height: 130,
+          height: 150,
           overflow: "auto",
           backgroundColor: "#F6F49D",
         }}
       >
-        <Box sx={{ fontWeight: "bold" }}>원하는 가격을 설정하세요</Box>
+        <Box sx={{ fontWeight: "bold", fontSize: 20, mb: 5 }}>
+          원하는 가격을 설정하세요
+        </Box>
         <Box
           sx={{ display: "flex", justifyContent: "center", margin: "1.5rem 0" }}
         >
           <TextField
+            color="success"
             onChange={(v) => {
               setInputPrice(Number(v.target.value));
             }}
           ></TextField>
           <Button
             sx={{
+              ml: 2,
               backgroundColor: "#5DAE8B",
               color: "#fff",
               "&:hover": {

@@ -12,6 +12,7 @@ const MyNFT = (props: any) => {
               onClick={() => {
                 console.log(props.nfts[index]);
               }}
+              className={styles.nft_item}
             >
               <MyNFTItem
                 MyNFTInfo={item}

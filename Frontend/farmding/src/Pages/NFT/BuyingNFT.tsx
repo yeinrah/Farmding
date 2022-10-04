@@ -49,7 +49,7 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
             variant="h5"
             component="h2"
             fontWeight="bold"
-            sx={{ mb: 3, marginLeft: "10px" }}
+            sx={{ mb: 4, marginLeft: "13px" }}
           >
             {NFTInfo.ownerNickname}
           </Typography>
@@ -59,8 +59,8 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
           alt="ntfImage"
           className={styles.NFTimg}
         />
-        <Box sx={{ display: "flex", justifyContent: "center" }}>
-          <LocalAtmIcon />
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+          <LocalAtmIcon sx={{ fontSize: 50 }} />
           <span className={styles.nftPrice}>{NFTInfo.currentPrice}</span>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-around" }}>

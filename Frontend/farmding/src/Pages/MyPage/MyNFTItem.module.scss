@@ -21,11 +21,12 @@
 .nftInfo {
   display: flex;
   justify-content: space-around;
+  margin-top: 10px;
 }
 
 .nftName {
-  font-weight: bold;
-  margin-right: 20px;
+  font-weight: bolder;
+  margin: 5px 20px 0 0;
 }
 
 .priceBlock {
@@ -33,6 +34,6 @@
   cursor: pointer;
 }
 .nftPrice {
-  color: gray;
-  margin: 3px 0 0 4px;
+  color: #5dae8b;
+  margin: 5px 0 0 4px;
 }

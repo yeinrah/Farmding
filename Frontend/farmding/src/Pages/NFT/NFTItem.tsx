@@ -38,7 +38,7 @@ const NFTItem = ({ NFTInfo, getMyInfo }: NFTitemProps) => {
       <div className={styles.userInfo}>
         <Avatar
           alt={NFTInfo.ownerNickname}
-          sx={{ width: 24, height: 24 }}
+          sx={{ width: 35, height: 35 }}
           src={
             image === 0
               ? process.env.PUBLIC_URL + "/Assets/defaultProfile.png"

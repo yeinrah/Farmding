@@ -100,7 +100,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
           sx={{ display: "flex", justifyContent: "center" }}
           value="top"
           control={<Switch color="success" />}
-          label="판매 등록"
+          label=""
           labelPlacement="top"
           checked={sellOn}
           onClick={async () => {

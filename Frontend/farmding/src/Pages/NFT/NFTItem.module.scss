@@ -4,12 +4,12 @@
 }
 .userInfo {
   display: flex;
-  margin: 4px 8px;
+  margin: 4px 0 15px 8px;
 }
 
 .userTitle {
   font-size: 1.2rem;
-  margin-left: 0.5rem;
+  margin: 0.4rem 0.5rem;
   font-weight: bold;
   line-height: 20px;
 }
@@ -22,17 +22,18 @@
 .nftInfo {
   display: flex;
   justify-content: space-around;
+  margin-top: 5px;
 }
 
 .nftName {
   font-weight: bold;
-  margin-right: 20px;
+  margin: 5px 20px 0 0;
 }
 
 .priceBlock {
   display: flex;
 }
 .nftPrice {
-  color: gray;
-  margin: 0 4px;
+  color: #5dae8b;
+  margin: 5px 0 0 4px;
 }
