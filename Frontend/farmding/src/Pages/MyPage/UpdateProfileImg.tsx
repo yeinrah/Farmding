@@ -42,7 +42,11 @@ const UpdateProfileImg = ({
                 }}
               >
                 <img
-                  src={`https://${myProfile[index]}`}
+                  src={
+                    index === 0
+                      ? process.env.PUBLIC_URL + "/Assets/defaultProfile.png"
+                      : `https://${myProfile[index]}`
+                  }
                   alt="images"
                   style={{
                     width: "90px",
