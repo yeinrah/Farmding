@@ -61,7 +61,7 @@ const NavBar = () => {
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
-  const [profileImg, setProfileImg] = useState("");
+  const [profileImg, setProfileImg] = useState<any>([]);
   // likeCount default 0으로 바꾸기.
   const [likeCount, setLikeCount] = useState(0);
   const navigate = useNavigate();
@@ -101,10 +101,11 @@ const NavBar = () => {
       setLikeFundings(likeFundingsList);
       setLikeCount(likeFundingsList.length);
       await getMyNfts(accounts[0]).then((info) => {
-        let temp: any[] = [];
+        let temp: any[] = [{}];
         for (let nftImage of info.data.nft) {
           temp.push(nftImage.nftAddress);
         }
+        setProfileImg(temp);
         setIsCurrentProfileImage(
           `https://${temp[info.data.user.profileImage]}`
         );
@@ -209,7 +210,7 @@ const NavBar = () => {
                 <div onClick={handleOpenUserMenu} className={styles.avatar}>
                   <Avatar
                     // src="/Assets/grape.png"
-                    src={isCurrentProfileImage}
+                    src={profileImg.length === 1 ? "" : isCurrentProfileImage}
                     sx={{ width: 53, height: 53, mr: 4 }}
                   />
                 </div>
