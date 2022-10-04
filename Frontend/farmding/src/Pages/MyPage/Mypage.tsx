@@ -187,24 +187,25 @@ const MyPage = () => {
             sx={{
               width: "10rem",
               height: "10rem",
-              cursor: "pointer",
             }}
             src={
               myProfile.length === 1
                 ? ""
                 : `https://${myProfile[userInfo.profileImage]}`
             }
+          />
+          <AddCircleOutlineIcon
             onClick={() => {
               handleOpen();
               handleProfileOpen();
             }}
-          />
-          <AddCircleOutlineIcon
             sx={{
               position: "relative",
               right: "40px",
               top: "110px",
-              fontSize: "50px",
+              fontSize: "45px",
+              color: "gray",
+              cursor: "pointer",
             }}
           />
           <Box sx={{ width: "100%", marginLeft: "2rem" }}>

@@ -21,7 +21,7 @@ const UserInfoUpdate = ({ handleClose1, userInfo, changeAddress }: any) => {
         aria-labelledby="modal-title"
         // aria-describedby="modal-modal-description"
       >
-        <Box sx={{ display: "flex", margin: "100px" }}>
+        <Box sx={{ ...modalStyle, width: 600, height: 400 }}>
           {openPostcode && (
             <DaumPostcode
               onComplete={(data) => {
@@ -42,12 +42,15 @@ const UserInfoUpdate = ({ handleClose1, userInfo, changeAddress }: any) => {
           backgroundColor: "#F6F49D",
         }}
       >
-        <Typography sx={{ fontWeight: "bold" }}>배송 주소</Typography>
+        <Typography sx={{ fontWeight: "bold", fontSize: 20 }}>
+          배송 주소
+        </Typography>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Box sx={{ display: "flex", margin: "1.6rem 0" }}>
             <TextField label="주소" value={address} disabled></TextField>
             <Button
               sx={{
+                ml: 2,
                 backgroundColor: "#5DAE8B",
                 color: "#fff",
                 "&:hover": {
@@ -65,7 +68,8 @@ const UserInfoUpdate = ({ handleClose1, userInfo, changeAddress }: any) => {
             </Button>
           </Box>
           <TextField
-            label="상세 주소"
+            placeholder="상세 주소"
+            color="success"
             sx={{ margin: "1.6rem 0" }}
             onChange={(v) => {
               setAddressDetail(v.target.value);

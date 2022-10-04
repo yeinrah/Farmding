@@ -16,16 +16,17 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
       <Box
         sx={{
           ...modalStyle,
-          width: 300,
+          width: 400,
           height: 300,
           overflow: "auto",
           backgroundColor: "#F6F49D",
         }}
       >
-        <Box sx={{ fontWeight: "bold" }}>소개를 작성하세요</Box>
+        <Box sx={{ fontWeight: "bold", fontSize: 20 }}>회원 정보 수정</Box>
         <Box sx={{ display: "flex", margin: "2rem 0" }}>
           <TextField
             label="닉네임"
+            color="success"
             value={nowNickname}
             onChange={(v) => {
               setNowNickname(v.target.value);
@@ -33,6 +34,9 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
           ></TextField>
           <Button
             sx={{
+              ml: 2,
+              width: "90px",
+              // height: "40px",
               backgroundColor: "#5DAE8B",
               color: "#fff",
               "&:hover": {
@@ -55,7 +59,8 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
         </Box>
         <Box sx={{ display: "flex", margin: "2rem 0" }}>
           <TextField
-            label="자기소개"
+            placeholder="자기소개"
+            color="success"
             value={nowPr}
             onChange={(v) => {
               setNowPr(v.target.value);
@@ -86,7 +91,8 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
               backgroundColor: "#5DAE8B",
               color: "#fff",
               width: "100px",
-              height: "50px",
+              height: "40px",
+              mt: 2,
               "&:hover": {
                 color: "#fff",
                 backgroundColor: "#5DAE8B",

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Avatar, Box, Typography } from "@mui/material";
 import { modalStyle } from "../../Common/data/Style";
 import profileImages from "../../Assets/profile/profileImages";
 import { changeMyProfile } from "../../Common/API/userApi";
@@ -22,40 +22,27 @@ const UpdateProfileImg = ({
       <Box
         sx={{
           ...modalStyle,
-          width: 500,
-          height: 430,
+          width: 400,
+          height: 400,
           overflow: "auto",
           backgroundColor: "#F6F49D",
         }}
       >
-        <Typography>프로필 수정</Typography>
-        <Box
-          sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
-        >
+        <Typography sx={{ mb: 3, fontSize: 25 }}>
+          프로필 이미지를 골라주세요.
+        </Typography>
+        <Box sx={{ display: "flex", flexWrap: "wrap" }}>
           {myProfile &&
             myProfile.map((element: any, index: number) => (
               <Box
                 sx={{
-                  borderRadius: "25px",
+                  borderRadius: "20px",
                   "&:hover": {
                     opacity: "60%",
                   },
                 }}
               >
-                <img
-                  src={
-                    index === 0
-                      ? process.env.PUBLIC_URL + "/Assets/defaultProfile.png"
-                      : `https://${myProfile[index]}`
-                  }
-                  alt="images"
-                  style={{
-                    width: "90px",
-                    height: "80px",
-                    cursor: "pointer",
-                    borderRadius: "25px",
-                    margin: "10px",
-                  }}
+                <Avatar
                   onClick={async () => {
                     const accounts = await ethereum.request({
                       method: "eth_requestAccounts",
@@ -65,6 +52,14 @@ const UpdateProfileImg = ({
                     setIsCurrentProfileImage(`https://${myProfile[index]}`);
                     handleClose();
                   }}
+                  sx={{
+                    width: "100px",
+                    height: "100px",
+                    cursor: "pointer",
+                    // borderRadius: "50px",
+                    margin: "10px",
+                  }}
+                  src={index === 0 ? "" : `https://${myProfile[index]}`}
                 />
               </Box>
             ))}
