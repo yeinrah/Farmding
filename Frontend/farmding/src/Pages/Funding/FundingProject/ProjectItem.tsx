@@ -19,7 +19,6 @@ import { currentUserIdState } from "../../../Recoil/atoms/account";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { navLikeButtonChangeState } from "../../../Recoil/atoms/funding";
-import { getLikeOrNot } from "../../../Common/functions/GetLikeOrNot";
 
 export interface IPjt {
   pjtId: number;
