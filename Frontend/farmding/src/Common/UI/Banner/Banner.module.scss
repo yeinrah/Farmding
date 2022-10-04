@@ -2,34 +2,34 @@
   position: relative; /* 핵심코드 */
 
   .banner {
-
     width: 100%;
     position: relative; /* 핵심코드 */
-    display : inline-block;
+    display: inline-block;
     // margin-top: 50px;
     // // margin-bottom: 5%;
     max-width: 100%;
-    background-repeat :no-repeat;
+    background-repeat: no-repeat;
     img {
       width: 100%;
-      height: 400px;
+      height: 380px;
       background-size: cover;
       // opacity: 80%;
     }
-
   }
   .banner_txt {
     position: absolute; /* 핵심코드 */
-    top: 53%; 
-    left: 50%; 
-    transform: translate( -50%, -50%); 
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     text-align: center;
     // font-size: x-large;
 
     h1 {
-      color: #000;
+      // color: #000;
+      color: beige;
+      text-shadow: 2px 2px #827f7f;
       letter-spacing: 2px;
-      font-size: 40px;
+      font-size: 50px;
       margin-bottom: 15px;
     }
 
@@ -44,9 +44,10 @@
       text-decoration: none;
       color: beige;
       &:hover {
-        color:black;
+        // transform: translateY(-7px);
+        transition: 0.3s;
+        color: #5dae8b;
       }
     }
   }
 }
-

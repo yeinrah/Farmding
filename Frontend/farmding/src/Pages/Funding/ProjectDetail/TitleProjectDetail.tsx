@@ -81,7 +81,8 @@ TitleProjectDetailProps) => {
         </div>
 
         <div className={styles.project_detail_banner_txt}>
-          <h1>{title} </h1>
+          <div className={styles.banner_title}>{title}</div>
+          {/* <h1>{title} </h1> */}
           <div className={styles.farm_like}>
             <h4>{farm}</h4>
             <div className={styles.heart_area}>

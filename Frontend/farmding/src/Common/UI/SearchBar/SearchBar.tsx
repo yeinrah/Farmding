@@ -10,14 +10,19 @@ const SearchBar = ({ placeHolder }: SearchBarProps) => {
     borderRadius: "500px",
     backgroundColor: alpha(theme.palette.common.black, 0.15),
     "&:hover": {
+      // boxShadow: "3px 7px 7px rgba(0, 0, 0, 0.25)",
+      // transform: "translateY(-7px)",
+      transition: "0.5s",
       backgroundColor: alpha(theme.palette.common.black, 0.25),
     },
     marginLeft: 0,
     width: "100%",
-    height: "70px",
+    // width: "100px",
+    height: "60px",
     [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(1),
-      width: "100%",
+      marginLeft: theme.spacing(6),
+      // margin: "auto",
+      width: "93%",
     },
   }));
 
@@ -36,7 +41,7 @@ const SearchBar = ({ placeHolder }: SearchBarProps) => {
     display: "flex",
     fontSize: "22px",
     width: "100%",
-    paddingTop: "12px",
+    paddingTop: "8px",
     "& .MuiInputBase-input": {
       padding: theme.spacing(1, 1, 1, 0),
       // vertical padding + font size from searchIcon

@@ -115,15 +115,6 @@ const NavBar = () => {
                   className={styles.navbar__logo}
                 />
               </Link>
-              {/* <Link to="/test-metamask">
-                <h5>잔액조회</h5>
-              </Link>
-              <Link to="/nft">
-                <h5> NFT</h5>
-              </Link> */}
-              {/* <Link to="/landing">
-                <h5>시작페이지</h5>
-              </Link> */}
               <Typography
                 // variant="h5"
                 // noWrap
@@ -157,9 +148,9 @@ const NavBar = () => {
                   fontSize: "20px",
                   fontWeight: 600,
                   letterSpacing: ".2rem",
-                  color: mainGreen,
+                  color: mainPink,
                   textDecoration: "none",
-                  ml: "30px",
+                  ml: "15px",
                   my: "auto",
                 }}
               >

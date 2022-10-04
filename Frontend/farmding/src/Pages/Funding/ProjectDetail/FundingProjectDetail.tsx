@@ -82,30 +82,52 @@ const FundingProjectDetail = ({
 
   return (
     <>
-      <div className={styles.funding_amount}>
+      <div className={styles.funding_day}>
         <Typography
-          variant="h2"
           gutterBottom
           fontWeight="bold"
-          color={mainGreen}
+          sx={{ mr: 2, fontSize: 80, mb: 0 }}
+        >
+          D -
+        </Typography>
+        <Typography
+          gutterBottom
+          fontWeight="bold"
+          color={mainPink}
+          sx={{ fontSize: 80, mb: 0 }}
+        >
+          {remainingDays}
+        </Typography>
+      </div>
+      <div className={styles.funding_amount}>
+        <Typography
+          variant="h3"
+          gutterBottom
+          fontWeight="bold"
+          // color={mainGreen}
         >
           {nowFundedAmount}
         </Typography>
-        <Typography variant="h2" gutterBottom fontWeight="200" sx={{ ml: 2 }}>
+        {/* <Typography
+          variant="h4"
+          gutterBottom
+          fontWeight="200"
+          sx={{ ml: 2, my: "auto" }}
+        >
           SSF
-        </Typography>
+        </Typography> */}
         <Typography
           variant="h5"
           gutterBottom
           color="text.secondary"
-          sx={{ ml: 2, mt: 3 }}
+          sx={{ ml: 2, mt: 2 }}
         >
-          펀딩 중
+          SSF 펀딩
         </Typography>
       </div>
       <div className={styles.funding_amount}>
         <Typography variant="h3" gutterBottom fontWeight="bold">
-          {fundingAchieveRate * 100}%
+          {fundingAchieveRate * 100}
         </Typography>
         <Typography
           variant="h5"
@@ -113,7 +135,7 @@ const FundingProjectDetail = ({
           color="text.secondary"
           sx={{ ml: 2, mt: 2 }}
         >
-          달성
+          % 달성
         </Typography>
       </div>
       <div className={styles.funding_funders}>
@@ -124,28 +146,15 @@ const FundingProjectDetail = ({
           variant="h6"
           gutterBottom
           color="text.secondary"
-          sx={{ ml: 1, mt: 1 }}
+          sx={{ ml: 2, mt: 1 }}
         >
           참여
-        </Typography>
-      </div>
-      <div className={styles.funding_amount}>
-        <Typography variant="h2" gutterBottom fontWeight="bold" sx={{ mr: 2 }}>
-          D -
-        </Typography>
-        <Typography
-          variant="h2"
-          gutterBottom
-          fontWeight="bold"
-          color={mainPink}
-        >
-          {remainingDays}
         </Typography>
       </div>
       <div className={styles.btn}>
         <CustomBtn
           customSx={{
-            width: "400px",
+            width: "350px",
             height: "70px",
             fontSize: "30px",
             letterSpacing: 3,

@@ -111,14 +111,17 @@ const ProjectItem = ({
             className={styles.pjt_title}
             onClick={() => moveDetailHandler(pjtId)}
             gutterBottom
-            variant="subtitle1"
+            // variant="subtitle1"
             component="div"
-            sx={{ fontWeight: 800 }}
+            sx={{
+              fontWeight: 900,
+              fontSize: "1.1rem",
+            }}
           >
             {pjtTitle}
           </Typography>
           <div className={styles.heartArea}>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" sx={{ ml: 0.5 }}>
               {farmerName}
             </Typography>
             <div className={styles.heart_with_cnt}>

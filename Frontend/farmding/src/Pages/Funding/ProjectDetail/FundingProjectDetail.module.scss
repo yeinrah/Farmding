@@ -1,15 +1,20 @@
+.funding_day {
+  display: flex;
+  width: 80%;
+  margin: 20px 20px 0px 40px;
+  padding-left: 20px;
+  border-bottom: 3px solid #5dae8b;
+}
 .funding_amount {
   display: flex;
-  margin: 20px 20px 0px 50px;
+  margin: 20px 20px 0px 60px;
 }
 .funding_funders {
   display: flex;
-  margin: 10px 20px 30px 50px;
-  border-bottom: 3px solid #5DAE8B;
-
+  margin: 20px 20px 0 60px;
 }
 .btn {
   display: flex;
   justify-content: center;
-  margin-top: 40px;
+  margin-top: 50px;
 }

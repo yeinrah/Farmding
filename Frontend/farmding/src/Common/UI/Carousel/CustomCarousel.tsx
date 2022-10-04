@@ -10,7 +10,7 @@ interface CustomCarouselProps {
 const CustomCarousel = ({ imgArray }: CustomCarouselProps) => {
   return (
     <div className={styles.container}>
-      <Carousel height="280px" sx={{ width: "450px" }}>
+      <Carousel height="280px" sx={{ width: "500px" }}>
         {imgArray.map((img, i) => (
           <img
             key={i}

@@ -37,9 +37,9 @@ export interface fundingProject {
 }
 const FundingRanking = ({
   allProjects,
-  // sortedProjects,
   moveDetailHandler,
-}: IFundingRankingProps) => {
+}: // sortedProjects,
+IFundingRankingProps) => {
   const sortedItem: any = allProjects
     .filter((item: any) => item.fundingStatus === "open")
     .sort((a: any, b: any) => b.likeAmount - a.likeAmount);
