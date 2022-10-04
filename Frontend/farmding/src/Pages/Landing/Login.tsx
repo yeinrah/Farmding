@@ -77,8 +77,6 @@ const Login = () => {
         return;
       }
       setAccount(accounts[0]);
-      // 토큰 자동불러오기 (이미 등록되어있어도 뜸.. 이건 해결방법은 없음(못찾는게아니라 애초에 방법이없음))
-      // https://coder-solution.com/solution-blog/288728 참고
 
       const chainId = 31221;
       const rpcurl = "http://20.196.209.2:8545";
@@ -149,16 +147,12 @@ const Login = () => {
         className={styles.back}
       />
       <div className={styles.LoginMenu}>
-        {isMetaMaskInstalled() ? (
-          <h1 className={styles.p}>지갑에 연결하세요</h1>
-        ) : (
-          <h1 className={styles.p}>지갑이 없으신가요?</h1>
-        )}
         <div className={styles.p}>
           <img
             src={process.env.PUBLIC_URL + "/Assets/farmer_removebg.png"}
             className={styles.farmer}
           />
+          <div className={styles.farmding}>FARMDING</div>
         </div>
         {/* {account && <p>연결된 지갑 주소 : {account}</p>} */}
         {/* <p className={styles.p}></p>
@@ -167,8 +161,6 @@ const Login = () => {
       </p>
       <p className={styles.p}></p>
       <p className={styles.p}></p> */}
-        <br></br>
-        <br></br>
         {/* <Button onClick={onClickButton}>
         <Logo src="/essets/images/metamask_logo.png" alt="Logo" />
         {onboardButtonText}
@@ -177,8 +169,8 @@ const Login = () => {
           <CustomBtn
             customSx={{
               width: "300px",
-              height: "100px",
-              fontSize: "20px",
+              height: "80px",
+              fontSize: "25px",
               letterSpacing: 3,
             }}
             bgColor={"mainPink"}
@@ -186,19 +178,25 @@ const Login = () => {
             // btnWord={btnName}
             btnWord={onboardButtonText}
           />
-          <img
+          {/* <div className={styles.help}>
+            <img
             src={process.env.PUBLIC_URL + "/Assets/helpButton.png"}
-            className={styles.help}
             onClick={onclickAlert}
-          />
+            />
+          </div> */}
         </div>
-        <br></br>
+        {/* {isMetaMaskInstalled() ? (
+          <h4 className={styles.guide}>지갑에 연결하세요</h4>
+        ) : (
+          <h4 className={styles.guide}>지갑이 없으신가요?</h4>
+        )} */}
+        {/* <br></br>
         <br></br>
         {isLogin ? (
           <div className="text-center">My Wallet: {account}</div>
         ) : (
           <div className={styles.p}>로그인해주세요!</div>
-        )}
+        )} */}
       </div>
     </div>
   );
