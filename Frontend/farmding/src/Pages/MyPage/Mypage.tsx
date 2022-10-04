@@ -22,12 +22,16 @@ import profileImages from "../../Assets/profile/profileImages";
 import MyProjectList from "./MyProjectList";
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
 import { useNavigate } from "react-router-dom";
-import { isAccountChangedState } from "../../Recoil/atoms/account";
+import {
+  currentProfileImageState,
+  isAccountChangedState,
+} from "../../Recoil/atoms/account";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../Recoil/atoms/auth";
 import Spinner from "../../Common/UI/Spinner/Spinner";
 import { mainGreen } from "../../Common/data/Style";
-
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
 // interface UserInfo {
 //   userId: number;
 //   nickname: string;
@@ -53,6 +57,8 @@ const MyPage = () => {
     walletAddress: "",
     active: false,
   });
+  const [isCurrentProfileImage, setIsCurrentProfileImage] =
+    useRecoilState<string>(currentProfileImageState);
   const [NFTInfo, setNFTInfo] = useState("");
   const { ethereum } = window;
   const navigate = useNavigate();
@@ -96,12 +102,14 @@ const MyPage = () => {
       if (!info.data.user.active) {
         navigate("/signup");
       }
-      let temp: any[] = [];
+      let temp: any[] = [{}];
       for (let nftImage of info.data.nft) {
         temp.push(nftImage.nftAddress);
       }
-
       setMyProfile(temp);
+      setIsCurrentProfileImage(
+        `https://${myProfile[info.data.user.profileImage]}`
+      );
     });
   };
   const modifyAddrHandler = () => {
@@ -181,10 +189,22 @@ const MyPage = () => {
               height: "10rem",
               cursor: "pointer",
             }}
-            src={`https://${myProfile[userInfo.profileImage]}`}
+            src={
+              myProfile.length === 1
+                ? ""
+                : `https://${myProfile[userInfo.profileImage]}`
+            }
             onClick={() => {
               handleOpen();
               handleProfileOpen();
+            }}
+          />
+          <AddCircleOutlineIcon
+            sx={{
+              position: "relative",
+              right: "40px",
+              top: "110px",
+              fontSize: "50px",
             }}
           />
           <Box sx={{ width: "100%", marginLeft: "2rem" }}>
@@ -255,13 +275,13 @@ const MyPage = () => {
             {/* <MyProject /> */}
           </>
         )}
-        <Button
+        {/* <Button
           sx={{
             display: "flex",
-            justifyContent: "center",
-            width: "90%",
-            background: "red",
-            color: "white",
+            justifyContent: "flex-end",
+            width: "20%",
+            background: "#white",
+            color: "red",
             margin: "auto",
             "&:hover": { background: "#a3261f" },
           }}
@@ -272,7 +292,7 @@ const MyPage = () => {
           }}
         >
           회원 탈퇴
-        </Button>
+        </Button> */}
       </Box>
     </>
   );
