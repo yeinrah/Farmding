@@ -16,9 +16,10 @@ import { navLikeButtonChangeState } from "../../../Recoil/atoms/funding";
 import FundingRankingItem from "./FundingRankingItem";
 interface IFundingRankingProps {
   allProjects: fundingProject[];
+  // sortedProjects: fundingProject[];
   moveDetailHandler: (ptjId: number) => void;
 }
-interface fundingProject {
+export interface fundingProject {
   category: number;
   currentAmount: number;
   farmerName: string;
@@ -36,6 +37,7 @@ interface fundingProject {
 }
 const FundingRanking = ({
   allProjects,
+  // sortedProjects,
   moveDetailHandler,
 }: IFundingRankingProps) => {
   const sortedItem: any = allProjects
@@ -66,39 +68,6 @@ const FundingRanking = ({
               farmer={item.farmerName}
               likeCnt={item.likeAmount}
             />
-            {/* <ListItem
-              alignItems="flex-start"
-              sx={{ margin: "10px 0px", cursor: "pointer" }}
-            >
-              {index < 3 && <div className={styles.rank1}>{index + 1}</div>}
-              {index >= 3 && <div className={styles.rank}>{index + 1}</div>}
-              <ListItemAvatar>
-                <Avatar
-                  alt={item.avatar}
-                  src={`/Assets/funding/${item.projectId}.jpg`}
-                  sx={{ cursor: "pointer" }}
-                />
-              </ListItemAvatar>
-              <ListItemText
-                primary={cutLongTitle(item.projectTitle)}
-                secondary={
-                  <div className={styles.detailInfo}>
-                    <Typography
-                      sx={{ display: "inline" }}
-                      component="span"
-                      variant="body2"
-                      color="gray"
-                    >
-                      {item.farmerName}
-                    </Typography>
-                    <div className={styles.heartArea}>
-                      <FavoriteBorderIcon sx={{ color: mainGreen }} />
-                      <span className={styles.like}>{item.likeAmount}</span>
-                    </div>
-                  </div>
-                }
-              />
-            </ListItem> */}
             <Divider variant="inset" component="li" />
           </div>
         ))}

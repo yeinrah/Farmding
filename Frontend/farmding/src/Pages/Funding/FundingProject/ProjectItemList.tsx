@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import FundingRanking from "../FundingRanking/FundingRanking";
+import FundingRanking, {
+  fundingProject,
+} from "../FundingRanking/FundingRanking";
 import ProjectItem from "./ProjectItem";
 // scss
 import styles from "./ProjectItemList.module.scss";
@@ -16,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { cutLongTitle } from "../../../Common/functions/CutLongTitle";
 import { navLikeButtonChangeState } from "../../../Recoil/atoms/funding";
 import { useRecoilState } from "recoil";
+import { isSearchStartState } from "../../../Recoil/atoms/search";
 
 export interface IPjtListItem {
   projectId: number;
@@ -29,6 +32,7 @@ const ProjectItemList = () => {
   );
   const [nowProjects, setNowProjects] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
+  const [rankingList, setRankingList] = useState<fundingProject[]>([]);
   const [nowSearch, setNowSearch] = useState("");
   const navigate = useNavigate();
   const moveDetailHandler = (pjtId: number) => {
@@ -42,6 +46,7 @@ const ProjectItemList = () => {
     const allPjts: any = await fetchAllProjects();
     setAllProjects(allPjts);
   };
+
   const search = async () => {
     if (nowSearch.length !== 0) {
       let temp: any = [];
@@ -54,6 +59,15 @@ const ProjectItemList = () => {
   useEffect(() => {
     fetchProjects();
     fetchAnyProjects();
+  }, []);
+
+  useEffect(() => {
+    fetchAnyProjects();
+    // const sortedRanking: fundingProject[] = allProjects
+    //   .filter((item: any) => item.fundingStatus === "open")
+    //   .sort((a: any, b: any) => b.likeAmount - a.likeAmount);
+
+    // setRankingList(sortedRanking);
   }, [isNavLikeChange]);
 
   useEffect(() => {
@@ -68,6 +82,7 @@ const ProjectItemList = () => {
           onKeyDown={(v: any) => {
             if (v.key === "Enter") {
               setNowSearch(v.target.value);
+              console.log(v.target.value, "검색 시작");
             }
           }}
         >
@@ -86,6 +101,7 @@ const ProjectItemList = () => {
               imgHeight={170}
               onClickDislike={() => {}}
               onModalClose={() => {}}
+
               // likeCnt={pjt.likeAmount}
             />
           </Grid>
@@ -93,6 +109,7 @@ const ProjectItemList = () => {
       </Grid>
       <FundingRanking
         allProjects={allProjects}
+        // sortedProjects={rankingList}
         moveDetailHandler={moveDetailHandler}
       />
     </div>

@@ -19,6 +19,8 @@ import { currentUserIdState } from "../../../Recoil/atoms/account";
 import { useRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
 import { navLikeButtonChangeState } from "../../../Recoil/atoms/funding";
+import { isSearchStartState } from "../../../Recoil/atoms/search";
+import Spinner from "../../../Common/UI/Spinner/Spinner";
 
 export interface IPjt {
   pjtId: number;
@@ -72,8 +74,9 @@ const ProjectItem = ({
   // console.log(isLiked, pjtId, "좋아요여부!!!!!!!!!!!!!!");
   useEffect(() => {
     (async function () {
+      console.log(pjtId, "수박 id");
       const likeUsersList = await fetchLikeUsers(pjtId);
-      console.log(likeUsersList, pjtId, "현재유저");
+      // console.log(likeUsersList, pjtId, "현재유저");
       if (likeUsersList.length === 0) {
         setIsLiked(false);
       } else {
@@ -85,13 +88,12 @@ const ProjectItem = ({
           }
         }
       }
-
       const projtDetail: any = await fetchProjectDetail(pjtId);
       setLikeCnt(projtDetail.likeAmount);
       // console.log(isLikeChange, pjtId, "likechange");
       setIsLikeChange(false);
     })();
-  }, [isNavLikeChange, currentUserId, isLikeChange]);
+  }, [isNavLikeChange, currentUserId, isLikeChange, pjtId]);
 
   return (
     <>
