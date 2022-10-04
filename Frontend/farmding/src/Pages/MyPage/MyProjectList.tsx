@@ -48,8 +48,9 @@ const MyProjectList = () => {
     (async function () {
       // 이거 +1한거 빼야함!!!!!!!! API 수정하고!!!!!!!!!!!!!
       // const myPjts: any = await fetchMyFundings(currentUserId);
+
       const myPjts: any = await fetchMyFundings(currentUserId);
-      setMyProjects(myPjts);
+      setMyProjects(myPjts.reverse());
     })();
   }, []);
   return (
