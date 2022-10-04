@@ -52,11 +52,11 @@ CREATE TABLE `project` (
 );
 
 CREATE TABLE `fundingList` (
-	`fundinglist_id`	int NOT NULL AUTO_INCREMENT,
-	`user_id`	int	NOT NULL,
+	`fundinglist_id` int NOT NULL AUTO_INCREMENT,
+	`user_id` int NOT NULL,
 	`project_id` int NOT NULL,
-	`reward_id`	int	NOT NULL,
-	`amount`	int	NOT NULL,
+	`reward_id` int NOT NULL,
+	`amount`	int NOT NULL,
     PRIMARY KEY(`fundinglist_id`)
 );
 
@@ -81,18 +81,10 @@ CREATE TABLE `reward` (
 	`delivery_date` datetime NOT NULL
 );
 
-CREATE TABLE `images` (
-	`image_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`project_id` int NOT NULL,
-	`project_file_name` varchar(200) NOT NULL,
-	`project_file_path` varchar(200) NOT NULL,
-	`is_main` boolean NULL
-);
-
 CREATE TABLE `like` (
-	`like_id`	int auto_increment	NOT NULL,
-	`project_id`	int	NOT NULL,
-	`user_id`	int	NOT NULL,
+	`like_id` int auto_increment NOT NULL,
+	`project_id` int NOT NULL,
+	`user_id` int NOT NULL,
     PRIMARY KEY(`like_id`)
 );
 
@@ -137,14 +129,6 @@ ALTER TABLE `reward` ADD CONSTRAINT `FK_project_TO_reward_1` FOREIGN KEY (
 REFERENCES `project` (
 	`project_id`
 );
-
-ALTER TABLE `images` ADD CONSTRAINT `FK_project_TO_images_1` FOREIGN KEY (
-	`project_id`
-)
-REFERENCES `project` (
-	`project_id`
-);
-
 
 -- 1. 딸기
 insert into project (project_title, project_explanation, 
@@ -275,4 +259,3 @@ SELECT * FROM funding;
 SELECT * FROM project;
 SELECT * FROM reward;
 SELECT * FROM nft;
-
