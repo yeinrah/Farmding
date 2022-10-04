@@ -32,6 +32,10 @@ import { loginState } from "../../../Recoil/atoms/auth";
 import { getMyInfo } from "../../../Common/API/userApi";
 import DisabledBtn from "../../../Common/UI/CustomBtn/DisabledBtn";
 import FundingComplete from "./FundingComplete";
+import { registerNFT } from "../../../Common/API/NFTApi";
+import { nftContract } from "../../../Common/ABI/abi";
+import { useNavigate } from "react-router-dom";
+import Spinner from "../../../Common/UI/Spinner/Spinner";
 
 export interface IChooseRewardProps {
   pjtId: number;
@@ -42,6 +46,8 @@ export interface IChooseRewardProps {
 const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
   const { ethereum } = window;
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const [currentUserId, setCurrentUserId] =
     useRecoilState<number>(currentUserIdState);
   const [isAccountChanged, SetIsAccountChanged] = useRecoilState<boolean>(
@@ -78,7 +84,35 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
   const getClickOrNotHandler = (clickOrNot: boolean) => {
     setIsRewardClicked(clickOrNot);
   };
-  const getNFTHandler = () => {};
+  const getNFTHandler = async () => {
+    setIsLoading(true);
+    try {
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      //0번부터 시작해서 +1
+      const minting = await nftContract.methods
+        .mint(accounts[0], 1)
+        .send({ from: accounts[0] });
+      const cnt = await nftContract.methods.getCount().call();
+      console.log(cnt);
+      const nowNickName = await (
+        await getMyInfo(accounts[0])
+      ).data.user.nickname;
+      await registerNFT(
+        1,
+        minting.events.getNFTData.returnValues[0],
+        nowNickName,
+        accounts[0],
+        Number(cnt)
+      );
+      alert("민팅 완료");
+      navigate("/mypage");
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+    }
+  };
 
   const onFundingClick = async () => {
     const fundedOrNot: boolean = await fundingHandler(
@@ -120,6 +154,7 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
 
   return (
     <Box sx={{ ...modalStyle, width: 500, height: 530 }}>
+      {isLoading && <Spinner />}
       {isFunded ? (
         <>
           <div className={styles.complete_modal_title}>
