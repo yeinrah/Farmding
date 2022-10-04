@@ -59,7 +59,14 @@ const MyPage = () => {
   const handleOpen = () => setOpen(true);
   const handleAddrOpen = () => setAddrOpen(true);
   const handleNickOpen = () => setNickOpen(true);
-  const handleProfileOpen = () => setProfileOpen(true);
+  const handleProfileOpen = () => {
+    if (myProfile.length === 0) {
+      alert("선택가능한 NFT가 없습니다.");
+      handleClose();
+      return;
+    }
+    setProfileOpen(true);
+  };
   const handleClose = () => {
     setAddrOpen(false);
     setNickOpen(false);
@@ -93,6 +100,7 @@ const MyPage = () => {
       for (let nftImage of info.data.nft) {
         temp.push(nftImage.nftAddress);
       }
+
       setMyProfile(temp);
     });
   };
@@ -215,13 +223,6 @@ const MyPage = () => {
           </Box>
         </Box>
         <Box sx={{ width: "100%" }}>
-          <Button
-            onClick={() => {
-              console.log(myProfile);
-            }}
-          >
-            hahah
-          </Button>
           <Tabs
             value={value}
             onChange={handleChange}
