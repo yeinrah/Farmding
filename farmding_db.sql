@@ -51,7 +51,7 @@ CREATE TABLE `project` (
 	`funder_count` int NOT NULL
 );
 
-CREATE TABLE `fundingList` (
+CREATE TABLE `fundinglist` (
 	`fundinglist_id` int NOT NULL AUTO_INCREMENT,
 	`user_id` int NOT NULL,
 	`project_id` int NOT NULL,
