@@ -24,12 +24,16 @@ import Badge, { BadgeProps } from "@mui/material/Badge";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../../Recoil/atoms/auth";
 import { fetchLikeFundingLists } from "../../API/likeFundingAPI";
-import { currentUserIdState } from "../../../Recoil/atoms/account";
+import {
+  currentProfileImageState,
+  currentUserIdState,
+} from "../../../Recoil/atoms/account";
 import {
   IFundingTypes,
   navLikeButtonChangeState,
   likeFundingsListState,
 } from "../../../Recoil/atoms/funding";
+import { getMyNfts } from "../../API/NFTApi";
 
 const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -52,6 +56,8 @@ const NavBar = () => {
   const [isNavLikeChange, setIsNavLikeChange] = useRecoilState<boolean>(
     navLikeButtonChangeState
   );
+  const [isCurrentProfileImage, setIsCurrentProfileImage] =
+    useRecoilState<string>(currentProfileImageState);
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [open, setOpen] = useState(false);
@@ -88,11 +94,23 @@ const NavBar = () => {
   };
   useEffect(() => {
     (async function () {
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
       const likeFundingsList: any = await fetchLikeFundingLists(currentUserId);
       setLikeFundings(likeFundingsList);
       setLikeCount(likeFundingsList.length);
+      await getMyNfts(accounts[0]).then((info) => {
+        let temp: any[] = [];
+        for (let nftImage of info.data.nft) {
+          temp.push(nftImage.nftAddress);
+        }
+        setIsCurrentProfileImage(
+          `https://${temp[info.data.user.profileImage]}`
+        );
+      });
     })();
-  }, [isNavLikeChange, currentUserId]);
+  }, [isNavLikeChange, currentUserId, isCurrentProfileImage]);
 
   return (
     <>
@@ -182,7 +200,7 @@ const NavBar = () => {
                 <div onClick={handleOpenUserMenu} className={styles.avatar}>
                   <Avatar
                     // src="/Assets/grape.png"
-                    src={profileImg}
+                    src={isCurrentProfileImage}
                     sx={{ width: 53, height: 53, mr: 4 }}
                   />
                 </div>

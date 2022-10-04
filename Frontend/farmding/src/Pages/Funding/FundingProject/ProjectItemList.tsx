@@ -90,22 +90,23 @@ const ProjectItemList = () => {
             placeHolder={"과일 이름을 입력하고 Enter 키를 눌러주세요!"}
           />
         </div>
-        {nowProjects.map((pjt: IPjtListItem, idx) => (
-          // <ProjectItem key={idx} title={pjt.title} />
-          <Grid item xs={6} sm={8} md={3} key={idx}>
-            <ProjectItem
-              pjtId={pjt.projectId}
-              pjtTitle={cutLongTitle(pjt.projectTitle, 12)}
-              farmerName={pjt.farmerName}
-              cardHeight={270}
-              imgHeight={170}
-              onClickDislike={() => {}}
-              onModalClose={() => {}}
+        {nowProjects &&
+          nowProjects.map((pjt: IPjtListItem, idx) => (
+            // <ProjectItem key={idx} title={pjt.title} />
+            <Grid item xs={6} sm={8} md={3} key={idx}>
+              <ProjectItem
+                pjtId={pjt.projectId}
+                pjtTitle={cutLongTitle(pjt.projectTitle, 12)}
+                farmerName={pjt.farmerName}
+                cardHeight={270}
+                imgHeight={170}
+                onClickDislike={() => {}}
+                onModalClose={() => {}}
 
-              // likeCnt={pjt.likeAmount}
-            />
-          </Grid>
-        ))}
+                // likeCnt={pjt.likeAmount}
+              />
+            </Grid>
+          ))}
       </Grid>
       <FundingRanking
         allProjects={allProjects}

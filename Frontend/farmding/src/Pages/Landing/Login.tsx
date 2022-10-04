@@ -160,7 +160,7 @@ const Login = () => {
             className={styles.farmer}
           />
         </div>
-        {account && <p>연결된 지갑 주소 : {account}</p>}
+        {/* {account && <p>연결된 지갑 주소 : {account}</p>} */}
         {/* <p className={styles.p}></p>
       <p className={styles.p}>
         <span></span>

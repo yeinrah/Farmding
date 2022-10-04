@@ -2,9 +2,21 @@ import { Box } from "@mui/material";
 import { modalStyle } from "../../Common/data/Style";
 import profileImages from "../../Assets/profile/profileImages";
 import { changeMyProfile } from "../../Common/API/userApi";
-import { useState } from "react";
-const UpdateProfileImg = ({ handleClose, changeProfile, userInfo }: any) => {
+import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
+import { currentProfileImageState } from "../../Recoil/atoms/account";
+const UpdateProfileImg = ({
+  handleClose,
+  changeProfile,
+  userInfo,
+  myProfile,
+}: any) => {
+  const [isCurrentProfileImage, setIsCurrentProfileImage] =
+    useRecoilState<string>(currentProfileImageState);
   const { ethereum } = window;
+  useEffect(() => {
+    console.log(myProfile + "hha");
+  }, []);
   return (
     <>
       <Box
@@ -19,23 +31,37 @@ const UpdateProfileImg = ({ handleClose, changeProfile, userInfo }: any) => {
         <Box
           sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
         >
-          {profileImages.map((element, index) => (
-            <Box>
-              <img
-                src={profileImages[index]}
-                alt="images"
-                style={{ width: "90px", height: "80px", cursor: "pointer" }}
-                onClick={async () => {
-                  const accounts = await ethereum.request({
-                    method: "eth_requestAccounts",
-                  });
-                  changeMyProfile(accounts[0], index);
-                  changeProfile({ ...userInfo, profileImage: index });
-                  handleClose();
+          {myProfile &&
+            myProfile.map((element: any, index: number) => (
+              <Box
+                sx={{
+                  borderRadius: "25px",
+                  "&:hover": {
+                    opacity: "60%",
+                  },
                 }}
-              />
-            </Box>
-          ))}
+              >
+                <img
+                  src={`https://${myProfile[index]}`}
+                  alt="images"
+                  style={{
+                    width: "90px",
+                    height: "80px",
+                    cursor: "pointer",
+                    borderRadius: "25px",
+                  }}
+                  onClick={async () => {
+                    const accounts = await ethereum.request({
+                      method: "eth_requestAccounts",
+                    });
+                    changeMyProfile(accounts[0], index);
+                    changeProfile({ ...userInfo, profileImage: index });
+                    setIsCurrentProfileImage(`https://${myProfile[index]}`);
+                    handleClose();
+                  }}
+                />
+              </Box>
+            ))}
         </Box>
       </Box>
     </>

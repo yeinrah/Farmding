@@ -23,3 +23,8 @@ export const isAccountChangedState = atom<boolean>({
   default: false,
   effects_UNSTABLE: [persistAtom],
 });
+export const currentProfileImageState = atom<string>({
+  key: "currentProfileImageState",
+  default: "",
+  effects_UNSTABLE: [persistAtom],
+});
