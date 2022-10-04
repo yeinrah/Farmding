@@ -178,9 +178,8 @@ const MyPage = () => {
           <Avatar
             sx={{
               width: "10rem",
-              height: "8rem",
+              height: "10rem",
               cursor: "pointer",
-              margin: "2rem 0",
             }}
             src={`https://${myProfile[userInfo.profileImage]}`}
             onClick={() => {
