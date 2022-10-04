@@ -12,6 +12,7 @@ import { Console } from "console";
 import { getMyInfo } from "../../Common/API/userApi";
 import Spinner from "../../Common/UI/Spinner/Spinner";
 import { useState } from "react";
+import Swal from "sweetalert2";
 interface IBuyingNFT {
   NFTInfo: NFTInfo;
   onClose: () => void;
@@ -91,7 +92,10 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
                 );
                 await changeOnSale(NFTInfo.count);
                 onClose();
-                alert("구매완료");
+                Swal.fire({
+                  icon: "success",
+                  title: "구매 완료",
+                });
                 loadSellingNFTList();
                 setIsLoading(false);
               } catch {

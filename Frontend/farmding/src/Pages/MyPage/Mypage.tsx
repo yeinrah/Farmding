@@ -32,6 +32,7 @@ import Spinner from "../../Common/UI/Spinner/Spinner";
 import { mainGreen } from "../../Common/data/Style";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import Swal from "sweetalert2";
 // interface UserInfo {
 //   userId: number;
 //   nickname: string;
@@ -67,7 +68,10 @@ const MyPage = () => {
   const handleNickOpen = () => setNickOpen(true);
   const handleProfileOpen = () => {
     if (myProfile.length === 0) {
-      alert("선택가능한 NFT가 없습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "선택 가능한 NFT가 없습니다.",
+      });
       handleClose();
       return;
     }

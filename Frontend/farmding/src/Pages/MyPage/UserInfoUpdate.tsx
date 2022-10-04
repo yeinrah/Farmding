@@ -4,6 +4,7 @@ import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import DaumPostcode from "react-daum-postcode";
 import { useState } from "react";
 import { changeMyAddress } from "../../Common/API/userApi";
+import Swal from "sweetalert2";
 const UserInfoUpdate = ({ handleClose1, userInfo, changeAddress }: any) => {
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
@@ -89,7 +90,7 @@ const UserInfoUpdate = ({ handleClose1, userInfo, changeAddress }: any) => {
             }}
             onClick={async () => {
               if (address.length === 0) {
-                alert("주소를 입력해주세요");
+                Swal.fire("주소를 입력해 주세요");
                 return;
               }
               const accounts = await ethereum.request({

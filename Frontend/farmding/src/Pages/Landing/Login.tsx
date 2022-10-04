@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 // import MetaMaskOnboarding from "@metamask/onboarding";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import Swal from "sweetalert2";
 import { getMyInfo } from "../../Common/API/userApi";
 import { userAddressExistCheck } from "../../Common/API/userApi";
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
@@ -111,14 +112,20 @@ const Login = () => {
       setIsLogin(true);
     } catch (error) {
       console.log(error);
-      alert("메타마스크에 연결중 오류가 발생하였습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "Metamask error!",
+        text: "메타마스크에 연결중 오류가 발생하였습니다.",
+      });
     }
   };
 
   const onclickAlert = () => {
-    alert(
+    Swal.fire(
+      "MetaMask?",
       "저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는 구글 확장프로그램인 메타마스크를 이용하여 로그인 합니다.\n" +
-        "이미 지갑을 소유하셨다면 회원가입 절차 필요없이 서비스를 바로 이용할 수 있습니다."
+        "이미 지갑을 소유하셨다면 회원가입 절차 필요없이 서비스를 바로 이용할 수 있습니다.",
+      "question"
     );
   };
 

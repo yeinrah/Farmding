@@ -36,6 +36,7 @@ import { registerNFT } from "../../../Common/API/NFTApi";
 import { nftContract } from "../../../Common/ABI/abi";
 import { useNavigate } from "react-router-dom";
 import Spinner from "../../../Common/UI/Spinner/Spinner";
+import Swal from "sweetalert2";
 
 export interface IChooseRewardProps {
   pjtId: number;
@@ -107,7 +108,10 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
         accounts[0],
         Number(cnt)
       );
-      alert("민팅 완료");
+      Swal.fire({
+        icon: "success",
+        title: "민팅 완료",
+      });
       navigate("/mypage");
       setIsLoading(false);
     } catch {

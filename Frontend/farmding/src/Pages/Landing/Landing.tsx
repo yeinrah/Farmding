@@ -9,6 +9,7 @@ import { injected } from "../../lib/connectors";
 //recoil
 import { useRecoilState } from "recoil";
 import { loginState } from "../../Recoil/atoms/auth";
+import Swal from "sweetalert2";
 
 export interface IResult {
   _hex: string;
@@ -43,7 +44,11 @@ const Landing = () => {
       !isLoading && console.log("활성화 성공", account);
     } catch (err) {
       console.log(err);
-      alert(err);
+      Swal.fire({
+        icon: "error",
+        title: "Metamask error!",
+        text: "err",
+      });
       window.open("https://metamask.io/download.html");
     }
   };

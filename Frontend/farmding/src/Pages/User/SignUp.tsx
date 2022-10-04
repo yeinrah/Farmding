@@ -4,6 +4,7 @@ import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import Swal from "sweetalert2";
 import { userNicknameExistCheck, userSignUp } from "../../Common/API/userApi";
 import { modalStyle } from "../../Common/data/Style";
 import { loginState } from "../../Recoil/atoms/auth";
@@ -23,37 +24,58 @@ const SignUp = () => {
   const navigate = useNavigate();
   const signup = async () => {
     if (!nameDuplicateCheck) {
-      alert("닉네임 중복체크를 해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "닉네임 중복체크를 해주세요.",
+      });
       return;
     }
     if (phoneNumber.length !== 11) {
-      alert("전화번호는 11자리 입니다.");
+      Swal.fire({
+        icon: "error",
+        title: "전화번호는 11자리 입니다.",
+      });
       return;
     }
     if (address.length === 0) {
-      alert("주소를 입력해주세요");
+      Swal.fire({
+        icon: "error",
+        title: "주소를 입력해주세요.",
+      });
       return;
     }
     const accounts = await ethereum.request({ method: "eth_accounts" });
     userSignUp(address, nickname, phoneNumber, accounts[0])
       .then(() => {
-        alert("회원가입 완료");
+        Swal.fire({
+          icon: "success",
+          title: "회원가입 완료",
+        });
         setIsLogin(true);
         navigate("/");
       })
       .catch((e) => {
         console.log(e);
-        alert("회원가입 실패");
+        Swal.fire({
+          icon: "error",
+          title: "회원가입 실패",
+        });
       });
   };
   const nicknameCheck = async () => {
     const result = await userNicknameExistCheck(nickname);
     console.log(result);
     if (!result.data) {
-      alert("사용 가능한 닉네임 입니다.");
+      Swal.fire({
+        icon: "success",
+        title: "사용 가능한 닉네임 입니다.",
+      });
       setNameDuplicateCheck(true);
     } else {
-      alert("사용 불가능한 닉네임 입니다.");
+      Swal.fire({
+        icon: "error",
+        title: "사용 불가능한 닉네임 입니다.",
+      });
       setNameDuplicateCheck(false);
     }
   };

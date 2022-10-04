@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { dateToUnixConverter } from "../Common/functions/DateConverter";
 import {
   CrowdFundingAddress,
@@ -28,7 +29,10 @@ export const launchingHandler = async (
     const goal = launchRes.events.Launch.returnValues.goal;
     const endAt = launchRes.events.Launch.returnValues.endAt;
     // fundingAddr = launchRes.events.Launch.returnValues.fundingAddr;
-    alert(`${projectId}번 프로젝트 런칭 완료`);
+    Swal.fire({
+      icon: "success",
+      title: `${projectId}번 프로젝트 런칭 완료`,
+    });
     console.log(projectId, beneficiary, goal, endAt);
 
     // funding 요청
@@ -52,8 +56,10 @@ export const claimHandler = async (pjtId: number) => {
       .send({ from: accounts[0] });
     // console.log(claimRes);
     const claimId = claimRes.events.Claim.returnValues.id;
-    alert(`${claimId} 번 프로젝트 클레임 완료`);
-
+    Swal.fire({
+      icon: "success",
+      title: `${claimId} 번 프로젝트 클레임 완료`,
+    });
     console.log(claimId, "번 프로젝트 클레임 완료");
   } catch (error) {
     console.log(error);
@@ -82,7 +88,10 @@ export const fundingHandler = async (
     const fundId = fundingRes.events.Fund.returnValues.id;
     const caller = fundingRes.events.Fund.returnValues.caller;
     const amount = fundingRes.events.Fund.returnValues.amount;
-    alert(`${caller}가 ${amount}만큼 펀딩 완료했습니다`);
+    Swal.fire({
+      icon: "success",
+      title: `${caller}가 ${amount}만큼 펀딩 완료했습니다`,
+    });
     result = true;
     console.log(fundId, caller, amount);
 

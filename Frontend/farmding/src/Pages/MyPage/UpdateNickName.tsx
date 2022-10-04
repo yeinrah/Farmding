@@ -1,5 +1,6 @@
 import { Box, Button, TextareaAutosize, TextField } from "@mui/material";
 import { useState } from "react";
+import Swal from "sweetalert2";
 import {
   changeMyNickNamePr,
   userNicknameExistCheck,
@@ -46,10 +47,18 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
             }}
             onClick={async () => {
               if (await (await userNicknameExistCheck(nowNickname)).data) {
-                alert("이미 존재하는 닉네임 입니다.");
+                Swal.fire({
+                  icon: "error",
+                  title: "이미 존재하는 닉네임 입니다!",
+                  text: "err",
+                });
                 setNameDuplicateCheck(false);
               } else {
-                alert("사용 가능한 닉네임 입니다.");
+                Swal.fire({
+                  icon: "success",
+                  title: "사용 가능한 닉네임 입니다.",
+                  text: "err",
+                });
                 setNameDuplicateCheck(true);
               }
             }}
@@ -100,11 +109,14 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
             }}
             onClick={async () => {
               if (nowNickname.length === 0 || nowNickname.length >= 50) {
-                alert("닉네임은 1~50길이만 허용됩니다.");
+                Swal.fire({
+                  icon: "error",
+                  title: "닉네임은 1~50길이만 허용됩니다.",
+                });
                 return;
               }
               if (!nameDuplicateCheck && nowNickname !== userInfo.nickname) {
-                alert("닉네임 중복 체크를 해주세요");
+                Swal.fire("닉네임 중복체크를 해주세요");
                 return;
               }
               const accounts = await ethereum.request({
