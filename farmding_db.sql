@@ -51,7 +51,7 @@ CREATE TABLE `project` (
 	`funder_count` int NOT NULL
 );
 
-CREATE TABLE `fundingList` (
+CREATE TABLE `fundinglist` (
 	`fundinglist_id` int NOT NULL AUTO_INCREMENT,
 	`user_id` int NOT NULL,
 	`project_id` int NOT NULL,
@@ -79,6 +79,14 @@ CREATE TABLE `reward` (
 	`amount` int NULL,
 	`delivery_fee` int NULL,
 	`delivery_date` datetime NOT NULL
+);
+
+CREATE TABLE `images` (
+	`image_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`project_id` int NOT NULL,
+	`project_file_name` varchar(200) NOT NULL,
+	`project_file_path` varchar(200) NOT NULL,
+	`is_main` boolean NULL
 );
 
 CREATE TABLE `like` (
@@ -129,6 +137,14 @@ ALTER TABLE `reward` ADD CONSTRAINT `FK_project_TO_reward_1` FOREIGN KEY (
 REFERENCES `project` (
 	`project_id`
 );
+
+ALTER TABLE `images` ADD CONSTRAINT `FK_project_TO_images_1` FOREIGN KEY (
+	`project_id`
+)
+REFERENCES `project` (
+	`project_id`
+);
+
 
 -- 1. 딸기
 insert into project (project_title, project_explanation, 
@@ -207,7 +223,6 @@ project_end_date, farmer_name, farmer_wallet_address, target_amount,
  funding_status, like_amount, funder_count)
  value ("달콤한 샤인머스캣을 가장 먼저 만나보세요.", "과일의 왕, 포도가 돌아왔다!! 싸피농장은 27년 간 포도만을 고집해 온 포도계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 포도를 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 포도 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 포도! 저희 포도로는 포도쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 포도 많이 사랑해주세요!", 
  7,"2022-09-27 00:00:00", "2022-11-23", "예인농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 30, 0, 0, "open", 0, 0);
-
 
 -- 9. 오렌지
 insert into project (project_title, project_explanation, 
