@@ -116,12 +116,14 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
   };
 
   const onFundingClick = async () => {
+    setIsLoading(true);
     const fundedOrNot: boolean = await fundingHandler(
       pjtId,
       fundingAmount,
       rewardDetail.shippingFee
     );
     setIsFunded(fundedOrNot);
+    setIsLoading(false);
 
     await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
     console.log(currentUserId, "지긍유저아이디");
