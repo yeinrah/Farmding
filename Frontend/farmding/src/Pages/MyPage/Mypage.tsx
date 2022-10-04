@@ -41,6 +41,7 @@ const MyPage = () => {
   const [addrOpen, setAddrOpen] = useState<Boolean>(false);
   const [nickOpen, setNickOpen] = useState<Boolean>(false);
   const [profileOpen, setProfileOpen] = useState<Boolean>(false);
+  const [myProfile, setMyProfile] = useState<any>([]);
   const [account, setAccount] = useState("");
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [isLoading, setIsLoading] = useState(false);
@@ -85,10 +86,14 @@ const MyPage = () => {
     setAccount(accounts[0]);
     await getMyNfts(accounts[0]).then((info) => {
       setNFTInfo(info.data.nft);
-      console.log(info.data.nft);
       if (!info.data.user.active) {
         navigate("/signup");
       }
+      let temp: any[] = [];
+      for (let nftImage of info.data.nft) {
+        temp.push(nftImage.nftAddress);
+      }
+      setMyProfile(temp);
     });
   };
   const modifyAddrHandler = () => {
@@ -149,6 +154,7 @@ const MyPage = () => {
               handleClose={handleClose}
               changeProfile={setUserInfo}
               userInfo={userInfo}
+              myProfile={myProfile}
             />
           )}
         </>
@@ -168,7 +174,7 @@ const MyPage = () => {
               cursor: "pointer",
               margin: "2rem 0",
             }}
-            src={profileImages[userInfo.profileImage]}
+            src={`https://${myProfile[userInfo.profileImage]}`}
             onClick={() => {
               handleOpen();
               handleProfileOpen();
@@ -209,6 +215,13 @@ const MyPage = () => {
           </Box>
         </Box>
         <Box sx={{ width: "100%" }}>
+          <Button
+            onClick={() => {
+              console.log(myProfile);
+            }}
+          >
+            hahah
+          </Button>
           <Tabs
             value={value}
             onChange={handleChange}
