@@ -10,6 +10,8 @@ import com.farmding.db.entity.Nft;
 import com.farmding.db.entity.Project;
 
 public interface NftRepository extends JpaRepository<Nft, String> {
+	
+	@Query(value = "select * from nft where owner_wallet_address=?1", nativeQuery = true)
 	List<Nft> findAllByOwnerWalletAddress(String ownerWalletAddress);
 	
 	List<Nft> findAll();
