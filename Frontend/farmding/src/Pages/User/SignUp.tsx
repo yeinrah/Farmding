@@ -3,9 +3,12 @@ import { url } from "inspector";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import { userNicknameExistCheck, userSignUp } from "../../Common/API/userApi";
 import { modalStyle } from "../../Common/data/Style";
+import { loginState } from "../../Recoil/atoms/auth";
 const SignUp = () => {
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
   const [nickname, setNickname] = useState("");
@@ -35,6 +38,7 @@ const SignUp = () => {
     userSignUp(address, nickname, phoneNumber, accounts[0])
       .then(() => {
         alert("회원가입 완료");
+        setIsLogin(true);
         navigate("/");
       })
       .catch((e) => {
