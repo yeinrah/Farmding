@@ -62,10 +62,11 @@ const MyProject = ({
         <Card
           sx={{
             width: 400,
-            height: 250,
+            height: 220,
             marginLeft: "10%",
             mr: 4,
-            my: "auto",
+            mt: "12px",
+            // my: "auto",
             cursor: "pointer",
           }}
           className={styles.card_img}

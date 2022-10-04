@@ -71,7 +71,9 @@ const ProjectItemList = () => {
             }
           }}
         >
-          <SearchBar placeHolder={"어떤 과일을 드시고 싶으세요?"} />
+          <SearchBar
+            placeHolder={"찾고 싶은 과일 이름을 입력하고 Enter 키를 눌러주세요"}
+          />
         </div>
         {nowProjects.map((pjt: IPjtListItem, idx) => (
           // <ProjectItem key={idx} title={pjt.title} />
