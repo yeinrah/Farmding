@@ -6,7 +6,7 @@ import ProjectItem from "./ProjectItem";
 // scss
 import styles from "./ProjectItemList.module.scss";
 // mui
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 import {
   fetchAllProjects,
@@ -30,6 +30,7 @@ const ProjectItemList = () => {
   const [isNavLikeChange, setIsNavLikeChange] = useRecoilState<boolean>(
     navLikeButtonChangeState
   );
+  const [isSearchEntered, setIsSearchEntered] = useState(false);
   const [nowProjects, setNowProjects] = useState([]);
   const [allProjects, setAllProjects] = useState([]);
   const [rankingList, setRankingList] = useState<fundingProject[]>([]);
@@ -74,45 +75,58 @@ const ProjectItemList = () => {
     search();
   }, [nowSearch]);
   return (
-    <div className={styles.projectMainBox}>
-      <Grid container spacing={{ xs: 4, md: 5 }} className={styles.container}>
-        <div
-          className={styles.searchBar}
-          defaultValue={nowSearch}
-          onKeyDown={(v: any) => {
-            if (v.key === "Enter") {
-              setNowSearch(v.target.value);
-              console.log(v.target.value, "검색 시작");
-            }
-          }}
+    <div className={styles.project_wrapper}>
+      <div
+        className={styles.searchBar}
+        defaultValue={nowSearch}
+        onKeyDown={(v: any) => {
+          if (v.key === "Enter") {
+            setNowSearch(v.target.value);
+            setIsSearchEntered(true);
+            console.log(v.target.value, "검색 시작");
+          }
+        }}
+      >
+        <SearchBar
+          placeHolder={"과일 이름을 입력하고 Enter 키를 눌러주세요!"}
+        />
+      </div>
+      {!isSearchEntered && (
+        <Typography
+          fontWeight="bold"
+          // color={mainGreen}
+          sx={{ fontSize: 35, ml: "6rem" }}
         >
-          <SearchBar
-            placeHolder={"과일 이름을 입력하고 Enter 키를 눌러주세요!"}
-          />
-        </div>
-        {nowProjects &&
-          nowProjects.map((pjt: IPjtListItem, idx) => (
-            // <ProjectItem key={idx} title={pjt.title} />
-            <Grid item xs={6} sm={8} md={3} key={idx}>
-              <ProjectItem
-                pjtId={pjt.projectId}
-                pjtTitle={cutLongTitle(pjt.projectTitle, 12)}
-                farmerName={pjt.farmerName}
-                cardHeight={270}
-                imgHeight={170}
-                onClickDislike={() => {}}
-                onModalClose={() => {}}
+          인기 프로젝트
+        </Typography>
+      )}
+      <div className={styles.projectMainBox}>
+        <Grid container spacing={{ xs: 4, md: 5 }} className={styles.container}>
+          {nowProjects &&
+            nowProjects.map((pjt: IPjtListItem, idx) => (
+              // <ProjectItem key={idx} title={pjt.title} />
+              <Grid item xs={6} sm={8} md={3} key={idx}>
+                <ProjectItem
+                  pjtId={pjt.projectId}
+                  pjtTitle={cutLongTitle(pjt.projectTitle, 12)}
+                  farmerName={pjt.farmerName}
+                  cardHeight={270}
+                  imgHeight={170}
+                  onClickDislike={() => {}}
+                  onModalClose={() => {}}
 
-                // likeCnt={pjt.likeAmount}
-              />
-            </Grid>
-          ))}
-      </Grid>
-      <FundingRanking
-        allProjects={allProjects}
-        // sortedProjects={rankingList}
-        moveDetailHandler={moveDetailHandler}
-      />
+                  // likeCnt={pjt.likeAmount}
+                />
+              </Grid>
+            ))}
+        </Grid>
+        <FundingRanking
+          allProjects={allProjects}
+          // sortedProjects={rankingList}
+          moveDetailHandler={moveDetailHandler}
+        />
+      </div>
+      {/* <div className={styles.projectMainBox}> */}
     </div>
   );
 };

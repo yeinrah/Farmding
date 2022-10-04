@@ -88,10 +88,10 @@ export const fundingHandler = async (
     const fundId = fundingRes.events.Fund.returnValues.id;
     const caller = fundingRes.events.Fund.returnValues.caller;
     const amount = fundingRes.events.Fund.returnValues.amount;
-    Swal.fire({
-      icon: "success",
-      title: `${caller}가 ${amount}만큼 펀딩 완료했습니다`,
-    });
+    // Swal.fire({
+    //   icon: "success",
+    //   title: `${caller}가 ${amount}만큼 펀딩 완료했습니다`,
+    // });
     result = true;
     console.log(fundId, caller, amount);
 

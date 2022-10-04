@@ -21,8 +21,8 @@ const SearchBar = ({ placeHolder }: SearchBarProps) => {
     height: "60px",
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(6),
-      // margin: "auto",
-      width: "93%",
+      margin: "10px auto",
+      width: "50%",
     },
   }));
 
