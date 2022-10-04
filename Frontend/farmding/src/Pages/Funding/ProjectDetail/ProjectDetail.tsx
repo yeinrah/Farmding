@@ -21,6 +21,7 @@ import {
   dateToUnixConverter,
   getRemainingDays,
 } from "../../../Common/functions/DateConverter";
+import { CrowdFundingContract } from "../../../Web3Config";
 
 export interface IPjtDetail {
   category: number;
@@ -48,6 +49,7 @@ const ProjectDetail = () => {
   });
   const { pjtId } = useParams();
   const [isLoading, SetIsLoading] = useState(true);
+  const [isClaimOrNot, setIsClaimOrNot] = useState(false);
   const [currentAccount, setCurrentAccount] = useState("");
   const [pjtDetail, setPjtDetail] = useState({
     category: 0,
@@ -62,10 +64,21 @@ const ProjectDetail = () => {
     projectEndDate: "",
     // remainingDays: 0,
   });
-
+  const clickClaimBtn = () => {
+    claimHandler(pjtDetail.projectId);
+    // getClaim();
+    setIsClaimOrNot(true);
+  };
   const images = ["1_2", "1_3", "1_4", "1_5", "1_6"];
   const remainingDays = getRemainingDays(pjtDetail.projectEndDate);
+  const getClaim = async () => {
+    const claimOrNot = await CrowdFundingContract.methods
+      .getClaimOrNot(pjtId)
+      .call();
 
+    setIsClaimOrNot(claimOrNot);
+    console.log(pjtId, claimOrNot, "claim or not");
+  };
   useEffect(() => {
     (async function () {
       const accounts = await ethereum.request({ method: "eth_accounts" });
@@ -85,6 +98,10 @@ const ProjectDetail = () => {
       SetIsLoading(false);
     })();
   }, [isAccountChanged, pjtId, currentUserIdState]);
+
+  useEffect(() => {
+    getClaim();
+  }, [pjtId]);
 
   return (
     <>
@@ -109,32 +126,32 @@ const ProjectDetail = () => {
             </div>
             <div className={styles.project_detail_funding}>
               {currentAccount === adminAddress && (
-                <div>
+                <div className={styles.admin}>
                   <CustomBtn
                     customSx={{
-                      width: "200px",
+                      width: "180px",
                       height: "50px",
                       fontSize: "20px",
                       letterSpacing: 3,
                     }}
-                    bgColor={"mainGreen"}
+                    bgColor={"mainPink"}
                     onclick={() =>
                       launchingHandler(
                         pjtDetail.targetAmount,
                         pjtDetail.projectEndDate
                       )
                     }
-                    btnWord={"런칭"}
+                    btnWord={`${pjtDetail.projectId}번 런칭`}
                   />
                   <CustomBtn
                     customSx={{
-                      width: "200px",
+                      width: "180px",
                       height: "50px",
                       fontSize: "20px",
                       letterSpacing: 3,
                     }}
-                    bgColor={"mainGreen"}
-                    onclick={() => claimHandler(pjtDetail.projectId)}
+                    bgColor={"mainPink"}
+                    onclick={clickClaimBtn}
                     // btnWord={"다음 단계로"}
                     btnWord={"claim"}
                   />
@@ -148,6 +165,7 @@ const ProjectDetail = () => {
                 funders={pjtDetail.funderCount}
                 remainingDays={remainingDays}
                 title={pjtDetail.projectTitle}
+                isClaimed={isClaimOrNot}
               />
             </div>
           </div>
