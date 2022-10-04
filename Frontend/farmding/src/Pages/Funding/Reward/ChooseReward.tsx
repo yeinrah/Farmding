@@ -100,6 +100,7 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
         await getMyInfo(accounts[0])
       ).data.user.nickname;
       await registerNFT(
+        // pjtId,
         1,
         minting.events.getNFTData.returnValues[0],
         nowNickName,

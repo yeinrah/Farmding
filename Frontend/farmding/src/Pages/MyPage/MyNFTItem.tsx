@@ -3,7 +3,7 @@ import { Avatar, FormControlLabel, Modal, Switch } from "@mui/material";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import UpdateNFTPrice from "./UpdateNFTPrice";
 import { useEffect, useState } from "react";
-import { nftContract } from "../../Common/ABI/abi";
+import { NFTAddress, nftContract } from "../../Common/ABI/abi";
 import { changeOnSale } from "../../Common/API/NFTApi";
 import { Sell } from "@mui/icons-material";
 import Spinner from "../../Common/UI/Spinner/Spinner";
@@ -32,7 +32,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
     const accounts = await ethereum.request({ method: "eth_accounts" });
     try {
       await nftContract.methods
-        .approve("0xaDCD62A9730d9A3D599752c10ad8e2dD75f18D9b", MyNFTInfo.count)
+        .approve(NFTAddress, MyNFTInfo.count)
         .send({ from: accounts[0] });
       await nftContract.methods
         .createSell(MyNFTInfo.count, MyNFTInfo.currentPrice)

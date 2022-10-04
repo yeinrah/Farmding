@@ -2,7 +2,11 @@ import styles from "./BuyingNFT.module.scss";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import { modalStyle } from "../../Common/data/Style";
-import { nftContract, ssafyTokenContract } from "../../Common/ABI/abi";
+import {
+  NFTAddress,
+  nftContract,
+  ssafyTokenContract,
+} from "../../Common/ABI/abi";
 import { changeOnSale, updateNFTOwner } from "../../Common/API/NFTApi";
 import { Console } from "console";
 import { getMyInfo } from "../../Common/API/userApi";
@@ -70,10 +74,7 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
                   method: "eth_requestAccounts",
                 });
                 const a = await ssafyTokenContract.methods
-                  .approve(
-                    "0xaDCD62A9730d9A3D599752c10ad8e2dD75f18D9b",
-                    NFTInfo.currentPrice
-                  )
+                  .approve(NFTAddress, NFTInfo.currentPrice)
                   .send({ from: accounts[0] });
                 console.log(a);
                 console.log(NFTInfo);
