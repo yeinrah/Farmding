@@ -41,8 +41,11 @@ const FundingProjectDetail = ({
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const fundingAchieveRate = parseFloat(
-    (nowFundedAmount / targetAmount).toFixed(2)
+  const fundingAchieveRate = Math.round(
+    parseFloat(
+      // (nowFundedAmount / targetAmount).toFixed(2)
+      (nowFundedAmount / targetAmount).toString()
+    ) * 100
   );
   const chooseRewardModalHandler = () => {
     handleOpen();
@@ -127,7 +130,7 @@ const FundingProjectDetail = ({
       </div>
       <div className={styles.funding_amount}>
         <Typography variant="h3" gutterBottom fontWeight="bold">
-          {fundingAchieveRate * 100}
+          {fundingAchieveRate}
         </Typography>
         <Typography
           variant="h5"
