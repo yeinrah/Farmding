@@ -20,7 +20,7 @@ public interface NftRepository extends JpaRepository<Nft, String> {
 	@Query(value = "select * from nft where is_on_sale = ?1", nativeQuery = true)
 	List<Nft> findAllByIsOnSale(int isOnSale);
 	
-	Nft findOneByNftId(int nftId);
+	Nft findOneByCount(int count);
 	@Modifying
 	@Query(value = "update nft set current_price =?1 where count = ?2", nativeQuery = true)
 	void updateCurrentPrice(double currentPrice, int count);
