@@ -30,17 +30,7 @@ export interface IMyPjtList {
   deliveryDate: string;
 }
 const MyProjectList = () => {
-  const [myProjects, setMyProjects] = useState([
-    {
-      projectId: 0,
-      projectTitle: "",
-      allOfFundingFee: 0,
-      rewardName: "",
-      amount: 0,
-      deliveryFee: 0,
-      deliveryDate: "",
-    },
-  ]);
+  const [myProjects, setMyProjects] = useState<IMyPjtList[]>([]);
 
   const [currentUserId, setCurrentUserId] =
     useRecoilState<number>(currentUserIdState);
