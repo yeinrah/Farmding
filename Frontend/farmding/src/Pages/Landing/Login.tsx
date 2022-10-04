@@ -115,22 +115,6 @@ const Login = () => {
     }
   };
 
-  //   const login = useMutation<any, Error>(
-  //     "postPurchase",
-  //     async () => {
-  //       return postLogin(account)
-  //     },
-  //     {
-  //       onSuccess: (res) => {
-  //       sessionStorage.setItem("userId", res.userId)
-  //       sessionStorage.setItem("userNickname", res.userNick)
-  //       navigate("/")
-  //       window.location.reload();
-  //     },
-  //     onError: (err: any) => {
-  //     },
-  //   }
-  // );
   const onclickAlert = () => {
     alert(
       "저희 사이트에는 개인지갑을 편리하고 안전하게 관리할 수 있는 구글 확장프로그램인 메타마스크를 이용하여 로그인 합니다.\n" +
@@ -140,18 +124,14 @@ const Login = () => {
 
   return (
     <div className={styles.LoginMain}>
-      {/* <div style={{backgroundImage:`url("/Assets/login_background.png")`}}className={styles.back}> 
-    </div>     */}
       <img
-        src={process.env.PUBLIC_URL + "/Assets/login_background.png"}
+        // src={process.env.PUBLIC_URL + "/Assets/login_background.png"}
+        src={"/Assets/login_background.png"}
         className={styles.back}
       />
       <div className={styles.LoginMenu}>
         <div className={styles.p}>
-          <img
-            src={process.env.PUBLIC_URL + "/Assets/farmer_removebg.png"}
-            className={styles.farmer}
-          />
+          <img src={"/Assets/farmer_removebg.png"} className={styles.farmer} />
           <div className={styles.farmding}>FARMDING</div>
         </div>
         {/* {account && <p>연결된 지갑 주소 : {account}</p>} */}
