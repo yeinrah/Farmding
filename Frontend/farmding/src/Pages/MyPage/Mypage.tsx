@@ -242,7 +242,7 @@ const MyPage = () => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ width: "100%" }}>
+        <Box sx={{ width: "100%", mt: 5 }}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -266,9 +266,9 @@ const MyPage = () => {
           </Tabs>
         </Box>
         {value === "one" && (
-          <>
+          <div className={styles.NFT_box}>
             <MyNFT nfts={NFTInfo} getInfoNFT={getInfoNFT} />
-          </>
+          </div>
         )}
         {value === "two" && (
           <>
