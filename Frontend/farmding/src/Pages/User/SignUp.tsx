@@ -1,9 +1,9 @@
 import { Box, Button, Modal, TextField, Typography } from "@mui/material";
+import { url } from "inspector";
 import { useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate } from "react-router-dom";
 import { userNicknameExistCheck, userSignUp } from "../../Common/API/userApi";
-
 const SignUp = () => {
   const [openPostcode, setOpenPostcode] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
@@ -53,9 +53,10 @@ const SignUp = () => {
     }
   };
   return (
-    <Box sx={{display: "flex"}}>
-      <img src={process.env.PUBLIC_URL+"/Assets/login_background1.png"}/>
-    <Box sx={{ display: "flex", justifyContent: "center" }}>
+    <Box sx={{backgroundImage: `url("/Assets/signup_background.png")`, backgroundSize:`1000px`, height:`100vh`}}>
+    {/* url(${process.env.PUBLIC_URL+background})` */}
+      {/* <img src={process.env.PUBLIC_URL+"/Assets/login_background.png"}/> */}
+    <Box sx={{ display: "flex", justifyContent: "center"}}>
       <Modal
         open={open}
         onClose={handleClose}
