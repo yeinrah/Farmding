@@ -245,11 +245,9 @@ project_end_date, farmer_name, farmer_wallet_address, target_amount,
  9,"2022-05-27 00:00:00", "2022-10-19", "수박수농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 20, 0, 0, "open", 0, 0);
  
 
-
-
-
 insert into user (nickname, wallet_address, phone_number, profile_image, address) 
 values('Harry','0x4323aaaa222222aaaa3333aaaa2222aa','01012345678',0,'서울시 강남구');
+
 
 
 insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
@@ -273,5 +271,11 @@ insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, de
  insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
  (10,"5kg",2, 100, 1, "2022-10-23");
  
+ 
+ insert into funding (user_id, project_id, reward_id, funding_amount)
+value (1,9,1,100);
  SELECT * FROM user;
+ SELECT * FROM funding;
 SELECT * FROM project;
+ SELECT * FROM reward;
+select * from nft;
