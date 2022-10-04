@@ -11,7 +11,7 @@ import { changeOnSale, updateNFTOwner } from "../../Common/API/NFTApi";
 import { Console } from "console";
 import { getMyInfo } from "../../Common/API/userApi";
 import Spinner from "../../Common/UI/Spinner/Spinner";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 interface IBuyingNFT {
   NFTInfo: NFTInfo;
@@ -31,6 +31,21 @@ interface NFTInfo {
 const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
   const { ethereum } = window;
   const [isLoading, setIsLoading] = useState(false);
+  const [image, setImage] = useState(0);
+  const [myProfile, setMyProfile] = useState<any>([]);
+  const loadUser = async () => {
+    const account = NFTInfo.ownerWalletAddress;
+    const result: any = await getMyInfo(account);
+    setImage(result.data.user.profileImage);
+    let temp: any[] = [{}];
+    for (let nftImage of result.data.nft) {
+      temp.push(nftImage.nftAddress);
+    }
+    setMyProfile(temp);
+  };
+  useEffect(() => {
+    loadUser();
+  }, []);
   return (
     <>
       {isLoading && <Spinner />}
@@ -43,7 +58,13 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
         }}
       >
         <Box sx={{ display: "flex" }}>
-          <Avatar />
+          <Avatar
+            src={
+              image === 0
+                ? process.env.PUBLIC_URL + "/Assets/defaultProfile.png"
+                : `https://${myProfile[image]}`
+            }
+          />
           <Typography
             id="modal-title"
             variant="h5"
