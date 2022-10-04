@@ -26,6 +26,7 @@ import { isAccountChangedState } from "../../Recoil/atoms/account";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../Recoil/atoms/auth";
 import Spinner from "../../Common/UI/Spinner/Spinner";
+import { mainGreen } from "../../Common/data/Style";
 
 // interface UserInfo {
 //   userId: number;
@@ -213,20 +214,20 @@ const MyPage = () => {
             onChange={handleChange}
             textColor="inherit"
             TabIndicatorProps={{
-              sx: { backgroundColor: "#5DAE8B" },
+              sx: { backgroundColor: mainGreen },
             }}
-            aria-label="secondary tabs example"
+            // aria-label="secondary tabs example"
             centered
           >
             <Tab
               value="one"
               label="나의 NFT"
-              sx={{ color: "#5DAE8B", width: "50%" }}
+              sx={{ color: mainGreen, width: "50%" }}
             ></Tab>
             <Tab
               value="two"
-              label="내가 후원한 프로젝트"
-              sx={{ color: "#5DAE8B", width: "50%" }}
+              label="내가 펀딩한 프로젝트"
+              sx={{ color: mainGreen, width: "50%" }}
             />
           </Tabs>
         </Box>

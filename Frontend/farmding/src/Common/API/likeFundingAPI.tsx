@@ -24,7 +24,7 @@ export const fetchLikeUsers = async (pjtId: number) => {
     .get(`/funding/detail/UserLikeOfProject/${pjtId}`)
     .then((res) => {
       result = res.data;
-      console.log("좋아요 누른 유저들 fetch", result);
+      // console.log("좋아요 누른 유저들 fetch", result);
     })
     .catch((err) => {
       result = err;
