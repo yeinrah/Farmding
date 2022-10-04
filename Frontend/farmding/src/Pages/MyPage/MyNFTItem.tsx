@@ -105,6 +105,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
           checked={sellOn}
           onClick={async () => {
             setIsLoading(true);
+            console.log(sellOn, MyNFTInfo.count);
             try {
               getInfoNFT();
               if (!sellOn) {

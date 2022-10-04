@@ -38,6 +38,7 @@ const NFT = () => {
   const loadSellingNFTList = async () => {
     const result = await sellingNFTList();
     setNfts(result.data);
+    console.log(result.data);
   };
   useEffect(() => {
     loadSellingNFTList();
