@@ -222,7 +222,7 @@ project_end_date, farmer_name, farmer_wallet_address, target_amount,
  current_amount, project_period, 
  funding_status, like_amount, funder_count)
  value ("달콤한 샤인머스캣을 가장 먼저 만나보세요.", "과일의 왕, 포도가 돌아왔다!! 싸피농장은 27년 간 포도만을 고집해 온 포도계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 포도를 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 포도 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 포도! 저희 포도로는 포도쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 포도 많이 사랑해주세요!", 
- 7,"2022-09-27 00:00:00", "2022-11-23", "포동농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 30, 0, 0, "open", 0, 0);
+ 7,"2022-09-27 00:00:00", "2022-11-23", "예인농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 30, 0, 0, "open", 0, 0);
 
 
 -- 9. 오렌지
@@ -242,7 +242,7 @@ project_end_date, farmer_name, farmer_wallet_address, target_amount,
  current_amount, project_period, 
  funding_status, like_amount, funder_count)
  value ("여름엔 꼭 먹어줘야 하는 수박", "과일의 왕, 수박이 돌아왔다!! 싸피농장은 27년 간 수박만을 고집해 온 수박계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 수박을 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 수박 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 수박! 저희 수박로는 수박쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 수박 많이 사랑해주세요!", 
- 9,"2022-05-27 00:00:00", "2022-10-19", "수박수농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 20, 0, 0, "open", 0, 0);
+ 9,"2022-05-27 00:00:00", "2022-10-19", "수박농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 20, 0, 0, "open", 0, 0);
 
 insert into user (nickname, wallet_address, phone_number, profile_image, address) 
 values('Harry','0x4323aaaa222222aaaa3333aaaa2222aa','01012345678',0,'서울시 강남구');
