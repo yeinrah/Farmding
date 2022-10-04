@@ -54,16 +54,19 @@ TitleProjectDetailProps) => {
     // setIsLoading(true);
     (async () => {
       const likeUsersList = await fetchLikeUsers(projtId);
-      console.log(likeUsersList, "현재유저");
-      for (const eachId of likeUsersList) {
-        if (eachId === currentUserId) {
-          setIsLiked(true);
-        } else {
-          setIsLiked(false);
+      console.log(likeUsersList, projtId, "현재유저");
+      if (likeUsersList.length === 0) {
+        setIsLiked(false);
+      } else {
+        for (const eachId of likeUsersList) {
+          if (eachId === currentUserId) {
+            setIsLiked(true);
+          } else {
+            setIsLiked(false);
+          }
         }
       }
-      // const likeOrNot = getLikeOrNot(currentUserId, likeUsersList);
-      // likeOrNot ? setIsLiked(true) : setIsLiked(false);
+
       const projtDetail: any = await fetchProjectDetail(projtId);
       setLikeCnt(projtDetail.likeAmount);
       // setIsLikeChange(false);

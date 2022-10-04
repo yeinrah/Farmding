@@ -94,6 +94,7 @@ export const fetchMyFundings = async (userId: number) => {
       console.log(err);
       console.log("내가 펀딩한 프로젝트 fetch 에러");
     });
+  return result;
 };
 export const fetchAllProjects = async () => {
   let result = null;
