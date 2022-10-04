@@ -165,7 +165,7 @@ const Login = () => {
         <Logo src="/essets/images/metamask_logo.png" alt="Logo" />
         {onboardButtonText}
       </Button> */}
-        <div className={styles.p}>
+        <div className={styles.btn}>
           <CustomBtn
             customSx={{
               width: "300px",
@@ -178,12 +178,12 @@ const Login = () => {
             // btnWord={btnName}
             btnWord={onboardButtonText}
           />
-          {/* <div className={styles.help}>
+          <div className={styles.help}>
             <img
-            src={process.env.PUBLIC_URL + "/Assets/helpButton.png"}
-            onClick={onclickAlert}
+              src={process.env.PUBLIC_URL + "/Assets/helpButton.png"}
+              onClick={onclickAlert}
             />
-          </div> */}
+          </div>
         </div>
         {/* {isMetaMaskInstalled() ? (
           <h4 className={styles.guide}>지갑에 연결하세요</h4>

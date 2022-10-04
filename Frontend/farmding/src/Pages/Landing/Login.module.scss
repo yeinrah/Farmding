@@ -18,7 +18,7 @@
 .farmding {
   text-align: center;
   font-size: 40px;
-  color: beige;
+  color: white;
   margin: 10px 0 30px 0;
 }
 .back {
@@ -27,17 +27,20 @@
   opacity: 80%;
   //   background-size: 3000px;
 }
-// .help {
-//   margin-top: 10px;
-//   img {
-//     width: 40px;
-//     height: 40px;
-//     cursor: pointer;
-//   }
-//   //   margin: 30px 0 0 10px;
-//   //   margin-left: 5%;
-// }
 .farmer {
   width: 30vh;
   height: 20vh;
+}
+.btn {
+  display: flex;
+  justify-content: center;
+}
+.help {
+  margin: auto 0 auto 10px;
+  img {
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    margin-left: 3%;
+  }
 }
