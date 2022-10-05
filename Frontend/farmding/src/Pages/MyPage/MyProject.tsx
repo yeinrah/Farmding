@@ -55,7 +55,7 @@ const MyProject = ({
         sx={{
           display: "flex",
           justifyContent: "center",
-          margin: "2rem 2rem",
+          margin: "2rem 0",
           width: "90%",
         }}
       >

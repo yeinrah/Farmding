@@ -182,11 +182,23 @@ const MyPage = () => {
       </Modal>
       <Box
         sx={{
-          width: "60%",
-          margin: "5rem auto",
+          width: "100%",
+          margin: "0 auto",
+          padding: "5rem 0 2rem 0",
+          // backgroundColor: "beige",
         }}
       >
-        <Box sx={{ display: "flex", width: "100%", overflow: "auto" }}>
+        <Box
+          sx={{
+            display: "flex",
+            width: "60%",
+            overflow: "auto",
+            margin: "auto",
+            // border: "2px solid ",
+            // borderRadius: "20px",
+            // padding: "20px 50px",
+          }}
+        >
           <Avatar
             sx={{
               width: "10rem",
@@ -217,7 +229,7 @@ const MyPage = () => {
             <Box sx={{ display: "flex", margin: "0.8rem 0" }}>
               <Typography
                 sx={{
-                  color: "#5DAE8B",
+                  // color: "#5DAE8B",
                   fontSize: "2.5rem",
                   fontWeight: "bold",
                 }}
@@ -225,7 +237,11 @@ const MyPage = () => {
                 {userInfo.nickname}
               </Typography>
               <EditIcon
-                sx={{ margin: "auto 1rem", cursor: "pointer" }}
+                sx={{
+                  margin: "auto 1rem",
+                  cursor: "pointer",
+                  color: "#aaaaaa",
+                }}
                 onClick={() => {
                   handleOpen();
                   handleNickOpen();
@@ -236,12 +252,12 @@ const MyPage = () => {
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
                 sx={{
-                  color: "#5DAE8B",
+                  // color: "#5DAE8B",
                   fontWeight: "bold",
                   margin: "auto 0",
                   fontSize: "18px",
                 }}
-              >{`배송지주소 : ${userInfo.address}`}</Typography>
+              >{`배송지 : ${userInfo.address}`}</Typography>
               <CustomBtn
                 customSx={{
                   width: "130px",
@@ -256,50 +272,6 @@ const MyPage = () => {
             </Box>
           </Box>
         </Box>
-        <Box sx={{ width: "100%", mt: 5 }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            textColor="inherit"
-            TabIndicatorProps={{
-              sx: { backgroundColor: mainGreen },
-            }}
-            // aria-label="secondary tabs example"
-            centered
-          >
-            <Tab
-              value="one"
-              label="나의 NFT"
-              sx={{
-                color: mainGreen,
-                width: "50%",
-                height: "70px",
-                fontSize: "20px",
-              }}
-            ></Tab>
-            <Tab
-              value="two"
-              label="내가 펀딩한 프로젝트"
-              sx={{
-                color: mainGreen,
-                width: "50%",
-                height: "70px",
-                fontSize: "20px",
-              }}
-            />
-          </Tabs>
-        </Box>
-        {value === "one" && (
-          <div className={styles.NFT_box}>
-            <MyNFT nfts={NFTInfo} getInfoNFT={getInfoNFT} />
-          </div>
-        )}
-        {value === "two" && (
-          <>
-            <MyProjectList />
-            {/* <MyProject /> */}
-          </>
-        )}
         {/* <Button
           sx={{
             display: "flex",
@@ -319,6 +291,49 @@ const MyPage = () => {
           회원 탈퇴
         </Button> */}
       </Box>
+      <Box sx={{ width: "100%", mt: 3, mx: "auto" }}>
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          textColor="inherit"
+          TabIndicatorProps={{
+            sx: { backgroundColor: mainGreen },
+          }}
+          centered
+        >
+          <Tab
+            value="one"
+            label="나의 NFT"
+            sx={{
+              color: mainGreen,
+              width: "100%",
+              height: "70px",
+              fontSize: "20px",
+            }}
+          ></Tab>
+          <Tab
+            value="two"
+            label="내가 펀딩한 프로젝트"
+            sx={{
+              color: mainGreen,
+              width: "100%",
+              height: "70px",
+              fontSize: "20px",
+            }}
+          />
+        </Tabs>
+      </Box>
+      {value === "one" && (
+        <div className={styles.tab_box}>
+          <MyNFT nfts={NFTInfo} getInfoNFT={getInfoNFT} />
+        </div>
+      )}
+      {value === "two" && (
+        <div className={styles.tab_box}>
+          <MyProjectList />
+          {/* <MyProject /> */}
+        </div>
+      )}
     </>
   );
 };
