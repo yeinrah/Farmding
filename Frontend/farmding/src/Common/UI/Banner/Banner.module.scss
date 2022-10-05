@@ -25,29 +25,31 @@
     text-align: center;
     // font-size: x-large;
 
-    h1 {
+    div {
       // color: #000;
       color: beige;
       text-shadow: 2px 2px #827f7f;
-      letter-spacing: 2px;
-      font-size: 50px;
-      margin-bottom: 15px;
+      letter-spacing: 4px;
+      font-size: 55px;
+      margin: 45px 0 5px 0;
+      // margin-bottom: 15px;
     }
 
-    h4 {
+    h3 {
       margin-top: 0px;
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 700;
       letter-spacing: 2px;
       color: beige;
     }
     a {
       text-decoration: none;
-      color: beige;
+      margin-top: 10px;
+      color: rgb(201, 201, 201);
       &:hover {
         // transform: translateY(-7px);
         transition: 0.3s;
-        color: #5dae8b;
+        color: beige;
       }
     }
   }

@@ -106,7 +106,7 @@ const NFT = () => {
       <Banner imgSrc={"/Assets/farmerNFTs.png"} isMain={false} />
       <div className={styles.NFTsBox}>
         <div className={styles.topBar}>
-          <span className={styles.title}>NFT 목록</span>
+          <span className={styles.title}>판매중인 NFT 목록</span>
           <FormControl sx={{ m: 5, minWidth: 125 }} size="small">
             <Select
               value={itemFilter}

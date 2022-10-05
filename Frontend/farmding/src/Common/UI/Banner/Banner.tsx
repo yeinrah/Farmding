@@ -10,8 +10,7 @@ interface BannerProps {
   // eachFunding: eachFunding;
 }
 
-const Banner = ({ imgSrc, isMain}: BannerProps) => {
-  
+const Banner = ({ imgSrc, isMain }: BannerProps) => {
   return (
     <>
       <div className={styles.wrap}>
@@ -20,8 +19,8 @@ const Banner = ({ imgSrc, isMain}: BannerProps) => {
         </div>
         {isMain && (
           <div className={styles.banner_txt}>
-            <h1>Farmding</h1>
-            <h4>농가와 소비자가 상생하는 곳</h4>
+            <div>FARMDING</div>
+            <h3>농가와 소비자가 상생하는 곳</h3>
             <a href="/tutorial">더 알아보기</a>
           </div>
         )}

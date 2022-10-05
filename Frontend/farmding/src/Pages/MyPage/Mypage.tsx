@@ -216,7 +216,11 @@ const MyPage = () => {
           <Box sx={{ width: "100%", marginLeft: "2rem" }}>
             <Box sx={{ display: "flex", margin: "0.8rem 0" }}>
               <Typography
-                sx={{ color: "#5DAE8B", fontSize: "2rem", fontWeight: "bold" }}
+                sx={{
+                  color: "#5DAE8B",
+                  fontSize: "2.5rem",
+                  fontWeight: "bold",
+                }}
               >
                 {userInfo.nickname}
               </Typography>
@@ -231,7 +235,12 @@ const MyPage = () => {
             <Typography sx={{ margin: "1rem 0" }}>{userInfo.userPr}</Typography>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography
-                sx={{ color: "#5DAE8B", fontWeight: "bold", margin: "auto 0" }}
+                sx={{
+                  color: "#5DAE8B",
+                  fontWeight: "bold",
+                  margin: "auto 0",
+                  fontSize: "18px",
+                }}
               >{`배송지주소 : ${userInfo.address}`}</Typography>
               <CustomBtn
                 customSx={{
@@ -261,12 +270,22 @@ const MyPage = () => {
             <Tab
               value="one"
               label="나의 NFT"
-              sx={{ color: mainGreen, width: "50%" }}
+              sx={{
+                color: mainGreen,
+                width: "50%",
+                height: "80px",
+                fontSize: "20px",
+              }}
             ></Tab>
             <Tab
               value="two"
               label="내가 펀딩한 프로젝트"
-              sx={{ color: mainGreen, width: "50%" }}
+              sx={{
+                color: mainGreen,
+                width: "50%",
+                height: "80px",
+                fontSize: "20px",
+              }}
             />
           </Tabs>
         </Box>
