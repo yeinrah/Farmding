@@ -1,7 +1,7 @@
 import styles from "./BuyingNFT.module.scss";
 import { Avatar, Box, Button, Typography } from "@mui/material";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
-import { modalStyle } from "../../Common/data/Style";
+import { mainGreen, modalStyle } from "../../Common/data/Style";
 import {
   NFTAddress,
   nftContract,
@@ -14,6 +14,7 @@ import Spinner from "../../Common/UI/Spinner/Spinner";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
+import PaidIcon from "@mui/icons-material/Paid";
 interface IBuyingNFT {
   NFTInfo: NFTInfo;
   onClose: () => void;
@@ -116,7 +117,8 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
           className={styles.NFTimg}
         />
         <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
-          <LocalAtmIcon sx={{ fontSize: 40, color: "#868686" }} />
+          {/* <LocalAtmIcon sx={{ fontSize: 40, color: "#868686" }} /> */}
+          <PaidIcon sx={{ fontSize: 40, color: mainGreen }} />
           <span className={styles.nftPrice}>{NFTInfo.currentPrice}</span>
         </Box>
         <div className={styles.btns}>

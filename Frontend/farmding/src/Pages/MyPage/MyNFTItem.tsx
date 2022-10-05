@@ -7,6 +7,10 @@ import { NFTAddress, nftContract } from "../../Common/ABI/abi";
 import { changeOnSale } from "../../Common/API/NFTApi";
 import { Sell } from "@mui/icons-material";
 import Spinner from "../../Common/UI/Spinner/Spinner";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import PaidIcon from "@mui/icons-material/Paid";
+import { mainGreen } from "../../Common/data/Style";
+import { Box } from "@mui/system";
 interface MyNFTInfo {
   nftId: string;
   currentPrice: number;
@@ -92,41 +96,64 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
               handleOpen();
             }}
           >
-            <LocalAtmIcon />
+            {/* <AttachMoneyIcon /> */}
+            <PaidIcon sx={{ color: mainGreen }} />
             <span className={styles.nftPrice}>{price}</span>
           </div>
         </div>
-        <FormControlLabel
-          sx={{ display: "flex", justifyContent: "center" }}
-          value="top"
-          control={<Switch color="success" />}
-          label=""
-          labelPlacement="top"
-          checked={sellOn}
-          onClick={async () => {
-            setIsLoading(true);
-            console.log(sellOn, MyNFTInfo.count);
-            try {
-              getInfoNFT();
-              if (!sellOn) {
-                if (await changeSell()) {
-                  await changeOnSale(MyNFTInfo.count);
-                  setSellOn(!sellOn);
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-around",
+            paddingLeft: "30px",
+          }}
+        >
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+            }}
+          >
+            판매 등록
+          </Box>
+          <FormControlLabel
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              paddingLeft: "30px",
+              width: "30px",
+            }}
+            value="top"
+            control={<Switch color="success" />}
+            label=""
+            labelPlacement="top"
+            checked={sellOn}
+            onClick={async () => {
+              setIsLoading(true);
+              console.log(sellOn, MyNFTInfo.count);
+              try {
+                getInfoNFT();
+                if (!sellOn) {
+                  if (await changeSell()) {
+                    await changeOnSale(MyNFTInfo.count);
+                    setSellOn(!sellOn);
+                  }
+                  setIsLoading(false);
+                } else {
+                  if (await cancleSell()) {
+                    await changeOnSale(MyNFTInfo.count);
+                    setSellOn(!sellOn);
+                  }
+                  setIsLoading(false);
                 }
-                setIsLoading(false);
-              } else {
-                if (await cancleSell()) {
-                  await changeOnSale(MyNFTInfo.count);
-                  setSellOn(!sellOn);
-                }
+                // setIsLoading(false);
+              } catch {
                 setIsLoading(false);
               }
-              // setIsLoading(false);
-            } catch {
-              setIsLoading(false);
-            }
-          }}
-        />
+            }}
+          />
+        </Box>
       </div>
     </>
   );

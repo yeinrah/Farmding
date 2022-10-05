@@ -3,6 +3,9 @@ import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import styles from "./NFTItem.module.scss";
 import profileImages from "../../Assets/profile/profileImages";
 import { useEffect, useState } from "react";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import PaidIcon from "@mui/icons-material/Paid";
+import { mainGreen } from "../../Common/data/Style";
 interface NFTInfo {
   nftId: number;
   fundingId: number;
@@ -55,7 +58,8 @@ const NFTItem = ({ NFTInfo, getMyInfo }: NFTitemProps) => {
       <div className={styles.nftInfo}>
         <span className={styles.nftName}>{`farmer# ${NFTInfo.count}`}</span>
         <div className={styles.priceBlock}>
-          <LocalAtmIcon />
+          {/* <AttachMoneyIcon /> */}
+          {<PaidIcon sx={{ color: mainGreen }} />}
           <span className={styles.nftPrice}>{NFTInfo.currentPrice}</span>
         </div>
       </div>
