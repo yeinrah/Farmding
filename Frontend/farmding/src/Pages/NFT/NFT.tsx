@@ -4,6 +4,7 @@ import SearchBar from "../../Common/UI/SearchBar/SearchBar";
 import NFTItem from "./NFTItem";
 import { modalStyle } from "../../Common/data/Style";
 import {
+  Button,
   FormControl,
   FormHelperText,
   MenuItem,
@@ -17,6 +18,7 @@ import { getMyInfo } from "../../Common/API/userApi";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { loginState } from "../../Recoil/atoms/auth";
+import { useInView } from "react-intersection-observer";
 interface NftInfo {
   nftId: number;
   currentPrice: number;
@@ -28,6 +30,8 @@ const NFT = () => {
   const [nfts, setNfts] = useState([]);
   const [itemFilter, setItemFilter] = useState("");
   const [isLogin, setIsLogin] = useRecoilState<boolean>(loginState);
+  const [ref, inView] = useInView({ initialInView: false });
+  const [max, setMax] = useState<number>(8);
   const { ethereum } = window;
   const navigate = useNavigate();
   const handleChange = (event: any) => {
@@ -37,13 +41,19 @@ const NFT = () => {
   const handleClose = () => setOpen(false);
   const loadSellingNFTList = async () => {
     const result = await sellingNFTList();
-    setNfts(result.data);
-    console.log(result.data);
+    setNfts(result.data.slice(0, max));
+    console.log(result.data.slice(0, max));
   };
   useEffect(() => {
     loadSellingNFTList();
     // loadUserImage();
   }, []);
+  useEffect(() => {
+    setMax(max + 8);
+  }, [inView]);
+  useEffect(() => {
+    loadSellingNFTList();
+  }, [max]);
   const isRegisteredUser = async () => {
     const accounts = await ethereum.request({
       method: "eth_requestAccounts",
@@ -134,7 +144,11 @@ const NFT = () => {
                 showModal(index);
               }}
             >
-              <NFTItem NFTInfo={item} getMyInfo={getMyInfo} />
+              {index !== max - 1 && (
+                <NFTItem NFTInfo={item} getMyInfo={getMyInfo} />
+              )}
+              {index === max - 1 && <Button ref={ref}></Button>}
+              {/* {index === max-1 && <NFTItem NFTInfo={item} getMyInfo={getMyInfo} />} */}
             </div>
           );
         })}
