@@ -208,7 +208,8 @@ const MyPage = () => {
               right: "40px",
               top: "110px",
               fontSize: "45px",
-              color: "gray",
+              // color: "gray",
+              color: "#aaaaaa",
               cursor: "pointer",
             }}
           />

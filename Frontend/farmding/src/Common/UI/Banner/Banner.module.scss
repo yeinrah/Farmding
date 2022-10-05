@@ -11,9 +11,10 @@
     background-repeat: no-repeat;
     img {
       width: 100%;
-      height: 380px;
+      height: 350px;
       background-size: cover;
-      // opacity: 80%;
+      // filter: grayscale(0.7);
+      // opacity: 70%;
     }
   }
   .banner_txt {

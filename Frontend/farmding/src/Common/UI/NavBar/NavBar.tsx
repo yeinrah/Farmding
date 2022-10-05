@@ -171,9 +171,12 @@ const NavBar = () => {
                   textDecoration: "none",
                   ml: "15px",
                   my: "auto",
+                  "&:hover": {
+                    color: "#ec2c48",
+                  },
                 }}
               >
-                NFT
+                NFTs
               </Typography>
             </div>
             <div>
