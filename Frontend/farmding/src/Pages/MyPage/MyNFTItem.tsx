@@ -113,6 +113,7 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
               display: "flex",
               justifyContent: "center",
               flexDirection: "column",
+              color: sellOn ? "#388e3c" : "gray",
             }}
           >
             판매 등록

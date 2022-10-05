@@ -273,7 +273,7 @@ const MyPage = () => {
               sx={{
                 color: mainGreen,
                 width: "50%",
-                height: "80px",
+                height: "70px",
                 fontSize: "20px",
               }}
             ></Tab>
@@ -283,7 +283,7 @@ const MyPage = () => {
               sx={{
                 color: mainGreen,
                 width: "50%",
-                height: "80px",
+                height: "70px",
                 fontSize: "20px",
               }}
             />
