@@ -13,6 +13,7 @@ import { getMyInfo } from "../../Common/API/userApi";
 import Spinner from "../../Common/UI/Spinner/Spinner";
 import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import CustomBtn from "../../Common/UI/CustomBtn/CustomBtn";
 interface IBuyingNFT {
   NFTInfo: NFTInfo;
   onClose: () => void;
@@ -43,6 +44,40 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
     }
     setMyProfile(temp);
   };
+  const onPurchaseClick = async () => {
+    setIsLoading(true);
+    try {
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      const a = await ssafyTokenContract.methods
+        .approve(NFTAddress, NFTInfo.currentPrice)
+        .send({ from: accounts[0] });
+      console.log(a);
+      console.log(NFTInfo);
+      const myInfo = await getMyInfo(accounts[0]);
+      console.log(myInfo.data.user.nickname);
+      const b = await nftContract.methods
+        .purchase(NFTInfo.count)
+        .send({ from: accounts[0] });
+      console.log(b);
+      await updateNFTOwner(
+        NFTInfo.count,
+        myInfo.data.user.nickname,
+        accounts[0]
+      );
+      await changeOnSale(NFTInfo.count);
+      onClose();
+      Swal.fire({
+        icon: "success",
+        title: "구매 완료",
+      });
+      loadSellingNFTList();
+      setIsLoading(false);
+    } catch {
+      setIsLoading(false);
+    }
+  };
   useEffect(() => {
     loadUser();
   }, []);
@@ -52,8 +87,8 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
       <Box
         sx={{
           ...modalStyle,
-          width: 500,
-          height: 500,
+          width: 400,
+          height: 400,
           overflow: "auto",
         }}
       >
@@ -67,7 +102,7 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
           />
           <Typography
             id="modal-title"
-            variant="h5"
+            variant="h6"
             component="h2"
             fontWeight="bold"
             sx={{ mb: 4, marginLeft: "13px" }}
@@ -80,61 +115,34 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
           alt="ntfImage"
           className={styles.NFTimg}
         />
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-          <LocalAtmIcon sx={{ fontSize: 50 }} />
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
+          <LocalAtmIcon sx={{ fontSize: 40, color: "#868686" }} />
           <span className={styles.nftPrice}>{NFTInfo.currentPrice}</span>
         </Box>
-        <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-          <Button
-            variant="contained"
-            color="success"
-            size="large"
-            onClick={async () => {
-              setIsLoading(true);
-              try {
-                const accounts = await ethereum.request({
-                  method: "eth_requestAccounts",
-                });
-                const a = await ssafyTokenContract.methods
-                  .approve(NFTAddress, NFTInfo.currentPrice)
-                  .send({ from: accounts[0] });
-                console.log(a);
-                console.log(NFTInfo);
-                const myInfo = await getMyInfo(accounts[0]);
-                console.log(myInfo.data.user.nickname);
-                const b = await nftContract.methods
-                  .purchase(NFTInfo.count)
-                  .send({ from: accounts[0] });
-                console.log(b);
-                await updateNFTOwner(
-                  NFTInfo.count,
-                  myInfo.data.user.nickname,
-                  accounts[0]
-                );
-                await changeOnSale(NFTInfo.count);
-                onClose();
-                Swal.fire({
-                  icon: "success",
-                  title: "구매 완료",
-                });
-                loadSellingNFTList();
-                setIsLoading(false);
-              } catch {
-                setIsLoading(false);
-              }
+        <div className={styles.btns}>
+          <CustomBtn
+            customSx={{
+              width: "100px",
+              height: "45px",
+              fontSize: "15px",
+              letterSpacing: 3,
             }}
-          >
-            구매
-          </Button>
-          <Button
-            variant="contained"
-            color="error"
-            size="large"
-            onClick={onClose}
-          >
-            취소
-          </Button>
-        </Box>
+            bgColor={"mainGreen"}
+            onclick={onPurchaseClick}
+            btnWord={"구매"}
+          />
+          <CustomBtn
+            customSx={{
+              width: "100px",
+              height: "45px",
+              fontSize: "15px",
+              letterSpacing: 3,
+            }}
+            bgColor={"mainPink"}
+            onclick={onClose}
+            btnWord={"취소"}
+          />
+        </div>
       </Box>
     </>
   );

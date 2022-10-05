@@ -107,20 +107,21 @@ const NFT = () => {
       <div className={styles.NFTsBox}>
         <div className={styles.topBar}>
           <span className={styles.title}>NFT 목록</span>
-          <FormControl sx={{ m: 5, minWidth: 150 }}>
+          <FormControl sx={{ m: 5, minWidth: 125 }} size="small">
             <Select
               value={itemFilter}
               onChange={handleChange}
               displayEmpty
+              // color="success"
               inputProps={{ "aria-label": "Without label" }}
             >
               <MenuItem value="">
-                <em>기본</em>
+                <div>기본</div>
               </MenuItem>
-              <MenuItem value={"nameUp"}>이름 오름차순</MenuItem>
-              <MenuItem value={"nameDown"}>이름 내림차순</MenuItem>
-              <MenuItem value={"priceUp"}>가격 오름차순</MenuItem>
-              <MenuItem value={"priceDown"}>가격 내림차순</MenuItem>
+              {/* <MenuItem value={"nameUp"}>이름 오름차순</MenuItem>
+              <MenuItem value={"nameDown"}>이름 내림차순</MenuItem> */}
+              <MenuItem value={"priceUp"}>낮은가격순</MenuItem>
+              <MenuItem value={"priceDown"}>높은가격순</MenuItem>
             </Select>
             {/* <FormHelperText>Without label</FormHelperText> */}
           </FormControl>
