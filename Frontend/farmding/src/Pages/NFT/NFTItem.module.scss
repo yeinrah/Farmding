@@ -17,6 +17,11 @@
   width: 200px;
   height: 200px;
   border-radius: 10px;
+  &:hover {
+    box-shadow: 3px 7px 7px rgba(0, 0, 0, 0.25);
+    transform: translateY(-7px);
+    transition: 0.5s;
+  }
 }
 
 .nftInfo {

@@ -54,7 +54,7 @@ const Main = () => {
       <Banner imgSrc={"/Assets/background/cover2.jpg"} isMain={true} />
       {/* <Banner
         imgSrc={
-          "https://previews.123rf.com/images/sripfoto/sripfoto1402/sripfoto140200038/25755981-%EA%B3%B5%EC%9E%A5%EC%97%90-%EC%8B%A0%EC%84%A0%ED%95%9C-%EC%98%A4%EB%A0%8C%EC%A7%80-%EC%98%A4%EB%A0%8C%EC%A7%80-%EB%82%98%EB%AC%B4.jpg"
+          ""
         }
         isMain={true}
       /> */}

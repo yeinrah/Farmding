@@ -36,4 +36,10 @@
 .nftPrice {
   color: #5dae8b;
   margin: 5px 0 0 4px;
+  &:hover {
+    color: #165037;
+    // box-shadow: 3px 7px 7px rgba(0, 0, 0, 0.25);
+    // transform: translateY(-7px);
+    transition: 0.3s;
+  }
 }
