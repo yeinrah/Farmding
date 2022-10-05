@@ -57,7 +57,6 @@ const UpdateNickName = ({ handleClose, changeInfo, userInfo }: any) => {
                 Swal.fire({
                   icon: "success",
                   title: "사용 가능한 닉네임 입니다.",
-                  text: "err",
                 });
                 setNameDuplicateCheck(true);
               }
