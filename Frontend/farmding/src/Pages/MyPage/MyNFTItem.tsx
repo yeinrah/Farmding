@@ -11,6 +11,15 @@ import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import PaidIcon from "@mui/icons-material/Paid";
 import { mainGreen } from "../../Common/data/Style";
 import { Box } from "@mui/system";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    success: {
+      main: mainGreen,
+    },
+  },
+});
 interface MyNFTInfo {
   nftId: string;
   currentPrice: number;
@@ -66,96 +75,100 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
   }, [price, sellOn]);
   return (
     <>
-      {isLoading && <Spinner />}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-title"
-        // aria-describedby="modal-modal-description"
-      >
-        <UpdateNFTPrice
-          count={MyNFTInfo.count}
-          nftPrice={MyNFTInfo.currentPrice}
+      <ThemeProvider theme={theme}>
+        {isLoading && <Spinner />}
+        <Modal
+          open={open}
           onClose={handleClose}
-          changePrice={changePrice}
-          isSelling={MyNFTInfo.onSale}
-        />
-        {/* <SuccessModal /> */}
-      </Modal>
-      <div className={styles.NFTBox}>
-        <img
-          className={styles.nft}
-          alt="nft1"
-          src={`https://${MyNFTInfo.nftAddress}`}
-        />
-        <div className={styles.nftInfo}>
-          <span className={styles.nftName}>{"farmer#" + MyNFTInfo.count}</span>
-          <div
-            className={styles.priceBlock}
-            onClick={() => {
-              handleOpen();
-            }}
-          >
-            {/* <AttachMoneyIcon /> */}
-            <PaidIcon sx={{ color: mainGreen }} />
-            <span className={styles.nftPrice}>{price}</span>
-          </div>
-        </div>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-around",
-            paddingLeft: "30px",
-          }}
+          aria-labelledby="modal-title"
+          // aria-describedby="modal-modal-description"
         >
+          <UpdateNFTPrice
+            count={MyNFTInfo.count}
+            nftPrice={MyNFTInfo.currentPrice}
+            onClose={handleClose}
+            changePrice={changePrice}
+            isSelling={MyNFTInfo.onSale}
+          />
+          {/* <SuccessModal /> */}
+        </Modal>
+        <div className={styles.NFTBox}>
+          <img
+            className={styles.nft}
+            alt="nft1"
+            src={`https://${MyNFTInfo.nftAddress}`}
+          />
+          <div className={styles.nftInfo}>
+            <span className={styles.nftName}>
+              {"farmer#" + MyNFTInfo.count}
+            </span>
+            <div
+              className={styles.priceBlock}
+              onClick={() => {
+                handleOpen();
+              }}
+            >
+              {/* <AttachMoneyIcon /> */}
+              <PaidIcon sx={{ color: mainGreen, mt: 0.5 }} />
+              <span className={styles.nftPrice}>{price}</span>
+            </div>
+          </div>
           <Box
             sx={{
               display: "flex",
-              justifyContent: "center",
-              flexDirection: "column",
-              color: sellOn ? "#388e3c" : "gray",
+              justifyContent: "space-around",
+              paddingLeft: "30px",
             }}
           >
-            판매 등록
-          </Box>
-          <FormControlLabel
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              paddingLeft: "30px",
-              width: "30px",
-            }}
-            value="top"
-            control={<Switch color="success" />}
-            label=""
-            labelPlacement="top"
-            checked={sellOn}
-            onClick={async () => {
-              setIsLoading(true);
-              console.log(sellOn, MyNFTInfo.count);
-              try {
-                getInfoNFT();
-                if (!sellOn) {
-                  if (await changeSell()) {
-                    await changeOnSale(MyNFTInfo.count);
-                    setSellOn(!sellOn);
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                color: sellOn ? mainGreen : "gray",
+              }}
+            >
+              판매 등록
+            </Box>
+            <FormControlLabel
+              sx={{
+                display: "flex",
+                justifyContent: "center",
+                paddingLeft: "30px",
+                width: "30px",
+              }}
+              value="top"
+              control={<Switch color="success" />}
+              label=""
+              labelPlacement="top"
+              checked={sellOn}
+              onClick={async () => {
+                setIsLoading(true);
+                console.log(sellOn, MyNFTInfo.count);
+                try {
+                  getInfoNFT();
+                  if (!sellOn) {
+                    if (await changeSell()) {
+                      await changeOnSale(MyNFTInfo.count);
+                      setSellOn(!sellOn);
+                    }
+                    setIsLoading(false);
+                  } else {
+                    if (await cancleSell()) {
+                      await changeOnSale(MyNFTInfo.count);
+                      setSellOn(!sellOn);
+                    }
+                    setIsLoading(false);
                   }
-                  setIsLoading(false);
-                } else {
-                  if (await cancleSell()) {
-                    await changeOnSale(MyNFTInfo.count);
-                    setSellOn(!sellOn);
-                  }
+                  // setIsLoading(false);
+                } catch {
                   setIsLoading(false);
                 }
-                // setIsLoading(false);
-              } catch {
-                setIsLoading(false);
-              }
-            }}
-          />
-        </Box>
-      </div>
+              }}
+            />
+          </Box>
+        </div>
+      </ThemeProvider>
     </>
   );
 };
