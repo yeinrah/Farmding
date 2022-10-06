@@ -93,7 +93,6 @@ Nginx와 letsencrypt를 이용하여 SSL 인증서를 적용하고, 프론트엔
 
 # 요구사항 정의서
 ![요구사항정의서](https://user-images.githubusercontent.com/24909625/194271765-e88b192a-3c46-45bc-ad34-17a11a12ef68.PNG)
-ser-images.githubusercontent.com/24909625/194269425-7a769700-88e2-4efb-94c6-06dc250c592f.PNG)
 <hr>
 
 # Git 컨벤션
