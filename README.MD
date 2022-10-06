@@ -4,7 +4,7 @@
 # 팀원을 소개합니다!
         고은민           김영진           김정서           나예인           송상훈
 
-![5FEAABBC-CA96-472A-B551-44C86809325E](https://user-images.githubusercontent.com/63994962/194329474-58fedb22-42ce-4209-b217-3603d07673f5.jpg)![kimjeongseo jpg](https://user-images.githubusercontent.com/63994962/187566676-4b167d52-01b5-4845-8096-9d26ebe5cd9b.png) ![김영진 jpg](https://user-images.githubusercontent.com/63994962/187566679-0fbab3f4-627e-4483-9a06-912b6a29f5d0.jpg) ![jenkins-logo](https://user-images.githubusercontent.com/63994962/187566675-a38857c0-faf1-4d28-8dd0-363c73f10c58.png) ![송상훈](https://user-images.githubusercontent.com/63994962/187566682-5afcdd4b-5b77-44f3-97d0-d1e97c76ea19.jpg) 
+![5FEAABBC-CA96-472A-B551-44C86809325E](https://user-images.githubusercontent.com/63994962/194329474-58fedb22-42ce-4209-b217-3603d07673f5.jpg) ![김영진 jpg](https://user-images.githubusercontent.com/63994962/187566679-0fbab3f4-627e-4483-9a06-912b6a29f5d0.jpg) ![kimjeongseo jpg](https://user-images.githubusercontent.com/63994962/187566676-4b167d52-01b5-4845-8096-9d26ebe5cd9b.png) ![jenkins-logo](https://user-images.githubusercontent.com/63994962/187566675-a38857c0-faf1-4d28-8dd0-363c73f10c58.png) ![송상훈](https://user-images.githubusercontent.com/63994962/187566682-5afcdd4b-5b77-44f3-97d0-d1e97c76ea19.jpg) 
 
 
 
