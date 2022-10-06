@@ -81,6 +81,7 @@ const ProjectItem = ({
         setLikeCnt(0);
       } else {
         setLikeCnt(likeUsersList.length);
+        console.log(pjtTitle, "좋아요 누른 리스트", likeUsersList);
         // likeUsersList.
         for (const eachId of likeUsersList) {
           if (eachId === currentUserId) {
