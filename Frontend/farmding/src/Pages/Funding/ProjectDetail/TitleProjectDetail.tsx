@@ -60,13 +60,9 @@ TitleProjectDetailProps) => {
         setLikeCnt(0);
       } else {
         setLikeCnt(likeUsersList.length);
-        for (const eachId of likeUsersList) {
-          if (eachId === currentUserId) {
-            setIsLiked(true);
-          } else {
-            setIsLiked(false);
-          }
-        }
+        likeUsersList.includes(currentUserId)
+          ? setIsLiked(true)
+          : setIsLiked(false);
       }
 
       const projtDetail: any = await fetchProjectDetail(projtId);
