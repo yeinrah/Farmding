@@ -474,12 +474,6 @@ const CrowdFundingABI = [
         name: "goal",
         type: "uint256",
       },
-      {
-        indexed: false,
-        internalType: "uint32",
-        name: "endAt",
-        type: "uint32",
-      },
     ],
     name: "Launch",
     type: "event",
@@ -687,25 +681,6 @@ const CrowdFundingABI = [
         type: "uint256",
       },
     ],
-    name: "getCloseDate",
-    outputs: [
-      {
-        internalType: "uint32",
-        name: "",
-        type: "uint32",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_projectId",
-        type: "uint256",
-      },
-    ],
     name: "getNowFundedAmount",
     outputs: [
       {
@@ -743,11 +718,6 @@ const CrowdFundingABI = [
         name: "_goal",
         type: "uint256",
       },
-      {
-        internalType: "uint32",
-        name: "_endAt",
-        type: "uint32",
-      },
     ],
     name: "launch",
     outputs: [],
@@ -783,11 +753,6 @@ const CrowdFundingABI = [
         internalType: "uint256",
         name: "nowFundedAmount",
         type: "uint256",
-      },
-      {
-        internalType: "uint32",
-        name: "endAt",
-        type: "uint32",
       },
       {
         internalType: "bool",
@@ -843,11 +808,10 @@ const CrowdFundingABI = [
     type: "function",
   },
 ];
-
 export const SSFTokenAddress = "0x0c54E456CE9E4501D2c43C38796ce3F06846C966";
 
 // export const CrowdFundingAddress = "0x687b230c41a3d5BABb138d94Dbb5cF0733d80917";
-export const CrowdFundingAddress = "0x772b2cc646f9ab400aF96b0D45A17a8c20Fb2aF4";
+export const CrowdFundingAddress = "0x02454bA816C89e275Cd778E24f13592D48515d6B";
 
 export const web3 = new Web3(window.ethereum);
 

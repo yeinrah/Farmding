@@ -81,8 +81,6 @@ const ProjectItem = ({
         setLikeCnt(0);
       } else {
         setLikeCnt(likeUsersList.length);
-        console.log(pjtTitle, "좋아요 누른 유저 리스트", likeUsersList);
-
         likeUsersList.includes(currentUserId)
           ? setIsLiked(true)
           : setIsLiked(false);
