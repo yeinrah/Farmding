@@ -1,0 +1,47 @@
+.NFTBox {
+  margin: 10px 30px;
+}
+.userInfo {
+  display: flex;
+  margin: 4px 8px;
+}
+
+.userTitle {
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  font-weight: bold;
+  line-height: 20px;
+}
+.nft {
+  width: 200px;
+  height: 200px;
+  border-radius: 10px;
+}
+
+.nftInfo {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.nftName {
+  font-weight: bolder;
+  font-size: 20px;
+  margin: 5px 20px 0 0;
+}
+
+.priceBlock {
+  display: flex;
+  cursor: pointer;
+}
+.nftPrice {
+  // color: #5dae8b;
+  margin: 8px 0 0 4px;
+  &:hover {
+    // color: #165037;
+    color: #5dae8b;
+    // box-shadow: 3px 7px 7px rgba(0, 0, 0, 0.25);
+    // transform: translateY(-7px);
+    transition: 0.3s;
+  }
+}

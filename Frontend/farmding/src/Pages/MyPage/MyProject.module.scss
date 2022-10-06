@@ -1,0 +1,18 @@
+.card_img {
+  &:hover {
+    box-shadow: 3px 7px 7px rgba(0, 0, 0, 0.25);
+    // transform: translateY(-7px);
+    // transition: 0.5s;
+  }
+}
+
+.heartArea {
+  display: flex;
+  justify-content: space-between;
+}
+.like {
+  position: relative;
+  margin-left: 3px;
+  bottom: 6px;
+  font-size: 13px;
+}

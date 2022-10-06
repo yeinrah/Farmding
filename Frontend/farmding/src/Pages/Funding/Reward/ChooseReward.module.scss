@@ -1,0 +1,43 @@
+.reward_item {
+  height: 70%;
+  // margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .modal_content {
+    // height: 10%;
+    text-align: center;
+    margin: 0 auto 50px auto;
+    font-size: 18px;
+    // font-weight: bold;
+    color: #868686;
+  }
+}
+.complete_modal_title {
+  text-align: center;
+  margin: 30px 0 20px 0;
+  font-size: 27px;
+  font-weight: 700;
+}
+.complete_modal_content {
+  text-align: center;
+  margin: 20px auto 50px auto;
+  font-size: 18px;
+  color: #868686;
+  span {
+    margin-right: 5px;
+    color: black;
+    font-weight: 700;
+  }
+}
+.btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.get_nft_btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 55px;
+}

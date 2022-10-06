@@ -1,0 +1,210 @@
+pragma solidity >=0.7.0 <0.9.0;
+
+import "./token/ERC20/ERC20.sol";
+import "./SSFToken.sol";
+import "./access/Ownable.sol";
+
+contract CrowdFunding {
+    SSFToken public SSFTokenContract;
+
+
+  struct Funder {
+    address _addr;
+    // string _name;
+    uint _amount;
+  }
+
+  event Launch(
+      uint id,
+      address indexed beneficiary,
+      uint goal
+      // uint32 startAt,
+    //   uint32 endAt
+      // address indexed fundingAddr
+  );
+  event Cancel(uint id);
+  event Fund(uint indexed id, address indexed caller, uint amount);
+  event Unfund(uint indexed id, address indexed caller, uint amount);
+  event Claim(uint id);
+  event Refund(uint id, address indexed caller, uint amount);
+
+
+  struct Project {
+    // Creator(beneficiary) of project
+    address beneficiary;
+    // Amount of tokens to raise
+    uint goal;
+    uint numFunders;
+    // Total amount funded unitl now
+    uint nowFundedAmount;
+    // Timestamp of start of project
+    // uint32 startAt;
+    // Timestamp of end of project
+    // uint32 endAt;
+    // True if goal was reached and creator has claimed the tokens.
+    bool claimed;
+    // mapping (uint => Funder) funders;
+  }
+
+  // IERC20 public immutable token;
+
+
+  // Total count of projects created.
+  // It is also used to generate id for new projects.
+  uint public projectsCount;
+  address public fundingCA;
+
+  // Mapping from id to project
+  //  key를 uint, value를 project 구조체로 갖는 mapping(객체 같은 것)을 만들고
+  // 이런 map을 projects라는 이름의 state 변수로 선언.
+  // { 1: project, 2: project ...}
+  mapping(uint => Project) public projects;
+
+  mapping(uint => uint) public fundersCount;
+  // Mapping from project id => funder => amount funded
+  mapping(uint => mapping(address => uint)) public fundedAmount;
+
+
+  constructor(address  _currencyAddress) { 
+    // admin = msg.sender;
+    SSFTokenContract = SSFToken(_currencyAddress);
+  }
+
+  function launch(
+      uint _goal
+      // uint32 _startAt,
+    //   uint32 _endAt
+  ) public {
+      // require(_startAt >= block.timestamp, "start at < now");
+      // require(_endAt >= _startAt, "end at < start at");
+    //   require(_endAt <= block.timestamp + 90 days, "end at > max duration");
+
+      projectsCount += 1;
+      fundingCA = address(this);
+      projects[projectsCount] = Project({
+          beneficiary: msg.sender,
+          goal: _goal,
+          numFunders: 0,
+          nowFundedAmount: 0,
+          // startAt: _startAt,
+        //   endAt: _endAt,
+          claimed: false
+      });
+
+      // emit Launch(projectsCount, msg.sender, _goal, _startAt, _endAt);
+      emit Launch(projectsCount, msg.sender, _goal);
+  }
+
+  
+  function cancel(uint _id) public {
+      Project memory project = projects[_id];
+      require(project.beneficiary == msg.sender, "not beneficiary");
+      // require(block.timestamp < project.startAt, "started");
+
+      delete projects[_id];
+      emit Cancel(_id);
+  }
+
+
+  function fund(uint _id, uint _amount) public {
+      Project storage project = projects[_id];
+      // require(block.timestamp >= project.startAt, "not started");
+    //   require(block.timestamp <= project.endAt, "ended");
+      require(SSFTokenContract.balanceOf(msg.sender) >= _amount, "funder do not have enough ERC20 token");
+      require(SSFTokenContract.allowance(msg.sender, address(this)) != 0, "buyer did not approve this contract");
+      require(SSFTokenContract.allowance(msg.sender, address(this)) >= _amount, "caller approve less amount of token");
+      // project.funders[project.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
+      project.nowFundedAmount += _amount;
+      fundedAmount[_id][msg.sender] += _amount;
+      project.numFunders++;
+    //   project.funders[project.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
+      fundingCA = address(this);
+
+      // approve 안해도 됨!!
+      // SSFTokenContract.approve(address(this), _amount);
+      SSFTokenContract.transferFrom(msg.sender, address(this), _amount);
+      emit Fund(_id, msg.sender, _amount);
+  }
+
+
+  function unfund(uint _id, uint _amount) public {
+      Project storage project = projects[_id];
+    //   require(block.timestamp <= project.endAt, "ended");
+
+      project.nowFundedAmount -= _amount;
+      fundedAmount[_id][msg.sender] -= _amount;
+      project.numFunders--;
+      // SSFTokenContract.approve(msg.sender, _amount);
+      SSFTokenContract.transfer(msg.sender, _amount);
+
+      emit Unfund(_id, msg.sender, _amount);
+  }
+
+  function claim(uint _id) public {
+      Project storage project = projects[_id];
+      require(project.beneficiary == msg.sender, "not beneficiary");
+      // require(block.timestamp > project.endAt, "not ended");
+      require(project.nowFundedAmount >= project.goal, "funded < goal");
+      require(!project.claimed, "already claimed");
+
+      project.claimed = true;
+      SSFTokenContract.transfer(project.beneficiary, project.nowFundedAmount);
+
+      emit Claim(_id);
+  }
+
+  function refund(uint _id) public {
+      Project memory project = projects[_id];
+    //   require(block.timestamp > project.endAt, "not ended");
+      require(project.nowFundedAmount < project.goal, "funded >= goal");
+
+      uint bal = fundedAmount[_id][msg.sender];
+      fundedAmount[_id][msg.sender] = 0;
+      SSFTokenContract.transfer(msg.sender, bal);
+      emit Refund(_id, msg.sender, bal);
+  }
+
+  function CABalanceOfSSF() public view returns(uint256){
+      return SSFTokenContract.balanceOf(address(this));
+  }
+  function getNowFundedAmount(uint256 _projectId) public view returns (uint256) {
+      Project memory project = projects[_projectId];
+      return project.nowFundedAmount;
+  }
+  function getNowFundersCnt(uint256 _projectId) public view returns (uint256) {
+      Project memory project = projects[_projectId];
+      return project.numFunders;
+  }
+    // function getCloseDate(uint256 _projectId) public view returns (uint32) {
+    //     Project memory project = projects[_projectId];
+    //     return project.endAt;
+    // }
+    function getClaimOrNot(uint256 _projectId) public view returns (bool) {
+        Project memory project = projects[_projectId];
+        return project.claimed;
+    }
+
+  function _getMyCurrentBalanceAmount() private view returns (uint256) {
+      return SSFTokenContract.balanceOf(msg.sender);
+  }
+
+  // function newproject(address _beneficiary, uint _goalAmount)  public returns (uint projectID)  {
+  //   projectID = numprojects++; 
+  //   // projects[projectID] = project(beneficiary, goal, 0, 0);
+  // }
+
+  // function contribute(uint projectID) public {
+  //   project storage c = projects[projectID];
+  //   c.funders[c.numFunders++] = Funder({addr: msg.sender, amount: msg.value});
+  //   c.amount += msg.value;
+  // }
+
+  // function checkGoalReached(uint projectID) public returns (bool reached) {
+  //   // project c = projects[projectID];
+  //   // if (c.amount < c.fundingGoal)
+  //   //   return false;
+  //   // c.beneficiary.send(c.amount);
+  //   // c.amount = 0;
+  //   // return true;
+  // }
+}

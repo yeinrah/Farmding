@@ -1,0 +1,67 @@
+.wrap {
+  position: relative; /* 핵심코드 */
+
+  .project_detail_banner {
+    width: 100%;
+    position: relative; /* 핵심코드 */
+    display: inline-block;
+    // margin-top: 50px;
+    // // margin-bottom: 5%;
+    max-width: 100%;
+    background-repeat: no-repeat;
+    // box-shadow: 0px 3px 0px rgb(171, 171, 171);
+    // background: rgba(0, 0, 0, 0.4);
+    img {
+      width: 100%;
+      height: 250px;
+      background-size: cover;
+      // opacity: 90%;
+      filter: blur(3px);
+      -webkit-filter: blur(3px);
+      // filter: grayscale(0.7);
+    }
+  }
+
+  .project_detail_banner_txt {
+    position: absolute; /* 핵심코드 */
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    max-width: 50%;
+    // font-size: x-large;
+
+    .banner_title {
+      color: rgb(248, 248, 248);
+      text-shadow: 1px 2px #827f7f;
+      line-height: 130%;
+      letter-spacing: 2px;
+      font-size: 40px;
+      margin-bottom: 15px;
+    }
+
+    h4 {
+      margin-top: 5px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: rgb(194, 189, 189);
+    }
+    .farm_like {
+      display: flex;
+      justify-content: center;
+      .heart_area {
+        display: flex;
+        margin-left: 15px;
+        .heart {
+          cursor: pointer;
+        }
+        .like {
+          font-size: 20px;
+          color: azure;
+          line-height: 40px;
+        }
+      }
+    }
+  }
+}

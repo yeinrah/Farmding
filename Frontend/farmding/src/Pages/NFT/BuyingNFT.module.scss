@@ -1,0 +1,21 @@
+.NFTimg {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  margin: auto;
+  border-radius: 16px;
+}
+
+.nftPrice {
+  font-size: 40px;
+  margin-left: 10px;
+  // color: #5dae8b;
+  // color: #868686;
+}
+
+.btns {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}

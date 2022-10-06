@@ -1,0 +1,56 @@
+.wrap {
+  position: relative; /* 핵심코드 */
+
+  .banner {
+    width: 100%;
+    position: relative; /* 핵심코드 */
+    display: inline-block;
+    // margin-top: 50px;
+    // // margin-bottom: 5%;
+    max-width: 100%;
+    background-repeat: no-repeat;
+    img {
+      width: 100%;
+      height: 350px;
+      background-size: cover;
+      // filter: grayscale(0.7);
+      // opacity: 70%;
+    }
+  }
+  .banner_txt {
+    position: absolute; /* 핵심코드 */
+    top: 53%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    // font-size: x-large;
+
+    div {
+      // color: #000;
+      color: beige;
+      text-shadow: 2px 2px #827f7f;
+      letter-spacing: 4px;
+      font-size: 55px;
+      margin: 45px 0 5px 0;
+      // margin-bottom: 15px;
+    }
+
+    h3 {
+      margin-top: 0px;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: beige;
+    }
+    a {
+      text-decoration: none;
+      margin-top: 10px;
+      color: rgb(201, 201, 201);
+      &:hover {
+        // transform: translateY(-7px);
+        transition: 0.3s;
+        color: beige;
+      }
+    }
+  }
+}

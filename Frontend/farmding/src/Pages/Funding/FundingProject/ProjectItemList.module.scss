@@ -1,0 +1,19 @@
+.project_wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.projectMainBox {
+  display: flex;
+  justify-content: center;
+}
+.container {
+  // !important 수정하기!!
+  display: flex;
+  width: 70% !important;
+  margin: 10px 20px !important;
+}
+.searchBar {
+  margin-top: 20px;
+  width: 100%;
+}

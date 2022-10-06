@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  .crs_img {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+  }
+}
