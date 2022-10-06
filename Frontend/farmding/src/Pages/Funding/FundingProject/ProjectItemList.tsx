@@ -83,7 +83,6 @@ const ProjectItemList = () => {
           if (v.key === "Enter") {
             setNowSearch(v.target.value);
             setIsSearchEntered(true);
-            console.log(v.target.value, "검색 시작");
           }
         }}
       >

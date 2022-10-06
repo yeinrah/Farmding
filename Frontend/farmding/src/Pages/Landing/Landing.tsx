@@ -60,19 +60,7 @@ const Landing = () => {
         setBalance(result._hex);
         // console.log(result)
       });
-      balance &&
-        console.log(
-          "지갑주소: ",
-          account,
-          "체인ID: ",
-          chainId,
-          "잔고: ",
-          balance
-        );
     }
-    console.log(isLogin, "로그인여부");
-    console.log(myAccount);
-    console.log(balance, "잔고");
     // if (account) {
     // }
     // active ? setIsLogin(true) : setIsLogin(false);

@@ -22,7 +22,6 @@ export const launchingHandler = async (
     const launchRes = await CrowdFundingContract.methods
       .launch(targetAmount, unixFundingCloseDate)
       .send({ from: accounts[0] });
-    console.log(launchRes);
 
     const projectId = launchRes.events.Launch.returnValues.id;
     const beneficiary = launchRes.events.Launch.returnValues.beneficiary;
@@ -43,7 +42,6 @@ export const launchingHandler = async (
     // console.log('결과' , isSended)
   } catch (error) {
     console.log(error);
-    console.log("런칭 에러");
   }
 };
 
@@ -60,10 +58,8 @@ export const claimHandler = async (pjtId: number) => {
       icon: "success",
       title: `${claimId} 번 프로젝트 클레임 완료`,
     });
-    console.log(claimId, "번 프로젝트 클레임 완료");
   } catch (error) {
     console.log(error);
-    console.log("클레임 에러");
   }
 };
 
@@ -84,7 +80,6 @@ export const fundingHandler = async (
     const fundingRes = await CrowdFundingContract.methods
       .fund(pjtId, fundingPrice)
       .send({ from: accounts[0] });
-    console.log(fundingRes);
     const fundId = fundingRes.events.Fund.returnValues.id;
     const caller = fundingRes.events.Fund.returnValues.caller;
     const amount = fundingRes.events.Fund.returnValues.amount;
@@ -93,7 +88,6 @@ export const fundingHandler = async (
     //   title: `${caller}가 ${amount}만큼 펀딩 완료했습니다`,
     // });
     result = true;
-    console.log(fundId, caller, amount);
 
     // funding 요청
   } catch (error) {

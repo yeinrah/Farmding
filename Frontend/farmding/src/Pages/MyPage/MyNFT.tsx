@@ -8,12 +8,7 @@ const MyNFT = (props: any) => {
       <div className={styles.NFTsBox}>
         {props.nfts &&
           props.nfts.map((item: any, index: number) => (
-            <div
-              onClick={() => {
-                console.log(props.nfts[index]);
-              }}
-              className={styles.nft_item}
-            >
+            <div className={styles.nft_item}>
               <MyNFTItem
                 MyNFTInfo={item}
                 getInfoNFT={props.getInfoNFT}

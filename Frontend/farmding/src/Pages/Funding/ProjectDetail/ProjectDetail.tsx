@@ -77,20 +77,17 @@ const ProjectDetail = () => {
       .call();
 
     setIsClaimOrNot(claimOrNot);
-    console.log(pjtId, claimOrNot, "claim or not");
   };
   useEffect(() => {
     (async function () {
       const accounts = await ethereum.request({ method: "eth_accounts" });
       if (!accounts.length) {
-        console.log(accounts);
         setIsLogin(false);
         // navigate("/login");
         // return;
       }
 
       setCurrentAccount(accounts[0]);
-      console.log(accounts[0]);
 
       const projtDetail: any = await fetchProjectDetail(Number(pjtId));
       setPjtDetail(projtDetail);

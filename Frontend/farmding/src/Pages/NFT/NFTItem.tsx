@@ -23,6 +23,7 @@ interface NFTitemProps {
 const NFTItem = ({ NFTInfo, getMyInfo }: NFTitemProps) => {
   const [image, setImage] = useState(0);
   const [myProfile, setMyProfile] = useState<any>([]);
+  const [myname, setMyName] = useState();
   const loadUserImage = async () => {
     const account = NFTInfo.ownerWalletAddress;
     const result: any = await getMyInfo(account);
@@ -31,6 +32,7 @@ const NFTItem = ({ NFTInfo, getMyInfo }: NFTitemProps) => {
     for (let nftImage of result.data.nft) {
       temp.push(nftImage.nftAddress);
     }
+    setMyName(result.data.user.nickname);
     setMyProfile(temp);
   };
   useEffect(() => {
@@ -48,7 +50,7 @@ const NFTItem = ({ NFTInfo, getMyInfo }: NFTitemProps) => {
               : `https://${myProfile[image]}`
           }
         />
-        <span className={styles.userTitle}>{NFTInfo.ownerNickname}</span>
+        <span className={styles.userTitle}>{myname}</span>
       </div>
       <img
         className={styles.nft}
