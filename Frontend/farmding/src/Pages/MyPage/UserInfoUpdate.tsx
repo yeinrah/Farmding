@@ -60,7 +60,6 @@ const UserInfoUpdate = ({ handleClose1, userInfo, changeAddress }: any) => {
                 },
               }}
               onClick={() => {
-                console.log(userInfo.address.split(" "));
                 setOpenPostcode(true);
                 setOpen(true);
               }}

@@ -88,7 +88,6 @@ const NavBar = () => {
 
   const goMyPageHandler = () => {
     handleCloseUserMenu();
-    console.log("mypage가기");
     // return <Navigate to="/mypage" />
     navigate("/mypage");
   };

@@ -39,7 +39,6 @@ const Main = () => {
         const userInfo = await getMyInfo(accounts[0]);
         setCurrentUserName(userInfo.data.user.nickname);
         setCurrentUserId(userInfo.data.user.userId);
-        console.log(userInfo.data.user.userId, userInfo.data.user.nickname);
       }
       SetIsAccountChanged(false);
     })();

@@ -35,6 +35,7 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
   const [isLoading, setIsLoading] = useState(false);
   const [image, setImage] = useState(0);
   const [myProfile, setMyProfile] = useState<any>([]);
+  const [myname, setMyName] = useState();
   const loadUser = async () => {
     const account = NFTInfo.ownerWalletAddress;
     const result: any = await getMyInfo(account);
@@ -43,6 +44,7 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
     for (let nftImage of result.data.nft) {
       temp.push(nftImage.nftAddress);
     }
+    setMyName(result.data.user.nickname);
     setMyProfile(temp);
   };
   const onPurchaseClick = async () => {
@@ -54,14 +56,10 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
       const a = await ssafyTokenContract.methods
         .approve(NFTAddress, NFTInfo.currentPrice)
         .send({ from: accounts[0] });
-      console.log(a);
-      console.log(NFTInfo);
       const myInfo = await getMyInfo(accounts[0]);
-      console.log(myInfo.data.user.nickname);
       const b = await nftContract.methods
         .purchase(NFTInfo.count)
         .send({ from: accounts[0] });
-      console.log(b);
       await updateNFTOwner(
         NFTInfo.count,
         myInfo.data.user.nickname,
@@ -108,7 +106,7 @@ const BuyingNFT = ({ NFTInfo, onClose, loadSellingNFTList }: IBuyingNFT) => {
             fontWeight="bold"
             sx={{ mb: 4, marginLeft: "13px" }}
           >
-            {NFTInfo.ownerNickname}
+            {myname}
           </Typography>
         </Box>
         <img

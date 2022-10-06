@@ -47,7 +47,6 @@ const LikeFundingsModal = ({
   useEffect(() => {
     // setIsLoading(true);
     (async () => {
-      console.log("시작!!!");
       const likeFundingList: any = await fetchLikeFundingLists(currentUserId);
       setLikeFundings(likeFundingList);
       setIsLikeChange(false);

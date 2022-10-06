@@ -68,13 +68,11 @@ const FundingProjectDetail = ({
         .getNowFundedAmount(projtId)
         .call();
       setNowFundedAmount(fundedAmount);
-      console.log(fundedAmount, "nowfundedAMount");
 
       const fundersCnt = await CrowdFundingContract.methods
         .getNowFundersCnt(projtId)
         .call();
       setFundersCount(fundersCnt);
-      console.log(fundersCnt, "펀딩한 사람들 수");
 
       // setCurrentAccount(accounts[0]);
       // console.log(accounts[0]);

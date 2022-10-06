@@ -42,7 +42,6 @@ const NFT = () => {
   const loadSellingNFTList = async () => {
     const result = await sellingNFTList();
     setNfts(result.data.slice(0, max));
-    console.log(result.data.slice(0, max));
   };
   useEffect(() => {
     loadSellingNFTList();
@@ -74,7 +73,6 @@ const NFT = () => {
     setIsLogin(false);
   });
   useEffect(() => {
-    console.log(nfts);
     let sortingArr = nfts;
     if (itemFilter === "") {
       sortingArr.sort((a: NftInfo, b: NftInfo) => b.count - a.count);
@@ -96,7 +94,6 @@ const NFT = () => {
       );
       setNfts([...sortingArr]);
     }
-    console.log(nfts);
   }, [itemFilter]);
   return (
     <>

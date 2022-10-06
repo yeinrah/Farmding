@@ -130,7 +130,6 @@ const ChooseReward = ({ title, pjtId, farmer }: IChooseRewardProps) => {
     setIsLoading(false);
 
     await updateRewardResidual(rewardDetail.rewardId, selectedQuantity);
-    console.log(currentUserId, "지긍유저아이디");
     await addUserRewardQuantityInfo(
       pjtId,
       currentUserId,

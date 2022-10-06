@@ -64,7 +64,6 @@ const SignUp = () => {
   };
   const nicknameCheck = async () => {
     const result = await userNicknameExistCheck(nickname);
-    console.log(result);
     if (!result.data) {
       Swal.fire({
         icon: "success",

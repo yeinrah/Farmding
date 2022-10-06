@@ -10,11 +10,8 @@ export const fetchPopularProjects = async () => {
     .get("/funding/popular_fundings")
     .then((res) => {
       result = res.data;
-      console.log("인기프로젝트 fetch", result);
     })
-    .catch((err) => {
-      console.log("인기 프로젝트 fetch 에러");
-    });
+    .catch((err) => {});
   return result;
 };
 
@@ -24,11 +21,8 @@ export const fetchProjectDetail = async (pjtId: number) => {
     .get(`/funding/${pjtId}`)
     .then((res) => {
       result = res.data.project;
-      // console.log("개별 프로젝트 fetch", result);
     })
-    .catch((err) => {
-      console.log("개별 프로젝트 fetch 에러");
-    });
+    .catch((err) => {});
   return result;
 };
 
@@ -38,11 +32,8 @@ export const fetchRewardDetail = async (pjtId: number) => {
     .get(`/funding/detail/${pjtId}`)
     .then((res) => {
       result = res.data[0];
-      console.log("리워드 fetch", result);
     })
-    .catch((err) => {
-      console.log("리워드 fetch 에러");
-    });
+    .catch((err) => {});
   return result;
 };
 
@@ -88,11 +79,9 @@ export const fetchMyFundings = async (userId: number) => {
     .get(`/funding/detail/MyPageFundingList/${userId}`)
     .then((res) => {
       result = res.data;
-      console.log("내가 펀딩한 프로젝트 fetch", result);
     })
     .catch((err) => {
       console.log(err);
-      console.log("내가 펀딩한 프로젝트 fetch 에러");
     });
   return result;
 };
@@ -102,8 +91,6 @@ export const fetchAllProjects = async () => {
     .get(`/funding/projects`)
     .then((res) => {
       result = res.data;
-      // console.log(result);
-      // console.log("모든 프로젝트 fetch 성공");
     })
     .catch((err) => {
       result = err;

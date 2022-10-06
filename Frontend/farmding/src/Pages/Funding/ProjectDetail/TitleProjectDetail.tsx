@@ -54,7 +54,6 @@ TitleProjectDetailProps) => {
     // setIsLoading(true);
     (async () => {
       const likeUsersList = await fetchLikeUsers(projtId);
-      console.log(likeUsersList, projtId, "현재유저");
       if (likeUsersList.length === 0) {
         setIsLiked(false);
         setLikeCnt(0);

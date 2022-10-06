@@ -52,7 +52,6 @@ const MyNFTItem = ({ MyNFTInfo, getInfoNFT }: MyNFTitemProps) => {
         .send({ from: accounts[0] });
       return true;
     } catch {
-      console.log("Ha");
       return false;
     }
   };
