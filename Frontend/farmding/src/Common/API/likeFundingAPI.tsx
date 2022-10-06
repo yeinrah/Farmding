@@ -10,7 +10,7 @@ export const fetchLikeFundingLists = async (userId: number) => {
     .get(`/funding/like/${userId}`)
     .then((res) => {
       result = res.data;
-      console.log("좋아요한 프로젝트 fetch", result);
+      // console.log("좋아요한 프로젝트 fetch", result);
     })
     .catch((err) => {
       console.log("좋아요한 프로젝트 fetch 에러ㅠㅠㅠ");

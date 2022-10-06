@@ -102,8 +102,8 @@ export const fetchAllProjects = async () => {
     .get(`/funding/projects`)
     .then((res) => {
       result = res.data;
-      console.log(result);
-      console.log("모든 프로젝트 fetch 성공");
+      // console.log(result);
+      // console.log("모든 프로젝트 fetch 성공");
     })
     .catch((err) => {
       result = err;
