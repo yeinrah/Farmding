@@ -17,9 +17,9 @@ contract CrowdFunding {
   event Launch(
       uint id,
       address indexed beneficiary,
-      uint goal,
+      uint goal
       // uint32 startAt,
-      uint32 endAt
+    //   uint32 endAt
       // address indexed fundingAddr
   );
   event Cancel(uint id);
@@ -40,7 +40,7 @@ contract CrowdFunding {
     // Timestamp of start of project
     // uint32 startAt;
     // Timestamp of end of project
-    uint32 endAt;
+    // uint32 endAt;
     // True if goal was reached and creator has claimed the tokens.
     bool claimed;
     // mapping (uint => Funder) funders;
@@ -71,13 +71,13 @@ contract CrowdFunding {
   }
 
   function launch(
-      uint _goal,
+      uint _goal
       // uint32 _startAt,
-      uint32 _endAt
+    //   uint32 _endAt
   ) public {
       // require(_startAt >= block.timestamp, "start at < now");
       // require(_endAt >= _startAt, "end at < start at");
-      require(_endAt <= block.timestamp + 90 days, "end at > max duration");
+    //   require(_endAt <= block.timestamp + 90 days, "end at > max duration");
 
       projectsCount += 1;
       fundingCA = address(this);
@@ -87,12 +87,12 @@ contract CrowdFunding {
           numFunders: 0,
           nowFundedAmount: 0,
           // startAt: _startAt,
-          endAt: _endAt,
+        //   endAt: _endAt,
           claimed: false
       });
 
       // emit Launch(projectsCount, msg.sender, _goal, _startAt, _endAt);
-      emit Launch(projectsCount, msg.sender, _goal, _endAt);
+      emit Launch(projectsCount, msg.sender, _goal);
   }
 
   
@@ -109,7 +109,7 @@ contract CrowdFunding {
   function fund(uint _id, uint _amount) public {
       Project storage project = projects[_id];
       // require(block.timestamp >= project.startAt, "not started");
-      require(block.timestamp <= project.endAt, "ended");
+    //   require(block.timestamp <= project.endAt, "ended");
       require(SSFTokenContract.balanceOf(msg.sender) >= _amount, "funder do not have enough ERC20 token");
       require(SSFTokenContract.allowance(msg.sender, address(this)) != 0, "buyer did not approve this contract");
       require(SSFTokenContract.allowance(msg.sender, address(this)) >= _amount, "caller approve less amount of token");
@@ -129,7 +129,7 @@ contract CrowdFunding {
 
   function unfund(uint _id, uint _amount) public {
       Project storage project = projects[_id];
-      require(block.timestamp <= project.endAt, "ended");
+    //   require(block.timestamp <= project.endAt, "ended");
 
       project.nowFundedAmount -= _amount;
       fundedAmount[_id][msg.sender] -= _amount;
@@ -155,7 +155,7 @@ contract CrowdFunding {
 
   function refund(uint _id) public {
       Project memory project = projects[_id];
-      require(block.timestamp > project.endAt, "not ended");
+    //   require(block.timestamp > project.endAt, "not ended");
       require(project.nowFundedAmount < project.goal, "funded >= goal");
 
       uint bal = fundedAmount[_id][msg.sender];
@@ -175,10 +175,10 @@ contract CrowdFunding {
       Project memory project = projects[_projectId];
       return project.numFunders;
   }
-    function getCloseDate(uint256 _projectId) public view returns (uint32) {
-        Project memory project = projects[_projectId];
-        return project.endAt;
-    }
+    // function getCloseDate(uint256 _projectId) public view returns (uint32) {
+    //     Project memory project = projects[_projectId];
+    //     return project.endAt;
+    // }
     function getClaimOrNot(uint256 _projectId) public view returns (bool) {
         Project memory project = projects[_projectId];
         return project.claimed;

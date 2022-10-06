@@ -185,8 +185,9 @@ const MyPage = () => {
           width: "100%",
           margin: "0 auto",
           padding: "4rem 0 3rem 0",
-          // backgroundColor: "rgba(246, 244, 157, 0.4)",
-          backgroundColor: "rgba(255, 118, 118, 0.2)",
+          backgroundColor: "rgba(93, 174, 139, 0.3)",
+          // backgroundColor: "rgba(246, 244, 157, 0.7)",
+          // backgroundColor: "rgba(255, 118, 118, 0.2)",
         }}
       >
         <Box
