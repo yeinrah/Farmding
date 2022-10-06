@@ -1,18 +1,19 @@
 # Farmding
- - 농산물 직거래와 NFT를 결합한 웹 서비스
+ - 농산물 크라우드 펀딩과 NFT를 결합한 웹 서비스
 
 # 팀원을 소개합니다!
-        김정서            김영진            나예인            송상훈            고은민 
+        고은민           김영진           김정서           나예인           송상훈
 
-![kimjeongseo jpg](https://user-images.githubusercontent.com/63994962/187566676-4b167d52-01b5-4845-8096-9d26ebe5cd9b.png) ![김영진 jpg](https://user-images.githubusercontent.com/63994962/187566679-0fbab3f4-627e-4483-9a06-912b6a29f5d0.jpg) ![jenkins-logo](https://user-images.githubusercontent.com/63994962/187566675-a38857c0-faf1-4d28-8dd0-363c73f10c58.png) ![송상훈](https://user-images.githubusercontent.com/63994962/187566682-5afcdd4b-5b77-44f3-97d0-d1e97c76ea19.jpg) ![조선송__2_](https://user-images.githubusercontent.com/63994962/187566691-822625b8-a78e-4d5c-ac6b-c030c089d251.jpg)
+![5FEAABBC-CA96-472A-B551-44C86809325E](https://user-images.githubusercontent.com/63994962/194329474-58fedb22-42ce-4209-b217-3603d07673f5.jpg)![kimjeongseo jpg](https://user-images.githubusercontent.com/63994962/187566676-4b167d52-01b5-4845-8096-9d26ebe5cd9b.png) ![김영진 jpg](https://user-images.githubusercontent.com/63994962/187566679-0fbab3f4-627e-4483-9a06-912b6a29f5d0.jpg) ![jenkins-logo](https://user-images.githubusercontent.com/63994962/187566675-a38857c0-faf1-4d28-8dd0-363c73f10c58.png) ![송상훈](https://user-images.githubusercontent.com/63994962/187566682-5afcdd4b-5b77-44f3-97d0-d1e97c76ea19.jpg) 
+
 
 
 # 팀원 역할
-송상훈 : 팀장, Backend <br> 
+고은민 : Frontend,BlockChain <br>
 김영진 : Backend,BlockChain<br>
-나예인 : Backend, Server, CI/CD <br>
 김정서 : Frontend,BlockChain <br>
-고은민 : Frontend,BlockChain
+나예인 : Backend, Server, CI/CD <br>
+송상훈 : 팀장, Backend <br>
 
 <hr>
 
@@ -60,8 +61,6 @@
 
 ---
 
-<hr>
-
 # Farmding의 모토
 농가와 소비자가 상생하는 크라우드 펀딩
 
@@ -78,7 +77,8 @@
 <hr>
 
 # 시스템 아키텍쳐
-![시스템아키텍처](https://user-images.githubusercontent.com/24909625/194269425-7a769700-88e2-4efb-94c6-06dc250c592f.PNG)
+![farmding_architecture](https://user-images.githubusercontent.com/63994962/194330471-5e510426-bd38-464b-ae0b-328518388c12.png)
+
 <hr>
 
 # CI/CD 구축 및 SSL 인증서 적용
@@ -125,7 +125,7 @@ feature의 기능이 완성되면 develop에 merge
 <hr>
 
 # ER Diagram
-![erd](https://user-images.githubusercontent.com/24909625/194269408-093254c5-41d6-4ee3-9f1b-2f105f57f0e6.PNG)
+![ERD](https://user-images.githubusercontent.com/63994962/194330689-d4938b16-e96d-41c1-a76b-c340184438ac.png)
 
 <hr>
 
@@ -140,9 +140,6 @@ feature의 기능이 완성되면 develop에 merge
 
 <hr>
 
-
-
-
 # 개발 후 회고
 <hr>
 
@@ -154,4 +151,4 @@ feature의 기능이 완성되면 develop에 merge
 
 김정서 : NFT라는 새로운 기술을 접하며 재밌게 개발할 수 있었습니다.<br>
 
-고은민 : NULL
+고은민 : 블록체인 기술에 흥미를 갖게 된 계기였습니다! 새로운 도전은 힘들지만 재밌는 것 같습니다! <br>
