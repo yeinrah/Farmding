@@ -74,7 +74,6 @@ const ProjectItem = ({
   // console.log(isLiked, pjtId, "좋아요여부!!!!!!!!!!!!!!");
   useEffect(() => {
     (async function () {
-      console.log(pjtId, "수박 id");
       const likeUsersList = await fetchLikeUsers(pjtId);
       // console.log(likeUsersList, pjtId, "현재유저");
       if (likeUsersList.length === 0) {
@@ -82,6 +81,7 @@ const ProjectItem = ({
         setLikeCnt(0);
       } else {
         setLikeCnt(likeUsersList.length);
+        // likeUsersList.
         for (const eachId of likeUsersList) {
           if (eachId === currentUserId) {
             setIsLiked(true);
