@@ -79,7 +79,9 @@ const ProjectItem = ({
       // console.log(likeUsersList, pjtId, "현재유저");
       if (likeUsersList.length === 0) {
         setIsLiked(false);
+        setLikeCnt(0);
       } else {
+        setLikeCnt(likeUsersList.length);
         for (const eachId of likeUsersList) {
           if (eachId === currentUserId) {
             setIsLiked(true);
@@ -89,7 +91,7 @@ const ProjectItem = ({
         }
       }
       const projtDetail: any = await fetchProjectDetail(pjtId);
-      setLikeCnt(projtDetail.likeAmount);
+      // setLikeCnt(projtDetail.likeAmount);
       // console.log(isLikeChange, pjtId, "likechange");
       setIsLikeChange(false);
     })();
