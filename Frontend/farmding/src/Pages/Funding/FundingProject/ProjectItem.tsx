@@ -82,28 +82,10 @@ const ProjectItem = ({
       } else {
         setLikeCnt(likeUsersList.length);
         console.log(pjtTitle, "좋아요 누른 유저 리스트", likeUsersList);
-        // likeUsersList.
-        for (const eachId of likeUsersList) {
-          if (eachId === currentUserId) {
-            console.log(
-              pjtId,
-              "번프로젝트",
-              "좋아요 true",
-              currentUserId,
-              "번 유저"
-            );
-            setIsLiked(true);
-          } else {
-            console.log(
-              pjtId,
-              "번프로젝트",
-              "좋아요 false",
-              currentUserId,
-              "번 유저"
-            );
-            setIsLiked(false);
-          }
-        }
+
+        likeUsersList.includes(currentUserId)
+          ? setIsLiked(true)
+          : setIsLiked(false);
       }
       const projtDetail: any = await fetchProjectDetail(pjtId);
       // setLikeCnt(projtDetail.likeAmount);
