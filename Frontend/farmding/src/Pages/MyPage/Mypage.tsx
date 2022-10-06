@@ -184,8 +184,9 @@ const MyPage = () => {
         sx={{
           width: "100%",
           margin: "0 auto",
-          padding: "5rem 0 2rem 0",
-          // backgroundColor: "beige",
+          padding: "4rem 0 3rem 0",
+          // backgroundColor: "rgba(246, 244, 157, 0.4)",
+          backgroundColor: "rgba(255, 118, 118, 0.2)",
         }}
       >
         <Box
