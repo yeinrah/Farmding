@@ -51,12 +51,12 @@ CREATE TABLE `project` (
 	`funder_count` int NOT NULL
 );
 
-CREATE TABLE `fundingList` (
-	`fundinglist_id`	int NOT NULL AUTO_INCREMENT,
-	`user_id`	int	NOT NULL,
+CREATE TABLE `fundinglist` (
+	`fundinglist_id` int NOT NULL AUTO_INCREMENT,
+	`user_id` int NOT NULL,
 	`project_id` int NOT NULL,
-	`reward_id`	int	NOT NULL,
-	`amount`	int	NOT NULL,
+	`reward_id` int NOT NULL,
+	`amount`	int NOT NULL,
     PRIMARY KEY(`fundinglist_id`)
 );
 
@@ -90,9 +90,9 @@ CREATE TABLE `images` (
 );
 
 CREATE TABLE `like` (
-	`like_id`	int auto_increment	NOT NULL,
-	`project_id`	int	NOT NULL,
-	`user_id`	int	NOT NULL,
+	`like_id` int auto_increment NOT NULL,
+	`project_id` int NOT NULL,
+	`user_id` int NOT NULL,
     PRIMARY KEY(`like_id`)
 );
 
@@ -144,7 +144,6 @@ ALTER TABLE `images` ADD CONSTRAINT `FK_project_TO_images_1` FOREIGN KEY (
 REFERENCES `project` (
 	`project_id`
 );
-
 
 -- 1. 딸기
 insert into project (project_title, project_explanation, 
@@ -269,71 +268,41 @@ project_end_date, farmer_name, farmer_wallet_address, target_amount,
  value ("제일 맛있는 설향 딸기", "과일의 왕, 딸기가 돌아왔다!! 싸피농장은 27년 간 딸기만을 고집해 온 딸기계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 딸기를 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 딸기 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 딸기! 저희 딸기로는 딸기쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 딸기 많이 사랑해주세요!", 
  0,"2022-09-01 00:00:00", "2022-10-10", "베리농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 40, 0, 0, "open", 0, 0);
 
--- 11
 insert into project (project_title, project_explanation, 
 category, project_created_date, 
 project_end_date, farmer_name, farmer_wallet_address, target_amount,
  current_amount, project_period, 
  funding_status, like_amount, funder_count)
- value ("베리베리 스트로베리!", "과일의 왕, 딸기가 돌아왔다!! 싸피농장은 27년 간 딸기만을 고집해 온 딸기계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 딸기를 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 딸기 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 딸기! 저희 딸기로는 딸기쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 딸기 많이 사랑해주세요!", 
+ value ("베리딸기 스트로베리!", "과일의 왕, 딸기가 돌아왔다!! 싸피농장은 27년 간 딸기만을 고집해 온 딸기계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 딸기를 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 딸기 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 딸기! 저희 딸기로는 딸기쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 딸기 많이 사랑해주세요!", 
  0,"2022-09-01 00:00:00", "2022-10-10", "베리농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 40, 0, 0, "open", 0, 0);
-
-insert into project (project_title, project_explanation, 
-category, project_created_date, 
-project_end_date, farmer_name, farmer_wallet_address, target_amount,
- current_amount, project_period, 
- funding_status, like_amount, funder_count)
- value ("과일의 여왕 딸기!", "과일의 왕, 딸기가 돌아왔다!! 싸피농장은 27년 간 딸기만을 고집해 온 딸기계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 딸기를 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 딸기 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 딸기! 저희 딸기로는 딸기쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 딸기 많이 사랑해주세요!", 
- 0,"2022-09-01 00:00:00", "2022-10-10", "베리농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 40, 0, 0, "open", 0, 0);
-
-
-insert into project (project_title, project_explanation, 
-category, project_created_date, 
-project_end_date, farmer_name, farmer_wallet_address, target_amount,
- current_amount, project_period, 
- funding_status, like_amount, funder_count)
- value ("제일 맛있는 설향 딸기", "과일의 왕, 딸기가 돌아왔다!! 싸피농장은 27년 간 딸기만을 고집해 온 딸기계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 딸기를 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 딸기 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 딸기! 저희 딸기로는 딸기쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 딸기 많이 사랑해주세요!", 
- 0,"2022-09-01 00:00:00", "2022-10-10", "베리농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 40, 0, 0, "open", 0, 0);
-
-insert into project (project_title, project_explanation, 
-category, project_created_date, 
-project_end_date, farmer_name, farmer_wallet_address, target_amount,
- current_amount, project_period, 
- funding_status, like_amount, funder_count)
- value ("베리베리 스트로베리!", "과일의 왕, 딸기가 돌아왔다!! 싸피농장은 27년 간 딸기만을 고집해 온 딸기계의 베테랑입니다. 무농약 재배방식을 사용하여 재배한 싸피농장의 첫 유기농 딸기를 누구보다도 빠르게 만나보세요. 12월부터 1월까지는 딸기 제철입니다. 당일 수확 당일 배송! 평균 20brix의 고당도 딸기! 저희 딸기로는 딸기쥬스를 만들어 먹어도 맛있고, 스무디를 해먹어도 맛있습니다. 영양도 풍부하고 맛도 좋은 딸기 많이 사랑해주세요!", 
- 0,"2022-09-01 00:00:00", "2022-10-10", "베리농장", "0x90E99269dD2aFf31b9a7fc737E2725dC52Ccc246", 40, 0, 0, "open", 0, 0);
-
 insert into user (nickname, wallet_address, phone_number, profile_image, address) 
 values('Harry','0x4323aaaa222222aaaa3333aaaa2222aa','01012345678',0,'서울시 강남구');
 
-
-
 insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (1,"1kg",10, 100, 2, "2022-10-22");
- insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (2,"5kg",4, 30, 2, "2022-11-22");
- insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (3,"3kg",7, 20, 1, "2022-10-28");
- insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (4,"4kg",4, 30, 3, "2022-11-10");
- insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (5,"5kg",9, 25, 1, "2022-10-23");
- insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (6,"4kg",11, 30, 2, "2022-10-25");
- insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (7,"7kg",10, 20, 2, "2022-10-27");
- insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (8,"10kg",4, 20, 1, "2022-10-27");
- insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (9,"3kg",8, 40, 3, "2022-10-23");
- insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
- (10,"5kg",2, 100, 1, "2022-10-23");
+(1,"1kg",10, 100, 2, "2022-10-22");
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+(2,"5kg",4, 30, 2, "2022-11-22");
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+(3,"3kg",7, 20, 1, "2022-10-28");
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+(4,"4kg",4, 30, 3, "2022-11-10");
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+(5,"5kg",9, 25, 1, "2022-10-23");
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+(6,"4kg",11, 30, 2, "2022-10-25");
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+(7,"7kg",10, 20, 2, "2022-10-27");
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+(8,"10kg",4, 20, 1, "2022-10-27");
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+(9,"3kg",8, 40, 3, "2022-10-23");
+insert into reward (project_id, reward_name, ssf_price, amount, delivery_fee, delivery_date) values
+(10,"5kg",2, 100, 1, "2022-10-23");
  
- 
- insert into funding (user_id, project_id, reward_id, funding_amount)
-value (1,9,1,100);
- SELECT * FROM user;
- SELECT * FROM funding;
+insert into funding (user_id, project_id, reward_id, funding_amount) values (1,9,1,100);
+
+SELECT * FROM user;
+SELECT * FROM funding;
 SELECT * FROM project;
- SELECT * FROM reward;
-select * from nft;
+SELECT * FROM reward;
+SELECT * FROM nft;
