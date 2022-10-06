@@ -847,7 +847,7 @@ const CrowdFundingABI = [
 export const SSFTokenAddress = "0x0c54E456CE9E4501D2c43C38796ce3F06846C966";
 
 // export const CrowdFundingAddress = "0x687b230c41a3d5BABb138d94Dbb5cF0733d80917";
-export const CrowdFundingAddress = "0x565f10441b2dD2f21Ff2B766249cAb9beCB33401";
+export const CrowdFundingAddress = "0xA6A1E5Ef6b6d8cef08bd2b93C39bB50A1661E7D5";
 
 export const web3 = new Web3(window.ethereum);
 
