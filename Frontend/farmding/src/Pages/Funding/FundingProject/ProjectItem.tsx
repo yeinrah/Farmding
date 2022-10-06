@@ -84,10 +84,24 @@ const ProjectItem = ({
         // likeUsersList.
         for (const eachId of likeUsersList) {
           if (eachId === currentUserId) {
-            console.log("좋아요 true", currentUserId, "지금 현재 유저 아이디");
+            console.log(
+              "좋아요 true",
+              currentUserId,
+              "유저",
+              pjtId,
+              " 번 프로젝트",
+              "지금 현재 유저 아이디"
+            );
             setIsLiked(true);
           } else {
-            console.log("좋아요 false", currentUserId, "지금 현재 유저 아이디");
+            console.log(
+              "좋아요 false",
+              currentUserId,
+              "유저",
+              pjtId,
+              " 번 프로젝트",
+              "지금 현재 유저 아이디"
+            );
             setIsLiked(false);
           }
         }
