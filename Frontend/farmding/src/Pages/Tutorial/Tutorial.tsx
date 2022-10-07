@@ -19,13 +19,13 @@ const Tutorial = () => {
       </div>
       <div className={styles.header}>
         <img
-          src={process.env.PUBLIC_URL + "/Assets/tutorial11.png"}
+          src={process.env.PUBLIC_URL + "/Assets/tutorial1.png"}
           className={styles.image}
         />
       </div>
       <div className={styles.header}>
         <img
-          src={process.env.PUBLIC_URL + "/Assets/tutorial26.png"}
+          src={process.env.PUBLIC_URL + "/Assets/tutorial2.png"}
           className={styles.image}
         />
       </div>
