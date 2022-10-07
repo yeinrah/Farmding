@@ -1,11 +1,15 @@
-.header{
-    display: flex;
-    justify-content: center;
+.header {
+  display: flex;
+  justify-content: center;
 }
-.image{
-    height: 85vh;
+.image {
+  height: 85vh;
+  width: 100%;
+  //   width: 100vw;
 }
-.headerImage{
-    height: 60vh;
-    // width: 100%;
+.headerImage {
+  height: 60vh;
+  width: 100%;
+  //   width: 100vw;
+  // width: 100%;
 }

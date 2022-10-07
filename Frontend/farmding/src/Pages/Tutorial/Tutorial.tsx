@@ -9,22 +9,28 @@ import styles from "./Tutorial.module.scss";
 
 //// component
 const Tutorial = () => {
-
   return (
     <div className={styles.page}>
       <div className={styles.header}>
-        <img src={process.env.PUBLIC_URL+"/Assets/tutorial_header.png"} className={styles.headerImage}/>
+        <img
+          src={process.env.PUBLIC_URL + "/Assets/tutorial_header1.png"}
+          className={styles.headerImage}
+        />
       </div>
       <div className={styles.header}>
-        <img src={process.env.PUBLIC_URL+"/Assets/tutorial1.png"} className={styles.image}/>
+        <img
+          src={process.env.PUBLIC_URL + "/Assets/tutorial1111.png"}
+          className={styles.image}
+        />
       </div>
       <div className={styles.header}>
-        <img src={process.env.PUBLIC_URL+"/Assets/tutorial2.png"} className={styles.image}/>
+        <img
+          src={process.env.PUBLIC_URL + "/Assets/tutorial22.png"}
+          className={styles.image}
+        />
       </div>
     </div>
   );
-
-
 };
 
 export default Tutorial;
